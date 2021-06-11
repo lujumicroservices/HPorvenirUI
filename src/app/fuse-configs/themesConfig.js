@@ -234,9 +234,9 @@ const themesConfig = {
 			type: 'light',
 			text: lightText,
 			primary: {
-				light: '#BFC4E6',
-				main: '#2A3BAB',
-				dark: '#0F1980'
+				light: '#32AFF2',
+				main: '#32AFF2',
+				dark: '#32AFF2'
 			},
 			secondary: {
 				light: '#C2ECF0',
@@ -259,9 +259,9 @@ const themesConfig = {
 			type: 'light',
 			text: lightText,
 			primary: {
-				light: '#D2EFF2',
-				main: '#68C8D5',
-				dark: '#3AA7BA'
+				light: '#32AFF2',
+				main: '#32AFF2',
+				dark: '#32AFF2'
 			},
 			secondary: {
 				light: '#FFF2C6',
