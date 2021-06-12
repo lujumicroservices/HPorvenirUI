@@ -3,15 +3,13 @@ import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRef } from 'react';
 import Button from '@material-ui/core/Button';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import navigationService from 'app/services/navigationService';
-import Dialog from '@material-ui/core/Dialog';
-import CloseIcon from '@material-ui/icons/Close';
+import DialogDayViewer from './navigationDay';
+
 import Hidden from '@material-ui/core/Hidden';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
@@ -42,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 function SimpleLeftSidebar3Sample() {
+
+	const viewerRef = useRef();
 
 	const [years, setYears] = useState([]);
 	const [months, setMonths] = useState([]);
@@ -74,6 +74,11 @@ function SimpleLeftSidebar3Sample() {
 		hidden: { opacity: 0, y: 40 },
 		show: { opacity: 1, y: 0 }
 	};
+
+	const handleOpenDialog = e => {
+		debugger;
+		viewerRef.current.handleOpenDialog();
+	}
 	
 	function handleYearSelection(year) {		
 		setYear(year);
@@ -92,13 +97,7 @@ function SimpleLeftSidebar3Sample() {
 		});
 	}
 
-	function handleOpenDialog(){
-		setOpenDialog(true);
-	}
 
-	function handleCloseDialog(){
-		setOpenDialog(false);
-	}
 	
 
 
@@ -172,66 +171,7 @@ function SimpleLeftSidebar3Sample() {
 					
 					</Paper>
 
-					<Dialog 
-						fullScreen 
-					open={openDialog} onClose={handleCloseDialog} aria-labelledby="form-dialog-title">
-						<AppBar position="static" elevation={0}>
-							<Toolbar className="flex w-full">
-								<IconButton edge="start" color="inherit" onClick={handleCloseDialog} aria-label="close">
-									<CloseIcon />
-								</IconButton>
-								<Typography variant="subtitle1" color="inherit">
-									New Message
-								</Typography>
-								<Button autoFocus color="inherit" onClick={handleCloseDialog}>
-									cerrar
-								</Button>
-							</Toolbar>
-						</AppBar>
-
-						<div>
-						
-						<FusePageSimple
-			classes={{
-				root: classes.layoutRoot
-			}}
-			
-
-			content={
-
-				<div className="p-24">					
-					<div className={classes.root}>
-					
-					</div>
-					<br />
-
-					<h4>Content</h4>
-					<br />
-					<Paper className="w-full rounded-20 shadow flex flex-col justify-between">
-
-						hola
-					
-					</Paper>					
-
-				</div>
-			}
-
-			
-			leftSidebarContent={
-				<div className="p-24">
-					<List>
-						<ListItem>
-							hola
-						</ListItem>						
-					</List>
-				</div>
-			}
-			
-			ref={pageLayout}
-		/>
-
-						</div>
-					</Dialog>
+					<DialogDayViewer ref={viewerRef} />		
 
 				</div>
 			}
