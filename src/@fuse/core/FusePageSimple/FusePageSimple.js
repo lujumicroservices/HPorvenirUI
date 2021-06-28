@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	header: {
 		height: headerHeight,
-		minHeight: headerHeight,
+		
 		display: 'flex',
 		background: `linear-gradient(to right, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
 		color: theme.palette.primary.contrastText,

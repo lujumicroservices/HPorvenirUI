@@ -9,11 +9,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import navigationService from 'app/services/navigationService';
 import DialogDayViewer from './navigationDay';
-
+import { green, grey, yellow,blue,orange } from '@material-ui/core/colors';
 import Hidden from '@material-ui/core/Hidden';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
+import clsx from 'clsx';
+import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +36,53 @@ const useStyles = makeStyles((theme) => ({
 		width: '15%',
 		height: '15%',
 		textAlign: 'center' 
+	},
+	header:{
+		color:"white"
+	},
+	activeMonth:{
+		color:"white"
+	},
+	listItem: {
+		color: 'inherit!important',
+		textDecoration: 'none!important',
+		height: 40,
+		width: '100%',
+		borderRadius: 6,
+		paddingLeft: 12,
+		paddingRight: 12,
+		marginBottom: 4,
+		'&.active': {
+			backgroundColor:
+				theme.palette.type === 'light' ? 'rgba(0, 0, 0, .05)!important' : 'rgba(255, 255, 255, .1)!important',
+			pointerEvents: 'none',
+			'& .list-item-icon': {
+				color: 'inherit'
+			}
+		},
+		'& .list-item-icon': {
+			fontSize: 16,
+			width: 16,
+			height: 16,
+			marginRight: 16
+		}
+	},
+	leftSidebarHeader:{
+		'& .yearsHeader':{
+			backgroundColor:grey[400],
+				pointerEvents: 'none',
+				
+		}
+	},
+	leftSidebarContent:{
+		'& .yearActive':{
+			backgroundColor:grey[200],
+				pointerEvents: 'none',
+				
+		}
+
 	}
+	
 
 }));
 
@@ -61,8 +109,6 @@ function SimpleLeftSidebar3Sample() {
 			console.log(years_info);
 			setYears(years_info);
 			handleYearSelection(years_info[0].value);
-			
-			
 		});
 	}
 
@@ -75,9 +121,9 @@ function SimpleLeftSidebar3Sample() {
 		show: { opacity: 1, y: 0 }
 	};
 
-	const handleOpenDialog = e => {
-		debugger;
-		viewerRef.current.handleOpenDialog();
+	const handleOpenDialog = (year,month,day) => {
+
+		viewerRef.current.handleOpenDialog(year,month,day);
 	}
 	
 	function handleYearSelection(year) {		
@@ -98,8 +144,6 @@ function SimpleLeftSidebar3Sample() {
 	}
 
 
-	
-
 
 	return (
 		<FusePageSimple
@@ -118,7 +162,7 @@ function SimpleLeftSidebar3Sample() {
 							</IconButton>
 						</Hidden>
 						<div className="flex-1 lg:px-12">
-							<h1>Navegacion Libre</h1>
+							<h1 className={classes.header}>Navegacion Libre</h1>
 						</div>
 					</div>
 				</div>
@@ -130,7 +174,7 @@ function SimpleLeftSidebar3Sample() {
 					<div className={classes.root}>
 					{months && months.map(month => {	
 						if(month.enable){
-						  return <Button onClick={() => handleMonthSelection(month.value)} variant="contained" color="primary">{month.name}</Button>								
+						  return <Button className={classes.activeMonth} onClick={() => handleMonthSelection(month.value)} variant="contained" color="primary">{month.name}</Button>								
 						}else{
 						  return <Button variant="contained" color="default">{month.name}</Button>								
 						}
@@ -150,17 +194,17 @@ function SimpleLeftSidebar3Sample() {
 								
 								if(day.enable){
 									return <div className={classes.day}>
-									<Typography onClick={handleOpenDialog} className="text-72 font-semibold leading-none text-blue-700 tracking-tighter">
+									<Typography variant="h3" onClick={() => handleOpenDialog(selectedYear,selectedMonth,day.value)} className="font-semibold leading-none text-blue-700 tracking-tighter">
 										{day.value}
 									</Typography>
-									<Typography className="text-18 text-black-800 font-normal">{day.name}</Typography>
+									<Typography variant="subtitle1" className=" text-black-800 font-normal">{day.name}</Typography>
 								</div>
 								}else{
 									return <div className={classes.day}>
-									<Typography    className="text-72 font-semibold leading-none text-red tracking-tighter">
+									<Typography variant="h3"    className=" font-semibold leading-none text-red tracking-tighter">
 										{day.value}
 									</Typography>
-									<Typography className="text-18 text-gray-600 font-normal">{day.name}</Typography>
+									<Typography variant="subtitle1" className="text-gray-600 font-normal">{day.name}</Typography>
 								</div>
 								}
 
@@ -176,24 +220,36 @@ function SimpleLeftSidebar3Sample() {
 				</div>
 			}
 			leftSidebarHeader={
-				<div className="p-24">
-					<h4>Años Disponibles</h4>
+				<div className={classes.leftSidebarHeader}>
+					<h4 className="yearsHeader p-24">Años Disponibles</h4>
 				</div>
 			}
 			leftSidebarContent={
-				<div className="p-24">
+				<div className={clsx(classes.leftSidebarContent,"p-24")}>
 					<List>
-						{years && years.map(year => (
-							<ListItem button
-							 onClick={() => handleYearSelection(year.value)}
-							 >
+						{years && years.map(year => {
+							
+							var statusLink = "inactive";
+							if (year.value == selectedYear) 
+								statusLink = "yearActive";
+							else
+							statusLink = "yearInactive"
+							
+							
+							return <ListItem button className={clsx(statusLink)}
+							  			onClick={() => handleYearSelection(year.value)}
+							  >
 								<ListItemText primary={year.value} />
-							</ListItem>
-						))}
+							 </ListItem> 
+							
+							
+			})}
 					</List>
 				</div>
 			}
+			
 			sidebarInner
+			innerScroll
 			ref={pageLayout}
 		/>
 	);

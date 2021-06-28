@@ -3,13 +3,13 @@ import { lightBlue, red } from '@material-ui/core/colors';
 
 const lightText = {
 	primary: 'rgb(17, 24, 39)',
-	secondary: 'rgb(107, 114, 128)',
+	secondary: 'rgb(255, 255, 255)',
 	disabled: 'rgb(149, 156, 169)'
 };
 
 const darkText = {
 	primary: 'rgb(255,255,255)',
-	secondary: 'rgb(229, 231, 235)',
+	secondary: 'rgb(247, 251, 255)',
 	disabled: 'rgb(156, 163, 175)'
 };
 

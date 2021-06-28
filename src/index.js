@@ -10,6 +10,8 @@ import './styles/app-components.css';
 import './styles/app-utilities.css';
 import App from 'app/App';
 import * as serviceWorker from './serviceWorker';
+    
+import * as scrollMagic from './scrollMagic';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(<App />, document.getElementById('root'));

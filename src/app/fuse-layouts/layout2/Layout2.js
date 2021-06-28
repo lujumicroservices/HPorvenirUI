@@ -29,7 +29,12 @@ const useStyles = makeStyles(theme => ({
 				margin: '0 auto'
 			}
 		}
+	},
+	noscrollbody: {
+
+		overflow: "hidden"
 	}
+
 }));
 
 function Layout2(props) {
@@ -50,20 +55,11 @@ function Layout2(props) {
 								/>
 							)}
 
-							{config.toolbar.display && (
-								<ToolbarLayout2
-									className={clsx(
-										config.toolbar.style === 'fixed' && 'sticky top-0',
-										config.toolbar.position === 'above' && 'order-first z-40'
-									)}
-								/>
-							)}
-
-							<div className="sticky top-0 z-99">
+<div className="sticky top-0 z-99">
 								<SettingsPanel />
 							</div>
 
-							<div className="flex flex-col flex-auto min-h-0 relative z-10">
+							<div  className={clsx(classes.noscrollbody,"flex flex-col flex-auto min-h-0 relative z-10")}>
 								<FuseDialog />
 
 								<FuseSuspense>{renderRoutes(routes)}</FuseSuspense>

@@ -35,18 +35,18 @@ class NavigationService extends FuseUtils.EventEmitter {
 
 
 	monthsMap = {
-		1 : "Enero",
-		2 : "Febrero",
-		3 : "Marzo",
-		4 : "Abril",
-		5 : "Mayo",
-		6 : "Junio",
-		7 : "Julio",
-		8 : "Agosto",
-		9 : "Septiembre",
-		10 : "Octubre",
-		11 : "Noviembre",
-		12 : "Diciembre"
+		0 : "Enero",
+		1 : "Febrero",
+		2 : "Marzo",
+		3 : "Abril",
+		4 : "Mayo",
+		5 : "Junio",
+		6 : "Julio",
+		7 : "Agosto",
+		8 : "Septiembre",
+		9 : "Octubre",
+		10 : "Noviembre",
+		11 : "Diciembre"
 	}
 
 	daysMap = {
@@ -57,6 +57,14 @@ class NavigationService extends FuseUtils.EventEmitter {
 		4 : "Jueves",
 		5 : "Viernes",
 		6 : "Sabado"		
+	}
+
+	getMonthString = (monthNumber) => {
+		return this.monthsMap[monthNumber];
+	}
+
+	getDayString = (dayNumber) => {
+		return this.daysMap[dayNumber];
 	}
 
     loadNavigationInfo = () => {		
@@ -116,7 +124,7 @@ class NavigationService extends FuseUtils.EventEmitter {
 			for(var i = 1; i <= 12; i++){				
 				var month = { value : i };				
 				month.enable = yearSelected == undefined || yearSelected[i] == undefined || Object.keys(yearSelected[i]).length > 0;  
-				month.name = this.monthsMap[i];
+				month.name = this.monthsMap[i-1];
 				months.push(month);
 			}	
 			
