@@ -51,7 +51,9 @@ class FuseAuthorization extends Component {
         User is guest
         Redirect to Login Page
         */
+	   
 		if (!userRole || userRole.length === 0) {
+			
 			history.push({
 				pathname: '/login',
 				state: { redirectUrl: pathname }
@@ -62,6 +64,7 @@ class FuseAuthorization extends Component {
         User must be on unAuthorized page or just logged in
         Redirect to dashboard or redirectUrl
         */
+		
 			history.push({
 				pathname: redirectUrl
 			});
@@ -75,6 +78,7 @@ class FuseAuthorization extends Component {
 }
 
 function mapStateToProps({ auth }) {
+	
 	return {
 		userRole: auth.user.role
 	};

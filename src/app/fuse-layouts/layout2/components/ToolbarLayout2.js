@@ -40,9 +40,7 @@ function ToolbarLayout2(props) {
 						</Hidden>
 					)}
 
-					<div className="flex flex-1">
-						
-					</div>
+					
 
 					<div className="flex items-center px-8 h-full overflow-x-auto">
 						<FullScreenToggle />

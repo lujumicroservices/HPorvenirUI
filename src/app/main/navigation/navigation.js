@@ -1,21 +1,20 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, {useRef, useState, useEffect } from 'react';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles } from '@material-ui/core/styles';
-import { useRef } from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import navigationService from 'app/services/navigationService';
-import DialogDayViewer from './navigationDay';
-import { green, grey, yellow,blue,orange } from '@material-ui/core/colors';
+import { grey } from '@material-ui/core/colors';
 import Hidden from '@material-ui/core/Hidden';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
-import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
+import DialogDayViewer from './navigationDay';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -105,10 +104,10 @@ function SimpleLeftSidebar3Sample() {
 	const pageLayout = useRef(null);
 
 	const getNavInfo = () => {
-		navigationService.buildNavigationYears().then((years_info) => {
-			console.log(years_info);
-			setYears(years_info);
-			handleYearSelection(years_info[0].value);
+		navigationService.buildNavigationYears().then((yearsInfo) => {
+			console.log(yearsInfo);
+			setYears(yearsInfo);
+			handleYearSelection(yearsInfo[0].value);
 		});
 	}
 
@@ -128,18 +127,18 @@ function SimpleLeftSidebar3Sample() {
 	
 	function handleYearSelection(year) {		
 		setYear(year);
-		navigationService.buildNavigationMonths(year).then((months_info) => {
+		navigationService.buildNavigationMonths(year).then((monthsInfo) => {
 			
-			setMonths(months_info);
+			setMonths(monthsInfo);
 			setDays(null);
 		});
 	}
 
 	function handleMonthSelection(month) {		
 		setMonth(month);
-		navigationService.buildNavigationDays(selectedYear,month).then((days_info) => {
+		navigationService.buildNavigationDays(selectedYear,month).then((daysInfo) => {
 			
-			setDays(days_info);
+			setDays(daysInfo);
 		});
 	}
 
@@ -174,17 +173,23 @@ function SimpleLeftSidebar3Sample() {
 					<div className={classes.root}>
 					{months && months.map(month => {	
 						if(month.enable){
-						  return <Button className={classes.activeMonth} onClick={() => handleMonthSelection(month.value)} variant="contained" color="primary">{month.name}</Button>								
-						}else{
-						  return <Button variant="contained" color="default">{month.name}</Button>								
-						}
+							if (month.value === selectedMonth){
+								return <Button className={classes.activeMonth} onClick={() => handleMonthSelection(month.value)} variant="contained" color="secondary">{month.name}</Button>								
+							}
 							
+							return <Button className={classes.activeMonth} onClick={() => handleMonthSelection(month.value)} variant="contained" color="primary">{month.name}</Button>								
+							
+						  
+						}
+						  
+						return <Button variant="contained" color="default">{month.name}</Button>								
+													
 					})}
 
 					</div>
 					<br />
 
-					<h4>Content</h4>
+					<h4>Días disponibles</h4>
 					<br />
 					<Paper className="w-full rounded-20 shadow flex flex-col justify-between">
 
@@ -199,14 +204,15 @@ function SimpleLeftSidebar3Sample() {
 									</Typography>
 									<Typography variant="subtitle1" className=" text-black-800 font-normal">{day.name}</Typography>
 								</div>
-								}else{
-									return <div className={classes.day}>
+								}
+								
+								return <div className={classes.day}>
 									<Typography variant="h3"    className=" font-semibold leading-none text-red tracking-tighter">
 										{day.value}
 									</Typography>
 									<Typography variant="subtitle1" className="text-gray-600 font-normal">{day.name}</Typography>
 								</div>
-								}
+								
 
 								
 							})}
@@ -229,8 +235,8 @@ function SimpleLeftSidebar3Sample() {
 					<List>
 						{years && years.map(year => {
 							
-							var statusLink = "inactive";
-							if (year.value == selectedYear) 
+							let statusLink = "inactive";
+							if (year.value === selectedYear) 
 								statusLink = "yearActive";
 							else
 							statusLink = "yearInactive"

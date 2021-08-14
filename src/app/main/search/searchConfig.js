@@ -1,28 +1,31 @@
 import i18next from 'i18next';
-import Example from './Example';
+import { authRoles } from 'app/auth';
+import Search from './search';
 import en from './i18n/en';
 import tr from './i18n/tr';
 import ar from './i18n/ar';
+
 
 i18next.addResourceBundle('en', 'examplePage', en);
 i18next.addResourceBundle('tr', 'examplePage', tr);
 i18next.addResourceBundle('ar', 'examplePage', ar);
 
-const ExampleConfig = {
+const SearchConfig = {
 	settings: {
 		layout: {
 			config: {}
 		}
 	},
+    auth: authRoles.admin,
 	routes: [
 		{
-			path: '/example',
-			component: Example
+			path: '/search',
+			component: Search
 		}
 	]
 };
 
-export default ExampleConfig;
+export default SearchConfig;
 
 /**
  * Lazy load Example

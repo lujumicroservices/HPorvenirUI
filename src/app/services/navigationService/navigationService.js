@@ -1,179 +1,135 @@
 import FuseUtils from '@fuse/utils/FuseUtils';
 import axios from 'axios';
 
-
-class Year {
-
-    constructor() {
-        year,
-        enable;
-    }
-
-}
-
-class Month {
-
-    constructor() {
-        month,
-        enable;
-    }
-
-}
-
-class Day {
-
-    constructor() {
-        day,
-        enable;
-    }
-
-}
-
-
-
 class NavigationService extends FuseUtils.EventEmitter {
-
-
 	monthsMap = {
-		0 : "Enero",
-		1 : "Febrero",
-		2 : "Marzo",
-		3 : "Abril",
-		4 : "Mayo",
-		5 : "Junio",
-		6 : "Julio",
-		7 : "Agosto",
-		8 : "Septiembre",
-		9 : "Octubre",
-		10 : "Noviembre",
-		11 : "Diciembre"
-	}
-
-	daysMap = {
-		0 : "Domingo",
-		1 : "Lunes",
-		2 : "Martes",
-		3 : "Miercoles",
-		4 : "Jueves",
-		5 : "Viernes",
-		6 : "Sabado"		
-	}
-
-	getMonthString = (monthNumber) => {
-		return this.monthsMap[monthNumber];
-	}
-
-	getDayString = (dayNumber) => {
-		return this.daysMap[dayNumber];
-	}
-
-    loadNavigationInfo = () => {		
-		if (localStorage.getItem("navigationExclusion") === null) {
-			return new Promise((resolve, reject) => {
-				axios
-					.get('https://localhost:5001/navigation')
-					.then(response => {						
-						//console.log(process.env.REACT_APP_NAV_STARTDATE)						
-						localStorage.setItem('navigationExclusion',JSON.stringify(response.data));
-						resolve(response.data);	
-					});
-			});
-		}else{
-
-			return new Promise(function(resolve, reject) {
-				resolve(JSON.parse(localStorage.getItem("navigationExclusion")));
-			});
-		}		
+		0: 'Enero',
+		1: 'Febrero',
+		2: 'Marzo',
+		3: 'Abril',
+		4: 'Mayo',
+		5: 'Junio',
+		6: 'Julio',
+		7: 'Agosto',
+		8: 'Septiembre',
+		9: 'Octubre',
+		10: 'Noviembre',
+		11: 'Diciembre'
 	};
 
+	daysMap = {
+		0: 'Domingo',
+		1: 'Lunes',
+		2: 'Martes',
+		3: 'Miercoles',
+		4: 'Jueves',
+		5: 'Viernes',
+		6: 'Sabado'
+	};
+
+	getMonthString = monthNumber => {
+		return this.monthsMap[monthNumber];
+	};
+
+	getDayString = dayNumber => {
+		return this.daysMap[dayNumber];
+	};
+
+	loadNavigationInfo = () => {
+		if (localStorage.getItem('navigationExclusion') === null) {
+			return new Promise((resolve, reject) => {
+				axios.get(`${process.env.WEBAPI}navigation`).then(response => {
+					localStorage.setItem('navigationExclusion', JSON.stringify(response.data));
+					resolve(response.data);
+				});
+			});
+		}
+
+		return new Promise(function (resolve, reject) {
+			resolve(JSON.parse(localStorage.getItem('navigationExclusion')));
+		});
+	};
 
 	buildNavigationYears = () => {
-			
 		return this.loadNavigationInfo().then(info => {
+			const years = [];
+			let startDate = new Date('1919/01/01');
+			let endDate = new Date();
 
-			var years = [];
-            var startDate = new Date("1919/01/01");
-			var endDate = new Date();
-
-			if (process.env.REACT_APP_NAV_STARTDATE){
-				startDate = new Date(process.env.REACT_APP_NAV_STARTDATE)
+			if (process.env.REACT_APP_NAV_STARTDATE) {
+				startDate = new Date(process.env.REACT_APP_NAV_STARTDATE);
 			}
-			if (process.env.REACT_APP_NAV_ENDDATE){
-				endDate = new Date(process.env.REACT_APP_NAV_ENDDATE)
+			if (process.env.REACT_APP_NAV_ENDDATE) {
+				endDate = new Date(process.env.REACT_APP_NAV_ENDDATE);
 			}
 
-			for(var i = startDate.getFullYear(); i < endDate.getFullYear(); i++){
-
+			for (let i = startDate.getFullYear(); i < endDate.getFullYear(); i += 1) {
 				console.log(i);
 				console.log(info[i]);
-				var year = { value : i };				
-				year.enable = info[i] == undefined || Object.keys(info[i]).length == 0;  
+				const year = { value: i };
+				year.enable = info[i] === undefined || Object.keys(info[i]).length === 0;
 				years.push(year);
-			}	
-		
+			}
+
 			return years;
 		});
-	}
+	};
 
-
-	buildNavigationMonths = (year) => {			
+	buildNavigationMonths = year => {
 		return this.loadNavigationInfo().then(info => {
-			var yearSelected = info[year]; 
-			var months = [];
-			
-			for(var i = 1; i <= 12; i++){				
-				var month = { value : i };				
-				month.enable = yearSelected == undefined || yearSelected[i] == undefined || Object.keys(yearSelected[i]).length > 0;  
-				month.name = this.monthsMap[i-1];
+			const yearSelected = info[year];
+			const months = [];
+
+			for (let i = 1; i <= 12; i += 1) {
+				const month = { value: i };
+				month.enable =
+					yearSelected === undefined ||
+					yearSelected[i] === undefined ||
+					Object.keys(yearSelected[i]).length > 0;
+				month.name = this.monthsMap[i - 1];
 				months.push(month);
-			}	
-			
-			return months;			
+			}
+
+			return months;
 		});
-	}
+	};
 
-	buildNavigationDays = (year,month) => {			
+	buildNavigationDays = (year, month) => {
 		return this.loadNavigationInfo().then(info => {
-			var yearSelected = info[year];
-			var monthSelected = yearSelected ? yearSelected[month] : undefined; 
-			var days = [];
+			const yearSelected = info[year];
+			const monthSelected = yearSelected ? yearSelected[month] : undefined;
+			const days = [];
 
-			var currentDate = new Date(year,month-1,1);
-			var nextMonth = new Date(new Date(year,month-1,1).setMonth(currentDate.getMonth() + 1));
-			var lastDayCurrent = new Date(nextMonth.getFullYear(), nextMonth.getMonth(), 1);									
-			lastDayCurrent.setDate(lastDayCurrent.getDate()-1);
+			const currentDate = new Date(year, month - 1, 1);
+			const nextMonth = new Date(new Date(year, month - 1, 1).setMonth(currentDate.getMonth() + 1));
+			const lastDayCurrent = new Date(nextMonth.getFullYear(), nextMonth.getMonth(), 1);
+			lastDayCurrent.setDate(lastDayCurrent.getDate() - 1);
 
-			for(var i = 1; i <= lastDayCurrent.getDate(); i++){				
-				var day = { value : i };				
-			
-				day.enable = monthSelected == undefined || !monthSelected.find(element => element == i) ;  
-				day.name = this.daysMap[new Date(year,month-1,i).getDay()];
+			for (let i = 1; i <= lastDayCurrent.getDate(); i += 1) {
+				const day = { value: i };
+
+				day.enable = monthSelected === undefined || !monthSelected.find(element => element === i);
+				day.name = this.daysMap[new Date(year, month - 1, i).getDay()];
 				days.push(day);
 			}
 
-			return days;			
+			return days;
 		});
-	}
+	};
 
-	loadDay = (year,month,day) => {		
-		if (localStorage.getItem(`day_${year}_${month}_${day}`) === null){
+	loadDay = (year, month, day) => {
+		if (localStorage.getItem(`day_${year}_${month}_${day}`) === null) {
 			return new Promise((resolve, reject) => {
-				axios
-					.get(`https://localhost:5001/navigation/day/${year}/${month}/${day}`)
-					.then(response => {						
-						
-						localStorage.setItem(`day_${year}_${month}_${day}`,JSON.stringify(response.data));
-						resolve(response.data);	
-					});
+				axios.get(`${process.env.WEBAPI}navigation/day/${year}/${month}/${day}`).then(response => {
+					localStorage.setItem(`day_${year}_${month}_${day}`, JSON.stringify(response.data));
+					resolve(response.data);
+				});
 			});
-		}else{
-			return new Promise(function(resolve, reject) {
-				resolve(JSON.parse(localStorage.getItem(`day_${year}_${month}_${day}`)));
-			});
-		}					
-	}
-
-
+		}
+		return new Promise(function (resolve, reject) {
+			resolve(JSON.parse(localStorage.getItem(`day_${year}_${month}_${day}`)));
+		});
+	};
 }
 
 const instance = new NavigationService();
