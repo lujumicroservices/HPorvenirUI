@@ -5,4 +5,4 @@ COPY package.json ./
 RUN yarn install --legacy-peer-deps
 COPY . .
 EXPOSE 80
-CMD ["yarn", "start"]
+CMD yarn run start
