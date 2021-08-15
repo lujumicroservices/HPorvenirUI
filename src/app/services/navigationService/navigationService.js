@@ -120,7 +120,7 @@ class NavigationService extends FuseUtils.EventEmitter {
 	loadDay = (year, month, day) => {
 		if (localStorage.getItem(`day_${year}_${month}_${day}`) === null) {
 			return new Promise((resolve, reject) => {
-				axios.get(`${process.env.WEBAPI}navigation/day/${year}/${month}/${day}`).then(response => {
+				axios.get(`${process.env.REACT_APP_WEBAPI}navigation/day/${year}/${month}/${day}`).then(response => {
 					localStorage.setItem(`day_${year}_${month}_${day}`, JSON.stringify(response.data));
 					resolve(response.data);
 				});
