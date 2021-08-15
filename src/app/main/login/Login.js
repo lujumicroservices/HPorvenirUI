@@ -73,24 +73,9 @@ function Login() {
 							</div>
 						</motion.div>
 
-						<Tabs
 
-							onChange={handleTabChange}
-							variant="fullWidth"
-							className="w-full mb-32"
-						>
-							<Tab
-								icon={
-									<></>
-								}
-								className="min-w-0"
-
-							/>
-						</Tabs>
-
-						{selectedTab === 0 && <JWTLoginTab />}
-						{selectedTab === 1 && <FirebaseLoginTab />}
-						{selectedTab === 2 && <Auth0LoginTab />}
+					    <JWTLoginTab />
+=
 					</CardContent>
 
 					<div className="flex flex-col items-center justify-center pb-32">

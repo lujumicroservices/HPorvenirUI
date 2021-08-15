@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 function NavigationYear(props) {
 	const user = null;
 
-    const years  = [1,2,3,4,5,6];
+	const years = [1, 2, 3, 4, 5, 6];
 	const dispatch = useDispatch();
 
 	const classes = useStyles(props);
@@ -55,22 +55,23 @@ function NavigationYear(props) {
 				className="rounded-0 shadow-none lg:rounded-16 lg:shadow"
 			>
 				<List className="pt-0 px-12">
-                    {years.map((row,i)=>{
-                        return (
-                            <ListItem
-                                button
-                                component={NavLinkAdapter}
-                                to="/apps/contacts/all"
-                                activeClassName="active"
-                                className={classes.listItem}
-                            >
-                                <Icon className="list-item-icon text-16" color="action">
-                                    {i}
-                                </Icon>
-                                <ListItemText className="truncate" primary={i} disableTypography />
-                            </ListItem>
-                        );
-                    })}				                    					
+					{years.map((row, i) => {
+						return (
+							<ListItem
+								button
+								component={NavLinkAdapter}
+								to="/apps/contacts/all"
+								activeClassName="active"
+								className={classes.listItem}
+								key="{i}"
+							>
+								<Icon className="list-item-icon text-16" color="action">
+									{i}
+								</Icon>
+								<ListItemText className="truncate" primary={i} disableTypography />
+							</ListItem>
+						);
+					})}
 				</List>
 			</Paper>
 		</div>

@@ -13,7 +13,7 @@ import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 
 import Paper from '@material-ui/core/Paper';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import { Document, Page } from 'react-pdf';
 import clsx from 'clsx';
 import { green, grey, yellow, blue, orange } from '@material-ui/core/colors';
 import searchService from 'app/services/searchService';
@@ -236,7 +236,7 @@ function DialogSearchViewer(props, ref) {
 				disabled={index <= 0}
 				className={clsx(classes.buttonbarstyle, 'whitespace-nowrap mx-4')}
 				variant="contained"
-				color="action"
+				
 				onClick={() => onSelectPage(index - 1)}
 				startIcon={<Icon className="hidden sm:flex">navigate_before</Icon>}
 			>
@@ -250,7 +250,7 @@ function DialogSearchViewer(props, ref) {
 			<Button
 				className={clsx(classes.buttonbarstyle, 'whitespace-nowrap mx-4')}
 				variant="contained"
-				color="action"
+				
 				onClick={() => onSelectPage(index + 1)}
 				startIcon={<Icon className="hidden sm:flex">navigate_next</Icon>}
 			>

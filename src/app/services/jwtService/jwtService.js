@@ -16,9 +16,7 @@ class JwtService extends FuseUtils.EventEmitter {
 			},
 			err => {
 				return new Promise((resolve, reject) => {
-					console.log(process.env.REACT_APP_WEBAPI);
-					console.log(process.env.REACT_APP_NAV_STARTDATE);
-		
+					
 					if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
 						// if you ever get an unauthorized response, logout the user
 						this.emit('onAutoLogout', 'Invalid access_token');
@@ -63,8 +61,7 @@ class JwtService extends FuseUtils.EventEmitter {
 
 	signInWithEmailAndPassword = (email, password) => {
 		return new Promise((resolve, reject) => {
-			console.log(process.env.REACT_APP_WEBAPI);
-			console.log(process.env.REACT_APP_NAV_STARTDATE);
+		
 			axios
 				.post(`${process.env.REACT_APP_WEBAPI}Authentication/login`, {
 					user:email,

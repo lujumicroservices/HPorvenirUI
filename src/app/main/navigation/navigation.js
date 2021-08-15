@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -15,32 +15,29 @@ import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
 import DialogDayViewer from './navigationDay';
 
-
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
 	root: {
 		'& > *': {
-			margin: theme.spacing(1),
-		},
+			margin: theme.spacing(1)
+		}
 	},
 	days: {
 		display: 'flex',
 		flexDirection: 'row',
 		flexFlow: 'wrap',
 		justifyContent: 'center',
-		padding: "20px"
-
+		padding: '20px'
 	},
 	day: {
 		width: '15%',
 		height: '15%',
-		textAlign: 'center' 
+		textAlign: 'center'
 	},
-	header:{
-		color:"white"
+	header: {
+		color: 'white'
 	},
-	activeMonth:{
-		color:"white"
+	activeMonth: {
+		color: 'white'
 	},
 	listItem: {
 		color: 'inherit!important',
@@ -66,34 +63,26 @@ const useStyles = makeStyles((theme) => ({
 			marginRight: 16
 		}
 	},
-	leftSidebarHeader:{
-		'& .yearsHeader':{
-			backgroundColor:grey[400],
-				pointerEvents: 'none',
-				
+	leftSidebarHeader: {
+		'& .yearsHeader': {
+			backgroundColor: grey[400],
+			pointerEvents: 'none'
 		}
 	},
-	leftSidebarContent:{
-		'& .yearActive':{
-			backgroundColor:grey[200],
-				pointerEvents: 'none',
-				
+	leftSidebarContent: {
+		'& .yearActive': {
+			backgroundColor: grey[200],
+			pointerEvents: 'none'
 		}
-
 	}
-	
-
 }));
 
-
 function SimpleLeftSidebar3Sample() {
-
 	const viewerRef = useRef();
 
 	const [years, setYears] = useState([]);
 	const [months, setMonths] = useState([]);
 	const [days, setDays] = useState([]);
-
 
 	const [selectedYear, setYear] = useState(null);
 	const [selectedMonth, setMonth] = useState(null);
@@ -104,12 +93,11 @@ function SimpleLeftSidebar3Sample() {
 	const pageLayout = useRef(null);
 
 	const getNavInfo = () => {
-		navigationService.buildNavigationYears().then((yearsInfo) => {
-			console.log(yearsInfo);
+		navigationService.buildNavigationYears().then(yearsInfo => {
 			setYears(yearsInfo);
 			handleYearSelection(yearsInfo[0].value);
 		});
-	}
+	};
 
 	useEffect(() => {
 		getNavInfo();
@@ -120,29 +108,24 @@ function SimpleLeftSidebar3Sample() {
 		show: { opacity: 1, y: 0 }
 	};
 
-	const handleOpenDialog = (year,month,day) => {
+	const handleOpenDialog = (year, month, day) => {
+		viewerRef.current.handleOpenDialog(year, month, day);
+	};
 
-		viewerRef.current.handleOpenDialog(year,month,day);
-	}
-	
-	function handleYearSelection(year) {		
+	function handleYearSelection(year) {
 		setYear(year);
-		navigationService.buildNavigationMonths(year).then((monthsInfo) => {
-			
+		navigationService.buildNavigationMonths(year).then(monthsInfo => {
 			setMonths(monthsInfo);
 			setDays(null);
 		});
 	}
 
-	function handleMonthSelection(month) {		
+	function handleMonthSelection(month) {
 		setMonth(month);
-		navigationService.buildNavigationDays(selectedYear,month).then((daysInfo) => {
-			
+		navigationService.buildNavigationDays(selectedYear, month).then(daysInfo => {
 			setDays(daysInfo);
 		});
 	}
-
-
 
 	return (
 		<FusePageSimple
@@ -166,63 +149,91 @@ function SimpleLeftSidebar3Sample() {
 					</div>
 				</div>
 			}
-
 			content={
-
-				<div className="p-24">					
+				<div className="p-24">
 					<div className={classes.root}>
-					{months && months.map(month => {	
-						if(month.enable){
-							if (month.value === selectedMonth){
-								return <Button className={classes.activeMonth} onClick={() => handleMonthSelection(month.value)} variant="contained" color="secondary">{month.name}</Button>								
-							}
-							
-							return <Button className={classes.activeMonth} onClick={() => handleMonthSelection(month.value)} variant="contained" color="primary">{month.name}</Button>								
-							
-						  
-						}
-						  
-						return <Button variant="contained" color="default">{month.name}</Button>								
-													
-					})}
+						{months &&
+							months.map(month => {
+								if (month.enable) {
+									if (month.value === selectedMonth) {
+										return (
+											<Button
+												className={classes.activeMonth}
+												onClick={() => handleMonthSelection(month.value)}
+												variant="contained"
+												color="secondary"
+												key={month.name}
+											>
+												{month.name}
+											</Button>
+										);
+									}
 
+									return (
+										<Button
+											className={classes.activeMonth}
+											onClick={() => handleMonthSelection(month.value)}
+											variant="contained"
+											color="primary"
+											key={month.name}
+										>
+											{month.name}
+										</Button>
+									);
+								}
+
+								return (
+									<Button variant="contained" color="default" key={month.name}>
+										{month.name}										
+									</Button>
+								);
+							})}
 					</div>
 					<br />
 
 					<h4>Días disponibles</h4>
 					<br />
 					<Paper className="w-full rounded-20 shadow flex flex-col justify-between">
-
 						<div className={classes.days}>
+							{days &&
+								days.map(day => {
+									if (day.enable) {
+										return (
+											<div className={classes.day} key={day.value}  >
+												<Typography
+													variant="h3"
+													onClick={() =>
+														handleOpenDialog(selectedYear, selectedMonth, day.value)
+													}
+													className="font-semibold leading-none text-blue-700 tracking-tighter"
+												>
+													{day.value}
+												</Typography>
+												<Typography variant="subtitle1" className=" text-black-800 font-normal">
+													{day.name}
+												</Typography>
+											</div>
+										);
+									}
 
-							{days && days.map(day => {
-								
-								if(day.enable){
-									return <div className={classes.day}>
-									<Typography variant="h3" onClick={() => handleOpenDialog(selectedYear,selectedMonth,day.value)} className="font-semibold leading-none text-blue-700 tracking-tighter">
-										{day.value}
-									</Typography>
-									<Typography variant="subtitle1" className=" text-black-800 font-normal">{day.name}</Typography>
-								</div>
-								}
-								
-								return <div className={classes.day}>
-									<Typography variant="h3"    className=" font-semibold leading-none text-red tracking-tighter">
-										{day.value}
-									</Typography>
-									<Typography variant="subtitle1" className="text-gray-600 font-normal">{day.name}</Typography>
-								</div>
-								
-
-								
-							})}
-
+									return (
+										<div className={classes.day} key={day.value}>
+											<Typography
+												variant="h3"
+												className=" font-semibold leading-none text-red tracking-tighter"
+											>
+												{day.value}
+											</Typography>
+											<Typography variant="subtitle1" className="text-gray-600 font-normal">
+												{day.name}
+											</Typography>
+										</div>
+									);
+								})}
 						</div>
-					
 					</Paper>
 
-					<DialogDayViewer ref={viewerRef} />		
-
+					<DialogDayViewer ref={viewerRef} />
 				</div>
 			}
 			leftSidebarHeader={
@@ -231,29 +242,28 @@ function SimpleLeftSidebar3Sample() {
 				</div>
 			}
 			leftSidebarContent={
-				<div className={clsx(classes.leftSidebarContent,"p-24")}>
+				<div className={clsx(classes.leftSidebarContent, 'p-24')}>
 					<List>
-						{years && years.map(year => {
-							
-							let statusLink = "inactive";
-							if (year.value === selectedYear) 
-								statusLink = "yearActive";
-							else
-							statusLink = "yearInactive"
-							
-							
-							return <ListItem button className={clsx(statusLink)}
-							  			onClick={() => handleYearSelection(year.value)}
-							  >
-								<ListItemText primary={year.value} />
-							 </ListItem> 
-							
-							
-			})}
+						{years &&
+							years.map(year => {
+								let statusLink = 'inactive';
+								if (year.value === selectedYear) statusLink = 'yearActive';
+								else statusLink = 'yearInactive';
+
+								return (
+									<ListItem
+										button
+										className={clsx(statusLink)}
+										onClick={() => handleYearSelection(year.value)}
+										key={year.value}
+									>
+										<ListItemText primary={year.value} />
+									</ListItem>
+								);
+							})}
 					</List>
 				</div>
 			}
-			
 			sidebarInner
 			innerScroll
 			ref={pageLayout}

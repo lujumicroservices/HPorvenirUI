@@ -12,7 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import { Document, Page } from 'react-pdf';
 import clsx from 'clsx';
 import { green, grey, yellow, blue, orange } from '@material-ui/core/colors';
 import navigationService from 'app/services/navigationService';
@@ -166,7 +166,7 @@ function DialogDayViewer(props, ref) {
 				setDate(new Date(year, month - 1, day));
 				loadDayInfo(year, month, day);
 				setOpenDialog(true);
-				//scrollMagic.test();
+				// scrollMagic.test();
 			}
 		}),
 		[]
@@ -174,7 +174,6 @@ function DialogDayViewer(props, ref) {
 
 	function loadDayInfo(year, month, day) {
 		navigationService.loadDay(year, month, day).then(days => {
-			days.map;
 			days.thumb = days.thumb.map(dayi => {
 				return `${days.urlPrefix}/${days.container}/${dayi}${days.shareKey}`;
 			});
@@ -224,7 +223,6 @@ function DialogDayViewer(props, ref) {
 				disabled={selectedPage <= 0}
 				className={clsx(classes.buttonbarstyle, 'whitespace-nowrap mx-4')}
 				variant="contained"
-				color="action"
 				onClick={() => onSelectPage(selectedPage - 1)}
 				startIcon={<Icon className="hidden sm:flex">navigate_before</Icon>}
 			>
@@ -239,7 +237,6 @@ function DialogDayViewer(props, ref) {
 				disabled={selectedPage >= dayInfo.thumb.length - 1}
 				className={clsx(classes.buttonbarstyle, 'whitespace-nowrap mx-4')}
 				variant="contained"
-				color="action"
 				onClick={() => onSelectPage(selectedPage + 1)}
 				startIcon={<Icon className="hidden sm:flex">navigate_next</Icon>}
 			>
@@ -302,7 +299,6 @@ function DialogDayViewer(props, ref) {
 														)}
 														onClick={handleZoomIn}
 														variant="contained"
-														color="action"
 													>
 														<Icon className={classes.buttonIcon}>zoom_in</Icon>
 													</Button>
@@ -311,7 +307,6 @@ function DialogDayViewer(props, ref) {
 														className={clsx(classes.button, 'whitespace-nowrap mx-4')}
 														onClick={handleZoomOut}
 														variant="contained"
-														color="action"
 													>
 														<Icon className={classes.buttonIcon}>zoom_out</Icon>
 													</Button>
@@ -323,7 +318,6 @@ function DialogDayViewer(props, ref) {
 														)}
 														onClick={handleZoomReset}
 														variant="contained"
-														color="action"
 													>
 														<Icon className={classes.buttonIcon}>zoom_out_map</Icon>
 													</Button>
@@ -345,7 +339,7 @@ function DialogDayViewer(props, ref) {
 							<List>
 								{dayInfo &&
 									dayInfo.thumb.map((page, i) => (
-										<ListItem>
+										<ListItem key={i}>
 											<Button
 												className={classes.thumb}
 												autoFocus
@@ -354,29 +348,27 @@ function DialogDayViewer(props, ref) {
 											>
 												<img src={page} alt="" />
 												{i === selectedPage && (
-													<Button
+													<span
 														className={clsx(classes.button, classes.settingsButton, 'icon')}
-														onClick={handleZoomIn}
 														variant="contained"
 														color="secondary"
 													>
 														<Typography color="textSecondary" variant="subtitle2">
 															{i + 1}
 														</Typography>
-													</Button>
+													</span>
 												)}
 
 												{i !== selectedPage && (
-													<Button
+													<span
 														className={clsx(classes.button, classes.settingsButton, 'icon')}
-														onClick={handleZoomIn}
 														variant="contained"
 														color="primary"
 													>
 														<Typography color="textSecondary" variant="subtitle2">
 															{i + 1}
 														</Typography>
-													</Button>
+													</span>
 												)}
 											</Button>
 										</ListItem>
