@@ -38,7 +38,7 @@ class NavigationService extends FuseUtils.EventEmitter {
 	loadNavigationInfo = () => {
 		if (localStorage.getItem('navigationExclusion') === null) {
 			return new Promise((resolve, reject) => {
-				axios.get(`${process.env.WEBAPI}navigation`).then(response => {
+				axios.get(`${process.env.REACT_APP_WEBAPI}navigation`).then(response => {
 					localStorage.setItem('navigationExclusion', JSON.stringify(response.data));
 					resolve(response.data);
 				});
