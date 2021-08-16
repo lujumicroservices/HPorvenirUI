@@ -354,10 +354,11 @@ function Contact() {
 								<Typography className={classes.title} color="textPrimary" gutterBottom>
 									Oficinas Monterrey
 								</Typography>
+								<br/>
 								<Typography variant="h8" component="h2">
 									Galeana 344 Sur Col. Centro Entre Washington y 5 de Mayo Monterrey, N.L. C.P. 64000
 								</Typography>
-
+								<br/>
 								<table className={classes.contactTable}>
 									<tr>
 										<td>
@@ -452,10 +453,11 @@ function Contact() {
 								<Typography className={classes.title} color="textPrimary" gutterBottom>
 									Oficinas México, D.F.
 								</Typography>
+								<br/>
 								<Typography variant="h8" component="h2">
 									Paseo de la Reforma # 30 3er Piso México, D.F. C.P. 06600 Tels: 5705-6178 / 81 / 82
 								</Typography>
-
+								<br/>
 								<table className={classes.contactTable}>
 									<tr>
 										<td>
