@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	controlOverride: {
 		'& label': {
-			color: 'red'
+			color: 'orange'
 		}
 	},
 	card: {
