@@ -302,7 +302,6 @@ function SimpleFullWidthSample() {
 
 	function triggerSearch() {
 		setIsSearching(true);
-
 		const terms = searchTerm.split(' ');
 
 		const emptypayload = {
@@ -310,10 +309,10 @@ function SimpleFullWidthSample() {
 			isPhrase
 		};
 
-		if (dateType === 1) {
+		if (dateType === '1') {
 			emptypayload.startDate = `${selectedYear}-01-01`;
 			emptypayload.endDate = `${selectedYear * 1 + 1}-01-01`;
-		} else if (dateType === 2) {
+		} else if (dateType === '2') {
 			emptypayload.startDate = startDate;
 			emptypayload.endDate = endDate;
 		}
