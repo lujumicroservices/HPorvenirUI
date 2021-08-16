@@ -57,7 +57,7 @@ function ResetPasswordPage2() {
 					initial={{ opacity: 0, scale: 0.6 }}
 					animate={{ opacity: 1, scale: 1, transition: { delay: 0.1 } }}
 				>
-					<img className="w-128 mb-32" src="assets/images/logos/fuse.svg" alt="logo" />
+					<img className="w-128 mb-32" src="assets/images/logos/porvenir.jpg" alt="logo" />
 				</motion.div>
 
 				<motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}>
