@@ -31,10 +31,8 @@ const useStyles = makeStyles(theme => ({
 		}
 	},
 	noscrollbody: {
-
-		overflow: "hidden"
+		overflow: 'hidden'
 	}
-
 }));
 
 function Layout2(props) {
@@ -54,10 +52,9 @@ function Layout2(props) {
 									className={clsx(config.navbar.style === 'fixed' && 'sticky top-0 z-50')}
 								/>
 							)}
-
-
-
-							<div  className={clsx(classes.noscrollbody,"flex flex-col flex-auto min-h-0 relative z-10")}>
+							<div
+								className={clsx(classes.noscrollbody, 'flex flex-col flex-auto min-h-0 relative z-10')}
+							>
 								<FuseDialog />
 
 								<FuseSuspense>{renderRoutes(routes)}</FuseSuspense>

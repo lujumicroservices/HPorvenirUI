@@ -49,7 +49,7 @@ const navigationConfig = [
 				title: 'Contact',
 				translate: 'Contact',
 				type: 'item',
-				icon: 'help',
+				icon: 'contact_mail',
 				auth: authRoles.admin,
 				url: '/contact'
 			}
