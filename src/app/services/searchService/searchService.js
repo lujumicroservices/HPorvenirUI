@@ -19,6 +19,7 @@ class SearchService extends FuseUtils.EventEmitter {
 		return new Promise((resolve, reject) => {
 			axios
 				.post(`${process.env.REACT_APP_WEBAPI}search/file`, payload, {
+				//.post(`${process.env.REACT_APP_WEBAPI}search/file`, payload, {
 					headers: {
 						'Content-Type': 'application/json'
 					},

@@ -147,10 +147,9 @@ function SimpleFullWidthSample() {
 		switch (dateType) {
 			case '1':
 				return renderDateYear();
-				
+
 			case '2':
 				return renderDateRange();
-				
 
 			default:
 				return renderDateYear();
@@ -449,7 +448,7 @@ function SimpleFullWidthSample() {
 													hover
 													role="checkbox"
 													tabIndex={-1}
-													key={n.id}
+													key={n.name}
 													onClick={event => handleRowClick(n, index)}
 												>
 													<TableCell className="p-4 md:p-16" component="th" scope="row">

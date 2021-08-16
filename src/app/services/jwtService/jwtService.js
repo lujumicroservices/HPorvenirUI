@@ -81,7 +81,7 @@ class JwtService extends FuseUtils.EventEmitter {
 	signInWithToken = () => {
 		return new Promise((resolve, reject) => {
 			axios
-				.get('/api/auth/access-token', {
+				.get(`${process.env.REACT_APP_WEBAPI}Authentication/accesstoken`, {
 					data: {
 						access_token: this.getAccessToken()
 					}
@@ -109,10 +109,10 @@ class JwtService extends FuseUtils.EventEmitter {
 	};
 
 	setSession = access_token => {
-		if (access_token) {
+		if (access_token) {			
 			localStorage.setItem('jwt_access_token', access_token);
 			axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
-		} else {
+		} else {			
 			localStorage.removeItem('jwt_access_token');
 			delete axios.defaults.headers.common.Authorization;
 		}

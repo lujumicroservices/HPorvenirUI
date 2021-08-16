@@ -1,7 +1,9 @@
 const locale = {
-	APPLICATIONS: 'Applicaciones',
+	APPLICATIONS: 'Menu',
 	NAVIGATION: 'Navegacion Libre',
-	SEARCH: 'Busqueda'
+	SEARCH: 'Busqueda',
+	HELP: 'Ayuda',
+	CONTACT: 'Contacto'
 };
 
 export default locale;

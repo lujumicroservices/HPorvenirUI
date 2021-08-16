@@ -55,9 +55,7 @@ function Layout2(props) {
 								/>
 							)}
 
-<div className="sticky top-0 z-99">
-								<SettingsPanel />
-							</div>
+
 
 							<div  className={clsx(classes.noscrollbody,"flex flex-col flex-auto min-h-0 relative z-10")}>
 								<FuseDialog />

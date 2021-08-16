@@ -34,6 +34,24 @@ const navigationConfig = [
 				icon: 'search',
 				auth: authRoles.admin,
 				url: '/search'
+			},
+			{
+				id: 'help-component',
+				title: 'Help',
+				translate: 'HELP',
+				type: 'item',
+				icon: 'help',
+				auth: authRoles.admin,
+				url: '/help'
+			},
+			{
+				id: 'contact-component',
+				title: 'Contact',
+				translate: 'Contact',
+				type: 'item',
+				icon: 'help',
+				auth: authRoles.admin,
+				url: '/contact'
 			}
 		]
 	}

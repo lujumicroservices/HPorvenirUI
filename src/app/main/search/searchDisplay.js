@@ -315,7 +315,7 @@ function DialogSearchViewer(props, ref) {
 													)}
 													onClick={handleZoomIn}
 													variant="contained"
-													color="action"
+													
 												>
 													<Icon className={classes.buttonIcon}>zoom_in</Icon>
 												</Button>
@@ -324,7 +324,7 @@ function DialogSearchViewer(props, ref) {
 													className={clsx(classes.button, 'whitespace-nowrap mx-4')}
 													onClick={handleZoomOut}
 													variant="contained"
-													color="action"
+													
 												>
 													<Icon className={classes.buttonIcon}>zoom_out</Icon>
 												</Button>
@@ -337,7 +337,7 @@ function DialogSearchViewer(props, ref) {
 													)}
 													onClick={handleZoomReset}
 													variant="contained"
-													color="action"
+													
 												>
 													<Icon className={classes.buttonIcon}>zoom_out_map</Icon>
 												</Button>
