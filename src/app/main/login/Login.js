@@ -15,7 +15,6 @@ import Auth0LoginTab from './tabs/Auth0LoginTab';
 import FirebaseLoginTab from './tabs/FirebaseLoginTab';
 import JWTLoginTab from './tabs/JWTLoginTab';
 
-
 const useStyles = makeStyles(theme => ({
 	root: {
 		background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${darken(
@@ -64,7 +63,6 @@ function Login() {
 					<CardContent className="flex flex-col items-center justify-center w-full py-96 max-w-320">
 						<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.2 } }}>
 							<div className="flex items-center mb-48">
-
 								<div>
 									<div className="logo">
 										<img width="128" src="assets/images/logos/logo-porv.gif" alt="logo" />
@@ -73,31 +71,18 @@ function Login() {
 							</div>
 						</motion.div>
 
-
-					    <JWTLoginTab />
-=
+						<JWTLoginTab />
 					</CardContent>
 
 					<div className="flex flex-col items-center justify-center pb-32">
-						
-							<div>
-								<a href="mailto:editorial@prodigy.net.mx"><Chip
-									icon={<MailIcon />}
-									label="editorial@prodigy.net.mx"
-									clickable
-									color="primary"
-								/></a>
-
-							</div>
-							<div className="py-16">
-								<a href="tarifas/tarifas.aspx">
-									Mas Información y Tarifas</a>
-							</div>
-
-
-
-						
-
+						<div>
+							<a href="mailto:editorial@prodigy.net.mx">
+								<Chip icon={<MailIcon />} label="editorial@prodigy.net.mx" clickable color="primary" />
+							</a>
+						</div>
+						<div className="py-16">
+							<a href="tarifas/tarifas.aspx">Mas Información y Tarifas</a>
+						</div>
 					</div>
 				</Card>
 
@@ -109,13 +94,14 @@ function Login() {
 						>
 							<Typography variant="h3" color="inherit" className="font-semibold leading-tight">
 								El Porvenir <br />
-
 							</Typography>
 						</motion.div>
 
 						<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.3 } }}>
 							<Typography variant="subtitle1" color="inherit" className="mt-32">
-								El acceso a la Hemeroteca Digital de El Porvenir es restingido solo a los suscriptores de este sistema. Es necesario contar con una suscripción al sistema para visualizar el contenido de nuestra Hemeroteca.
+								El acceso a la Hemeroteca Digital de El Porvenir es restingido solo a los suscriptores
+								de este sistema. Es necesario contar con una suscripción al sistema para visualizar el
+								contenido de nuestra Hemeroteca.
 							</Typography>
 						</motion.div>
 					</div>
