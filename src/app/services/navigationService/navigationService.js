@@ -27,12 +27,18 @@ class NavigationService extends FuseUtils.EventEmitter {
 		6: 'Sabado'
 	};
 
+	daysStringMap = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+
 	getMonthString = monthNumber => {
 		return this.monthsMap[monthNumber];
 	};
 
 	getDayString = dayNumber => {
 		return this.daysMap[dayNumber];
+	};
+
+	getDayNumber = day => {
+		return this.daysStringMap.indexOf(day);
 	};
 
 	loadNavigationInfo = () => {
@@ -63,7 +69,7 @@ class NavigationService extends FuseUtils.EventEmitter {
 				endDate = new Date(process.env.REACT_APP_NAV_ENDDATE);
 			}
 
-			for (let i = startDate.getFullYear(); i < endDate.getFullYear(); i += 1) {			
+			for (let i = startDate.getFullYear(); i < endDate.getFullYear(); i += 1) {
 				const year = { value: i };
 				year.enable = info[i] === undefined || Object.keys(info[i]).length === 0;
 				years.push(year);

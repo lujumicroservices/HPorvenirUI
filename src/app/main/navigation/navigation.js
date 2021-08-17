@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import FusePageSimple from '@fuse/core/FusePageSimple';
+import FusePageCarded from '@fuse/core/FusePageCarded';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -25,11 +25,11 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		flexDirection: 'row',
 		flexFlow: 'wrap',
-		justifyContent: 'center',
-		padding: '20px'
+		padding: '10px',
+		justifyContent: 'flex-start'
 	},
 	day: {
-		width: '15%',
+		width: '14%',
 		height: '15%',
 		textAlign: 'center'
 	},
@@ -64,9 +64,15 @@ const useStyles = makeStyles(theme => ({
 		}
 	},
 	leftSidebarHeader: {
+		height: '64px',
+		alignSelf: 'flex-end',
+		width: '200px',
+		marginLeft: '20px',
 		'& .yearsHeader': {
-			backgroundColor: grey[400],
-			pointerEvents: 'none'
+			backgroundColor: theme.palette.secondary.dark,
+			pointerEvents: 'none',
+			'border-top-right-radius': '20px',
+			'border-top-left-radius': '20px'
 		}
 	},
 	leftSidebarContent: {
@@ -112,10 +118,19 @@ function SimpleLeftSidebar3Sample() {
 		viewerRef.current.handleOpenDialog(year, month, day);
 	};
 
+	function getWindowDimensions() {
+		const { innerWidth: width, innerHeight: height } = window;
+		return {
+			width,
+			height
+		};
+	}
+
 	function handleYearSelection(year) {
 		setYear(year);
 		navigationService.buildNavigationMonths(year).then(monthsInfo => {
 			setMonths(monthsInfo);
+			setMonth(null);
 			setDays(null);
 		});
 	}
@@ -123,12 +138,24 @@ function SimpleLeftSidebar3Sample() {
 	function handleMonthSelection(month) {
 		setMonth(month);
 		navigationService.buildNavigationDays(selectedYear, month).then(daysInfo => {
-			setDays(daysInfo);
+			const emptyArray = [];
+			if (daysInfo.length > 0) {
+				const dayNumber = navigationService.getDayNumber(daysInfo[0].name);
+				for (let i = 0; i < dayNumber; i += 1) {
+					emptyArray.push({
+						enable: false,
+						value: null,
+						name: ''
+					});
+				}
+			}
+			const finalDays = emptyArray.concat(daysInfo);
+			setDays(finalDays);
 		});
 	}
 
 	return (
-		<FusePageSimple
+		<FusePageCarded
 			classes={{
 				root: classes.layoutRoot
 			}}
@@ -147,6 +174,14 @@ function SimpleLeftSidebar3Sample() {
 							<h1 className={classes.header}>Navegacion Libre</h1>
 						</div>
 					</div>
+				</div>
+			}
+			contentToolbar={
+				<div className="px-24">
+					<h4>
+						{' '}
+						<Typography> Año seleccionado : {selectedYear} </Typography>{' '}
+					</h4>
 				</div>
 			}
 			content={
@@ -184,7 +219,7 @@ function SimpleLeftSidebar3Sample() {
 
 								return (
 									<Button variant="contained" color="default" key={month.name}>
-										{month.name}										
+										{month.name}
 									</Button>
 								);
 							})}
@@ -199,9 +234,9 @@ function SimpleLeftSidebar3Sample() {
 								days.map(day => {
 									if (day.enable) {
 										return (
-											<div className={classes.day} key={day.value}  >
+											<div className={classes.day} key={day.value}>
 												<Typography
-													variant="h3"
+													variant="h6"
 													onClick={() =>
 														handleOpenDialog(selectedYear, selectedMonth, day.value)
 													}
@@ -209,8 +244,12 @@ function SimpleLeftSidebar3Sample() {
 												>
 													{day.value}
 												</Typography>
-												<Typography variant="subtitle1" className=" text-black-800 font-normal">
+												<Typography variant="subtitle1" className=" text-black-800 font-normal invisible lg:visible sm:invisible">
 													{day.name}
+												</Typography>
+
+												<Typography variant="subtitle1" className=" text-black-800 font-normal lg:hidden">
+													{day.name[0]}
 												</Typography>
 											</div>
 										);
@@ -219,14 +258,18 @@ function SimpleLeftSidebar3Sample() {
 									return (
 										<div className={classes.day} key={day.value}>
 											<Typography
-												variant="h3"
+												variant="h6"
 												className=" font-semibold leading-none text-red tracking-tighter"
 											>
 												{day.value}
+												{day.value ? '' : '_'}
 											</Typography>
-											<Typography variant="subtitle1" className="text-gray-600 font-normal">
+											<Typography variant="subtitle1" className="text-gray-600 font-normal invisible lg:visible sm:invisible">
 												{day.name}
 											</Typography>
+											<Typography variant="subtitle1" className=" text-black-800 font-normal lg:hidden">
+													{day.name[0]}
+												</Typography>
 										</div>
 									);
 								})}
@@ -237,7 +280,7 @@ function SimpleLeftSidebar3Sample() {
 				</div>
 			}
 			leftSidebarHeader={
-				<div className={classes.leftSidebarHeader}>
+				<div borderRadius={16} className={classes.leftSidebarHeader}>
 					<h4 className="yearsHeader p-24">Años Disponibles</h4>
 				</div>
 			}
@@ -264,7 +307,6 @@ function SimpleLeftSidebar3Sample() {
 					</List>
 				</div>
 			}
-			sidebarInner
 			innerScroll
 			ref={pageLayout}
 		/>
@@ -272,103 +314,3 @@ function SimpleLeftSidebar3Sample() {
 }
 
 export default SimpleLeftSidebar3Sample;
-
-/*
-function SimpleFullWidthSample() {
-
-	const [years, setYears] = useState([]);
-	//const [months, setMonths] = useState<Array>(null);
-	//const [days, setDays] = useState<Array>(null);
-
-
-	const classes = useStyles();
-	const pageLayout = useRef(null);
-
-
-	const getNavInfo = () => {
-		navigationService.buildNavigationYears().then((years_info)=>{
-		   console.log(years_info);
-		   setYears(years_info);
-		});
-	}
-
-	useEffect(() => {
-		getNavInfo();
-	}, []);
-
-	const item = {
-		hidden: { opacity: 0, y: 40 },
-		show: { opacity: 1, y: 0 }
-	};
-
-	function init(){
-		navigationService.buildNavigationYears().then((years_info)=>{
-			console.log(years_info);
-		   useEffect(() => setYears(years_info), [years]);
-		});
-	}
-
-		return (
-			<FusePageSimple
-				classes={{
-					root: classes.layoutRoot
-				}}
-
-				contentToolbar={
-					<div className="p-24">
-						<h4>1950</h4>
-					</div>
-				}
-
-				content={
-					<div className={classes.root}>
-						<Button variant="outlined" color="primary">Enero</Button>
-						<Button variant="outlined" color="primary">Febrero</Button>
-						<Button variant="outlined" color="primary">Marzo</Button>
-						<Button variant="outlined" color="primary">Abril</Button>
-						<Button variant="outlined" color="primary">Mayo</Button>
-						<Button variant="outlined" color="primary">Junio</Button>
-						<Button variant="outlined" color="primary">Julio</Button>
-						<Button variant="outlined" color="primary">Agosto</Button>
-						<Button variant="outlined" color="primary">Septiembre</Button>
-						<Button variant="outlined" color="primary">Octubre</Button>
-						<Button variant="outlined" color="primary">Noviembre</Button>
-						<Button variant="outlined" color="primary">Diciembre</Button>
-					</div>
-				}
-
-				leftSidebarContent={
-					<div className="p-24">
-						<Card component={motion.div} variants={item} className="w-full rounded-16 shadow mb-32">
-						<AppBar position="static" elevation={0}>
-							<Toolbar className="px-8">
-								<Typography variant="subtitle1" color="inherit" className="flex-1 px-12 font-medium">
-									Años
-								</Typography>
-								<Button color="inherit" size="small" className="font-medium">
-									Ver Todos
-								</Button>
-							</Toolbar>
-						</AppBar>
-						<CardContent className="p-0">
-							<List>
-							{years && years.map(year => (
-
-
-										<ListItem button>
-											<ListItemText primary="" />
-										</ListItem>
-								))}
-							</List>
-						</CardContent>
-						</Card>
-					</div>
-				}
-				innerScroll
-				ref={pageLayout}
-			/>
-		);
-	}
-
-export default SimpleFullWidthSample;
-*/
