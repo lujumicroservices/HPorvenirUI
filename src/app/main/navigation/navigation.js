@@ -64,13 +64,19 @@ const useStyles = makeStyles(theme => ({
 		}
 	},
 	leftSidebarHeader: {
+		height: '64px',
+		alignSelf: 'flex-end',
 		width: '200px',
+		marginLeft: '20px',
 		'& .yearsHeader': {
 			backgroundColor: theme.palette.secondary.dark,
-			pointerEvents: 'none'
+			pointerEvents: 'none',
+			'border-top-right-radius': '20px',
+			'border-top-left-radius': '20px'
 		}
 	},
 	leftSidebarContent: {
+		height:'500px',
 		'& .yearActive': {
 			backgroundColor: grey[200],
 			pointerEvents: 'none'
@@ -102,7 +108,7 @@ function SimpleLeftSidebar3Sample() {
 
 	useEffect(() => {
 		getNavInfo();
-	},[]);
+	}, []);
 
 	const item = {
 		hidden: { opacity: 0, y: 40 },
@@ -239,17 +245,11 @@ function SimpleLeftSidebar3Sample() {
 												>
 													{day.value}
 												</Typography>
-												<Typography
-													variant="subtitle1"
-													className=" text-black-800 font-normal invisible lg:visible sm:invisible"
-												>
+												<Typography variant="subtitle1" className=" text-black-800 font-normal invisible lg:visible sm:invisible">
 													{day.name}
 												</Typography>
 
-												<Typography
-													variant="subtitle1"
-													className=" text-black-800 font-normal lg:hidden"
-												>
+												<Typography variant="subtitle1" className=" text-black-800 font-normal lg:hidden">
 													{day.name[0]}
 												</Typography>
 											</div>
@@ -265,18 +265,12 @@ function SimpleLeftSidebar3Sample() {
 												{day.value}
 												{day.value ? '' : '_'}
 											</Typography>
-											<Typography
-												variant="subtitle1"
-												className="text-gray-600 font-normal invisible lg:visible sm:invisible"
-											>
+											<Typography variant="subtitle1" className="text-gray-600 font-normal invisible lg:visible sm:invisible">
 												{day.name}
 											</Typography>
-											<Typography
-												variant="subtitle1"
-												className=" text-black-800 font-normal lg:hidden"
-											>
-												{day.name[0]}
-											</Typography>
+											<Typography variant="subtitle1" className=" text-black-800 font-normal lg:hidden">
+													{day.name[0]}
+												</Typography>
 										</div>
 									);
 								})}

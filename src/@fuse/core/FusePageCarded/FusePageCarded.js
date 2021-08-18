@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
 		overflow: 'auto',
 		'-webkit-overflow-scrolling': 'touch'
 	},
-	sidebarWrapper: {
+	sidebarWrapper: {		
 		position: 'absolute',
 		backgroundColor: 'transparent',
 		zIndex: 5,
