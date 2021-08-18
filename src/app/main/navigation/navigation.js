@@ -63,16 +63,11 @@ const useStyles = makeStyles(theme => ({
 			marginRight: 16
 		}
 	},
-	leftSidebarHeader: {
-		height: '64px',
-		alignSelf: 'flex-end',
-		width: '200px',
-		marginLeft: '20px',
+	leftSidebarHeader: {		
+		width: '200px',		
 		'& .yearsHeader': {
 			backgroundColor: theme.palette.secondary.dark,
-			pointerEvents: 'none',
-			'border-top-right-radius': '20px',
-			'border-top-left-radius': '20px'
+			pointerEvents: 'none'
 		}
 	},
 	leftSidebarContent: {
