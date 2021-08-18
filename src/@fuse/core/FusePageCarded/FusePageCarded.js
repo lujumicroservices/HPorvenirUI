@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
 		overflow: 'auto',
 		'-webkit-overflow-scrolling': 'touch'
 	},
-	sidebarWrapper: {		
+	sidebarWrapper: {
 		position: 'absolute',
 		backgroundColor: 'transparent',
 		zIndex: 5,
@@ -113,7 +113,8 @@ const useStyles = makeStyles(theme => ({
 	leftSidebar: {},
 	rightSidebar: {},
 	sidebarHeader: {
-		
+		display: 'flex',
+		flexDirection: 'row',
 		height: headerHeight,
 		minHeight: headerHeight,
 		color: theme.palette.primary.contrastText,
