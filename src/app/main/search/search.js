@@ -22,9 +22,6 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import FuseLoading from '@fuse/core/FuseLoading';
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
-import FuseUtils from '@fuse/utils';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import clsx from 'clsx';
 import _ from 'lodash';
 
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
@@ -340,7 +337,7 @@ function SimpleFullWidthSample() {
 						component={motion.div}
 						initial={{ y: -20, opacity: 0 }}
 						animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
-						className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
+						className="flex items-center w-full max-w-512 m-16 px-8 py-4 rounded-16 shadow"
 					>
 						<Icon color="action">search</Icon>
 
@@ -454,10 +451,7 @@ function SimpleFullWidthSample() {
 														hemeroteca, Monterrey
 													</TableCell>
 													<TableCell className="p-4 md:p-16" component="th" scope="row">
-														{`${n.date.substring(0, 4)}-${n.date.substring(
-															4,
-															6
-														)}-${n.date.substring(6, 8)}`}
+														{navigationService.getStringDate(n.date)}
 													</TableCell>
 													<TableCell className="p-4 md:p-16" component="th" scope="row">
 														{n.fileName}

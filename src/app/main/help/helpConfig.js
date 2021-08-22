@@ -16,7 +16,7 @@ const HelpConfig = {
 			config: {}
 		}
 	},
-	auth: authRoles.admin,
+	auth: authRoles.user,
 	routes: [
 		{
 			path: '/help',

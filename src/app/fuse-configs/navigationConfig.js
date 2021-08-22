@@ -23,7 +23,7 @@ const navigationConfig = [
 				translate: 'NAVIGATION',
 				type: 'item',
 				icon: 'snippet_folder',
-				auth: authRoles.admin,
+				auth: authRoles.user,
 				url: '/navigation'
 			},
 			{
@@ -32,7 +32,7 @@ const navigationConfig = [
 				translate: 'SEARCH',
 				type: 'item',
 				icon: 'search',
-				auth: authRoles.admin,
+				auth: authRoles.user,
 				url: '/search'
 			},
 			{
@@ -41,7 +41,7 @@ const navigationConfig = [
 				translate: 'HELP',
 				type: 'item',
 				icon: 'help',
-				auth: authRoles.admin,
+				auth: authRoles.user,
 				url: '/help'
 			},
 			{
@@ -50,7 +50,7 @@ const navigationConfig = [
 				translate: 'Contact',
 				type: 'item',
 				icon: 'contact_mail',
-				auth: authRoles.admin,
+				auth: authRoles.user,
 				url: '/contact'
 			}
 		]

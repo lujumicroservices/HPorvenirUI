@@ -41,6 +41,19 @@ class NavigationService extends FuseUtils.EventEmitter {
 		return this.daysStringMap.indexOf(day);
 	};
 
+	getStringDate = stringdate => {
+		const year = stringdate.substring(0, 4);
+		const month = stringdate.substring(4, 6);
+		const day = stringdate.substring(6, 8);
+		const currentDate = new Date(year, month - 1, day);
+
+		const stringDateResult = `${this.getDayString(
+			currentDate.getDay()
+		)}, ${currentDate.getDate()} De ${this.getMonthString(currentDate.getMonth())} De ${currentDate.getFullYear()}`;
+
+		return stringDateResult;
+	};
+
 	loadNavigationInfo = () => {
 		if (localStorage.getItem('navigationExclusion') === null) {
 			return new Promise((resolve, reject) => {
@@ -132,6 +145,42 @@ class NavigationService extends FuseUtils.EventEmitter {
 		}
 		return new Promise(function (resolve, reject) {
 			resolve(JSON.parse(localStorage.getItem(`day_${year}_${month}_${day}`)));
+		});
+	};
+
+	loadPage = page => {
+		return new Promise((resolve, reject) => {
+			axios
+				.get(`${process.env.REACT_APP_WEBAPI}navigation/file/${encodeURIComponent(page)}`, {
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					responseType: 'arraybuffer'
+				})
+				.then(response => {
+					resolve(response);
+				});
+		});
+	};
+
+	downloadPage = page => {
+		return new Promise((resolve, reject) => {
+			axios
+				.get(`${process.env.REACT_APP_WEBAPI}navigation/file/${encodeURIComponent(page)}`, {
+					responseType: 'blob',
+					headers: {
+						'Content-Type': 'application/pdf'
+					}
+				})
+				.then(({ data }) => {
+					const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+					const link = document.createElement('a');
+					link.href = downloadUrl;
+					link.setAttribute('download', page); // any other extension
+					document.body.appendChild(link);
+					link.click();
+					link.remove();
+				});
 		});
 	};
 }

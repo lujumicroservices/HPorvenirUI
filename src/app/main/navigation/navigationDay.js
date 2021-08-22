@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { Document, Page } from 'react-pdf';
 import clsx from 'clsx';
+import ReactToPrint from 'react-to-print';
 import { green, grey, yellow, blue, orange } from '@material-ui/core/colors';
 import navigationService from 'app/services/navigationService';
 import zIndex from '@material-ui/core/styles/zIndex';
@@ -147,6 +148,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function DialogDayViewer(props, ref) {
+	const componentRef = useRef();
+
 	const classes = useStyles();
 
 	const [openDialog, setOpenDialog] = useState(false);
@@ -154,15 +157,18 @@ function DialogDayViewer(props, ref) {
 	const [dayInfo, setDayInfo] = useState(null);
 	const [selectedPage, setSelectedPage] = useState(0);
 	const [scale, setScale] = useState(1);
+	const [fileData, setFileData] = useState(null);
+	const [loadingPDF, setLoadingPDF] = useState(false);
 
 	useEffect(() => {
-		// scrollMagic.test();
-	}, []);
+		loadFileInfo();
+	}, [selectedPage, dayInfo]);
 
 	useImperativeHandle(
 		ref,
 		() => ({
 			handleOpenDialog(year, month, day) {
+				setFileData(null);
 				setDate(new Date(year, month - 1, day));
 				loadDayInfo(year, month, day);
 				setOpenDialog(true);
@@ -172,15 +178,23 @@ function DialogDayViewer(props, ref) {
 		[]
 	);
 
+	function loadFileInfo() {
+		if (!dayInfo) return;
+		navigationService
+			.loadPage(dayInfo.pages[selectedPage])
+			.then(data => {
+				setFileData(data.data);
+			})
+			.finally(() => {
+				setLoadingPDF(false);
+			});
+	}
+
 	function loadDayInfo(year, month, day) {
 		navigationService.loadDay(year, month, day).then(days => {
 			days.thumb = days.thumb.map(dayi => {
 				return `${days.urlPrefix}/${days.container}/${dayi}${days.shareKey}`;
 			});
-			days.pages = days.pages.map(dayi => {
-				return `${days.urlPrefix}/${days.container}/${dayi}`;
-			});
-
 			setDayInfo(days);
 		});
 	}
@@ -215,6 +229,12 @@ function DialogDayViewer(props, ref) {
 
 	function handleZoomReset() {
 		setScale(1);
+	}
+
+	function handleDownloadButton() {
+		navigationService.downloadPage(dayInfo.pages[selectedPage]).then(data => {
+			console.log('');
+		});
 	}
 
 	function renderBackButton() {
@@ -285,7 +305,7 @@ function DialogDayViewer(props, ref) {
 							<div className={classes.root}>
 								<Paper className="w-full rounded-20 shadow flex flex-col justify-between">
 									{dayInfo && (
-										<div id="pdfcont" onWheel={handleWheel}>
+										<div id="pdfcont">
 											<div className={classes.completebuttonbar}>
 												{renderBackButton()}
 
@@ -321,11 +341,21 @@ function DialogDayViewer(props, ref) {
 													>
 														<Icon className={classes.buttonIcon}>zoom_out_map</Icon>
 													</Button>
+													<Button
+														className={clsx(
+															classes.button,
+															classes.settingsButton,
+															'whitespace-nowrap mx-4'
+														)}
+														onClick={handleDownloadButton}
+														variant="contained"
+													>
+														<Icon className={classes.buttonIcon}>get_app</Icon>
+													</Button>
 												</div>
 												{renderNextButton()}
 											</div>
-
-											<Document className={classes.document} file={dayInfo.pages[selectedPage]}>
+											<Document className={classes.document} file={fileData}>
 												<Page scale={scale} pageNumber={1} />
 											</Document>
 										</div>

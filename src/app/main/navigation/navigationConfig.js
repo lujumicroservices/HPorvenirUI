@@ -16,7 +16,7 @@ const NavigationConfig = {
 			config: {}
 		}
 	},
-	auth: authRoles.admin,
+	auth: authRoles.user,
 	routes: [
 		{
 			path: '/navigation',

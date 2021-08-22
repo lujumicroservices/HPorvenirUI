@@ -16,7 +16,7 @@ const ContactConfig = {
 			config: {}
 		}
 	},
-	auth: authRoles.admin,
+	auth: authRoles.user,
 	routes: [
 		{
 			path: '/contact',

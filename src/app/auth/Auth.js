@@ -20,7 +20,7 @@ class Auth extends Component {
 			// this.firebaseCheck(),
 			// this.auth0Check(),
 			this.jwtCheck()
-		]).then(() => {
+		]).then(() => {			
 			this.setState({ waitAuthCheck: false });
 		});
 	}

@@ -4,23 +4,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Toolbar from '@material-ui/core/Toolbar';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
-
 import Paper from '@material-ui/core/Paper';
 import { Document, Page } from 'react-pdf';
 import clsx from 'clsx';
-import { green, grey, yellow, blue, orange } from '@material-ui/core/colors';
 import searchService from 'app/services/searchService';
-import zIndex from '@material-ui/core/styles/zIndex';
-import { result, size } from 'lodash';
+import navigationService from 'app/services/navigationService';
 import FuseLoading from '@fuse/core/FuseLoading';
-import * as scrollMagic from '../../../scrollMagic';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -217,17 +211,16 @@ function DialogSearchViewer(props, ref) {
 	function handleWheel(e) {
 		e.preventDefault();
 		return false;
-		/*
-        handleZoomIn();
-		console.log(e.deltaY);
-		e.persist();
-		e.nativeEvent.stopImmediatePropagation();
-		e.stopPropagation();
-        */
 	}
 
 	function handleZoomReset() {
 		setScale(1);
+	}
+
+	function handleDownloadButton() {
+		searchService.downloadDocDetailSearch(payload).then(data => {
+			console.log('');
+		});
 	}
 
 	function renderBackButton() {
@@ -236,7 +229,6 @@ function DialogSearchViewer(props, ref) {
 				disabled={index <= 0}
 				className={clsx(classes.buttonbarstyle, 'whitespace-nowrap mx-4')}
 				variant="contained"
-				
 				onClick={() => onSelectPage(index - 1)}
 				startIcon={<Icon className="hidden sm:flex">navigate_before</Icon>}
 			>
@@ -250,7 +242,6 @@ function DialogSearchViewer(props, ref) {
 			<Button
 				className={clsx(classes.buttonbarstyle, 'whitespace-nowrap mx-4')}
 				variant="contained"
-				
 				onClick={() => onSelectPage(index + 1)}
 				startIcon={<Icon className="hidden sm:flex">navigate_next</Icon>}
 			>
@@ -286,7 +277,7 @@ function DialogSearchViewer(props, ref) {
 					{openDialog && (
 						<div className={classes.headerFormat}>
 							<Typography className={classes.headerText} variant="h6">
-								{`${results[index].fileName}`}
+								{navigationService.getStringDate(results[index].date)}
 							</Typography>
 						</div>
 					)}
@@ -315,7 +306,6 @@ function DialogSearchViewer(props, ref) {
 													)}
 													onClick={handleZoomIn}
 													variant="contained"
-													
 												>
 													<Icon className={classes.buttonIcon}>zoom_in</Icon>
 												</Button>
@@ -324,7 +314,6 @@ function DialogSearchViewer(props, ref) {
 													className={clsx(classes.button, 'whitespace-nowrap mx-4')}
 													onClick={handleZoomOut}
 													variant="contained"
-													
 												>
 													<Icon className={classes.buttonIcon}>zoom_out</Icon>
 												</Button>
@@ -337,9 +326,19 @@ function DialogSearchViewer(props, ref) {
 													)}
 													onClick={handleZoomReset}
 													variant="contained"
-													
 												>
 													<Icon className={classes.buttonIcon}>zoom_out_map</Icon>
+												</Button>
+												<Button
+													className={clsx(
+														classes.button,
+														classes.settingsButton,
+														'whitespace-nowrap mx-4'
+													)}
+													onClick={handleDownloadButton}
+													variant="contained"
+												>
+													<Icon className={classes.buttonIcon}>get_app</Icon>
 												</Button>
 											</div>
 											{renderNextButton()}
@@ -364,50 +363,6 @@ function DialogSearchViewer(props, ref) {
 									</div>
 								</Paper>
 							</div>
-						</div>
-					}
-					leftSidebarContent={
-						<div className="p-24">
-							<List>
-								{dayInfo &&
-									dayInfo.thumb.map((page, i) => (
-										<ListItem>
-											<Button
-												className={classes.thumb}
-												autoFocus
-												color="inherit"
-												onClick={() => onSelectPage(i)}
-											>
-												<img src={page} alt="" />
-												{i === index && (
-													<Button
-														className={clsx(classes.button, classes.settingsButton, 'icon')}
-														onClick={handleZoomIn}
-														variant="contained"
-														color="secondary"
-													>
-														<Typography color="textSecondary" variant="subtitle2">
-															{i + 1}
-														</Typography>
-													</Button>
-												)}
-
-												{i !== index && (
-													<Button
-														className={clsx(classes.button, classes.settingsButton, 'icon')}
-														onClick={handleZoomIn}
-														variant="contained"
-														color="primary"
-													>
-														<Typography color="textSecondary" variant="subtitle2">
-															{i + 1}
-														</Typography>
-													</Button>
-												)}
-											</Button>
-										</ListItem>
-									))}
-							</List>
 						</div>
 					}
 					ref={pageLayout}

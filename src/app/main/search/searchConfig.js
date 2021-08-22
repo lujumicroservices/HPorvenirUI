@@ -16,7 +16,7 @@ const SearchConfig = {
 			config: {}
 		}
 	},
-    auth: authRoles.admin,
+    auth: authRoles.user,
 	routes: [
 		{
 			path: '/search',
