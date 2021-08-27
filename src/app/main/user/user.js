@@ -1,19 +1,24 @@
 import React, { memo, useState, useEffect, useRef } from 'react';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { Button, FormGroup } from '@material-ui/core';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import { motion } from 'framer-motion';
 import Icon from '@material-ui/core/Icon';
 import Input from '@material-ui/core/Input';
-import { FormGroup } from '@material-ui/core';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import navigationService from 'app/services/navigationService';
+import userService from 'app/services/userService';
 import { Done, LensOutlined } from '@material-ui/icons';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
-import searchService from 'app/services/searchService';
+import { useDispatch } from 'react-redux';
+import { lightGreen } from '@material-ui/core/colors';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/AddCircle';
+import EditIcon from '@material-ui/icons/Edit';
 import InputBase from '@material-ui/core/InputBase';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -22,64 +27,10 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import FuseLoading from '@fuse/core/FuseLoading';
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
+
 import _ from 'lodash';
-
-import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
-import SearchTableHeader from './searchResultsHeader';
-import DialogSearchViewer from './searchDisplay';
-
-const BootstrapInput = withStyles(theme => ({
-	root: {
-		'label + &': {
-			marginTop: theme.spacing(3)
-		}
-	},
-	input: {
-		borderRadius: 4,
-		position: 'relative',
-		backgroundColor: theme.palette.background.paper,
-		border: '1px solid #ced4da',
-		fontSize: 16,
-		padding: '10px 26px 10px 12px',
-		transition: theme.transitions.create(['border-color', 'box-shadow']),
-		// Use the system font instead of the default Roboto font.
-		fontFamily: [
-			'-apple-system',
-			'BlinkMacSystemFont',
-			'"Segoe UI"',
-			'Roboto',
-			'"Helvetica Neue"',
-			'Arial',
-			'sans-serif',
-			'"Apple Color Emoji"',
-			'"Segoe UI Emoji"',
-			'"Segoe UI Symbol"'
-		].join(','),
-		'&:focus': {
-			borderRadius: 4,
-			borderColor: '#80bdff',
-			boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)'
-		}
-	}
-}))(InputBase);
-
-const HeaderContainer = withStyles({
-	root: {
-		flexDirection: 'row',
-		paddingTop: '20px',
-		alignItems: 'flex-end'
-	}
-})(FormGroup);
-
-const FraseIconUncheck = withStyles({
-	root: {}
-})(LensOutlined);
-
-const FraseIconcheck = withStyles({
-	root: {
-		color: 'green'
-	}
-})(Done);
+import UserTableHeader from './userResultHeader';
+import AddUserDialog from './addUserDialog';
 
 const HeaderFormControl = withStyles({
 	root: {
@@ -96,6 +47,8 @@ const HeaderFormControl = withStyles({
 	}
 })(FormControl);
 
+const emails = ['username@gmail.com', 'user02@gmail.com'];
+
 const useStyles = makeStyles({
 	layoutRoot: {},
 	search: {
@@ -107,10 +60,22 @@ const useStyles = makeStyles({
 		height: '30%',
 		display: 'flex',
 		alignItems: 'center'
+	},
+	headerContainer: {
+		display: 'flex',
+		flexDirection: 'row',
+		width: '100%',
+		justifyContent: 'space-between'
+	},
+	addButton: {
+		color: lightGreen[700]
 	}
 });
 
-function SimpleFullWidthSample() {
+function User() {
+
+	
+	const dispatch = useDispatch();
 	const viewerRef = useRef();
 
 	const classes = useStyles();
@@ -119,8 +84,6 @@ function SimpleFullWidthSample() {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [isPhrase, setIsPhrase] = useState(false);
 	const [selectedYear, setYear] = useState(0);
-	const [startDate, setStartDate] = useState(new Date('1919-01-01'));
-	const [endDate, setEndDate] = useState(new Date('1919-01-01'));
 	const [dateType, setDateType] = useState(0);
 
 	const [order, setOrder] = useState({
@@ -134,90 +97,12 @@ function SimpleFullWidthSample() {
 	const [isSearching, setIsSearching] = useState(false);
 	const [payload, setPayload] = useState(null);
 
-	const getNavInfo = () => {
-		navigationService.buildNavigationYears().then(yearsInfo => {
-			setYears(yearsInfo);
-		});
-	};
-
-	const renderDateType = () => {
-		switch (dateType) {
-			case '1':
-				return renderDateYear();
-
-			case '2':
-				return renderDateRange();
-
-			default:
-				return renderDateYear();
-		}
-	};
-
-	const renderDateRange = () => {
-		return (
-			<>
-				<HeaderFormControl className={classes.margin}>
-					<KeyboardDatePicker
-						margin="normal"
-						id="date-picker-dialog"
-						label="Fecha Inicial"
-						format="yyyy/MM/dd"
-						value={startDate}
-						onChange={handleStartDateChange}
-						KeyboardButtonProps={{
-							'aria-label': 'change date'
-						}}
-					/>
-				</HeaderFormControl>
-				<HeaderFormControl className={classes.margin}>
-					<KeyboardDatePicker
-						margin="normal"
-						id="date-picker-dialog"
-						label="Fecha Final"
-						format="yyyy/MM/dd"
-						value={endDate}
-						onChange={handleEndDateChange}
-						KeyboardButtonProps={{
-							'aria-label': 'change date'
-						}}
-					/>
-				</HeaderFormControl>
-			</>
-		);
-	};
-
-	const renderDateYear = () => {
-		return (
-			<HeaderFormControl className={classes.margin}>
-				<InputLabel htmlFor="demo-customized-select-native">Fechas</InputLabel>
-				<NativeSelect
-					id="demo-customized-select-native"
-					value={selectedYear}
-					onChange={handleYearChange}
-					input={<BootstrapInput />}
-				>
-					<option aria-label="None" value="">
-						Año
-					</option>
-					{years.map(year => (
-						<option aria-label="None" value={year.value}>
-							{year.value}
-						</option>
-					))}
-				</NativeSelect>
-			</HeaderFormControl>
-		);
-	};
+	const [open, setOpen] = React.useState(false);
+	const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 
 	useEffect(() => {
-		getNavInfo();
+		loadUsers();
 	}, []);
-
-	useEffect(() => {
-		if (searchTerm.length > 2) {
-			triggerSearch();
-		}
-	}, [isPhrase, selectedYear, startDate, endDate]);
 
 	const handleDateTypeChange = event => {
 		setDateType(event.target.value);
@@ -231,21 +116,13 @@ function SimpleFullWidthSample() {
 		setYear(event.target.value);
 	};
 
-	const handleStartDateChange = date => {
-		setStartDate(date);
-	};
-
-	const handleEndDateChange = date => {
-		setEndDate(date);
-	};
-
 	const handleSearchChange = ev => {
 		setSearchTerm(ev.target.value);
 	};
 
 	const handleKeyPress = ev => {
 		if (ev.key === 'Enter') {
-			triggerSearch();
+			// triggerSearch();
 		}
 	};
 
@@ -268,6 +145,15 @@ function SimpleFullWidthSample() {
 	function handleChangeRowsPerPage(event) {
 		setRowsPerPage(event.target.value);
 	}
+
+	function handleAddUser() {
+		setOpen(true);
+	}
+
+	const handleClose = value => {
+		setOpen(false);
+		setSelectedValue(value);
+	};
 
 	function handleRowClick(item, index) {
 		const orderedData = _.orderBy(
@@ -297,27 +183,10 @@ function SimpleFullWidthSample() {
 
 	function triggerFileSearch() {}
 
-	function triggerSearch() {
+	function loadUsers() {
 		setIsSearching(true);
-		const terms = searchTerm.split(' ');
-
-		const emptypayload = {
-			terms,
-			isPhrase
-		};
-
-		if (dateType === '1') {
-			emptypayload.startDate = `${selectedYear}-01-01`;
-			emptypayload.endDate = `${selectedYear * 1 + 1}-01-01`;
-		} else if (dateType === '2') {
-			emptypayload.startDate = startDate;
-			emptypayload.endDate = endDate;
-		}
-
-		setPayload(emptypayload);
-
-		searchService
-			.simpleSearch(emptypayload)
+		userService
+			.getUsers()
 			.then(result => {
 				setResults(result.data);
 			})
@@ -332,9 +201,17 @@ function SimpleFullWidthSample() {
 				root: classes.layoutRoot
 			}}
 			header={
-				<div className={classes.search}>
+				<div className="flex flex-col flex-1">
+					<div className="flex items-center p-24 px-12">
+						<div className="flex-1 lg:px-12">
+							<h1 className={classes.header}>Administracion de Usuarios</h1>
+						</div>
+					</div>
+				</div>
+			}
+			contentToolbar={
+				<div className={classes.headerContainer}>
 					<Paper
-						component={motion.div}
 						initial={{ y: -20, opacity: 0 }}
 						animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
 						className="flex items-center w-full max-w-512 m-16 px-8 py-4 rounded-16 shadow"
@@ -350,52 +227,19 @@ function SimpleFullWidthSample() {
 							inputProps={{
 								'aria-label': 'Buscar'
 							}}
-							onChange={ev => handleSearchChange(ev)}
-							onKeyPress={ev => handleKeyPress(ev)}
 						/>
 					</Paper>
+
+					<IconButton
+						onClick={handleAddUser}
+						className={classes.addButton}
+						color="primary"
+						aria-label="Borrar"
+					>
+						<AddIcon fontSize="large" />
+					</IconButton>
+					<AddUserDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
 				</div>
-			}
-			contentToolbar={
-				<HeaderContainer className="px-24">
-					<HeaderFormControl className={classes.margin}>
-						<FormControlLabel
-							control={
-								<Checkbox
-									icon={<FraseIconUncheck color="primary" />}
-									onChange={handleIsPhraseChange}
-									checkedIcon={<FraseIconcheck />}
-									name="checkedH"
-								/>
-							}
-							label="Frase Exacta"
-						/>
-					</HeaderFormControl>
-
-					{years ? (
-						<>
-							<HeaderFormControl className={classes.margin}>
-								<InputLabel htmlFor="demo-customized-select-native">Fechas</InputLabel>
-								<NativeSelect
-									id="demo-customized-select-native"
-									value={dateType}
-									onChange={handleDateTypeChange}
-									input={<BootstrapInput />}
-								>
-									<option aria-label="None" value={0}>
-										Fechas
-									</option>
-									<option value={1}>Año</option>
-									<option value={2}>Rango</option>
-								</NativeSelect>
-							</HeaderFormControl>
-
-							{dateType > 0 && renderDateType()}
-						</>
-					) : (
-						<div>loading..</div>
-					)}
-				</HeaderContainer>
 			}
 			content={
 				<>
@@ -411,7 +255,7 @@ function SimpleFullWidthSample() {
 						<div className="w-full flex flex-col">
 							<FuseScrollbars className="flex-grow overflow-x-auto">
 								<Table stickyHeader className="min-w-xl mt-32" aria-labelledby="tableTitle">
-									<SearchTableHeader
+									<UserTableHeader
 										order={order}
 										onRequestSort={handleRequestSort}
 										rowCount={results.length}
@@ -423,11 +267,17 @@ function SimpleFullWidthSample() {
 											[
 												o => {
 													switch (order.id) {
-														case 'date': {
-															return o.date;
+														case 'userName': {
+															return o.userName;
 														}
-														case 'fileName': {
-															return o.fileName;
+														case 'name': {
+															return o.name;
+														}
+														case 'lastName': {
+															return o.lastName;
+														}
+														case 'email': {
+															return o.email;
 														}
 														default: {
 															return o[order.id];
@@ -448,13 +298,33 @@ function SimpleFullWidthSample() {
 													onClick={event => handleRowClick(n, index)}
 												>
 													<TableCell className="p-4 md:p-16" component="th" scope="row">
-														hemeroteca, Monterrey
+														{n.id}
 													</TableCell>
 													<TableCell className="p-4 md:p-16" component="th" scope="row">
-														{navigationService.getStringDate(n.date)}
+														{n.userName}
 													</TableCell>
 													<TableCell className="p-4 md:p-16" component="th" scope="row">
-														{n.fileName}
+														{n.password}
+													</TableCell>
+													<TableCell className="p-4 md:p-16" component="th" scope="row">
+														{n.name}
+													</TableCell>
+													<TableCell className="p-4 md:p-16" component="th" scope="row">
+														{n.lastName}
+													</TableCell>
+													<TableCell className="p-4 md:p-16" component="th" scope="row">
+														{n.email}
+													</TableCell>
+													<TableCell className="p-4 md:p-16" component="th" scope="row">
+														{n.role}
+													</TableCell>
+													<TableCell className="p-4 md:p-16" component="th" scope="row">
+														<IconButton color="primary" aria-label="Editar">
+															<EditIcon />
+														</IconButton>
+														<IconButton color="danger" aria-label="Borrar">
+															<DeleteIcon />
+														</IconButton>
 													</TableCell>
 												</TableRow>
 											))}
@@ -478,12 +348,10 @@ function SimpleFullWidthSample() {
 							/>
 						</div>
 					)}
-
-					<DialogSearchViewer ref={viewerRef} />
 				</>
 			}
 		/>
 	);
 }
 
-export default SimpleFullWidthSample;
+export default User;

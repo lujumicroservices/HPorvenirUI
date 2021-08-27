@@ -52,6 +52,15 @@ const navigationConfig = [
 				icon: 'contact_mail',
 				auth: authRoles.user,
 				url: '/contact'
+			},
+			{
+				id: 'contact-component',
+				title: 'Admin',
+				translate: 'Admin',
+				type: 'item',
+				icon: 'contact_mail',
+				auth: authRoles.user,
+				url: '/contacts/all'
 			}
 		]
 	}

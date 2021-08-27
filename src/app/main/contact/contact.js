@@ -11,8 +11,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Icon from '@material-ui/core/Icon';
 import TextField from '@material-ui/core/TextField';
-import { useCallback, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
 
@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	controlOverride: {
 		'& label': {
-			color: 'orange'
+			color: 'gray'
 		}
 	},
 	card: {
@@ -125,7 +125,7 @@ function Contact() {
 							>
 								<div className="flex">
 									<div className="min-w-48 pt-20">
-										<Icon color="action">business</Icon>
+										<Icon color="action">account_circle</Icon>
 									</div>
 									<Controller
 										control={control}

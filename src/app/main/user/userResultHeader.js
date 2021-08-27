@@ -18,25 +18,60 @@ import { useDispatch } from 'react-redux';
 
 const rows = [
 	{
-		id: 'name',
+		id: 'id',
 		align: 'left',
 		disablePadding: false,
 		label: 'id',
 		sort: false
 	},
 	{
-		id: 'date',
+		id: 'userName',
 		align: 'left',
 		disablePadding: false,
-		label: 'Fecha',
+		label: 'Usuario',
 		sort: true
 	},
 	{
-		id: 'fileName',
+		id: 'password',
+		align: 'left',
+		disablePadding: true,
+		label: 'Password',
+		sort: false
+	},
+	{
+		id: 'name',
 		align: 'left',
 		disablePadding: false,
-		label: 'Archivo',
+		label: 'Nombre',
 		sort: true
+	},
+	{
+		id: 'lastName',
+		align: 'left',
+		disablePadding: false,
+		label: 'Apellido',
+		sort: true
+	},
+	{
+		id: 'email',
+		align: 'left',
+		disablePadding: false,
+		label: 'Correo',
+		sort: true
+	},
+	{
+		id: 'role',
+		align: 'left',
+		disablePadding: false,
+		label: 'Roles',
+		sort: false
+	},
+	{
+		id: 'action',
+		align: 'left',
+		disablePadding: false,
+		label: 'Action',
+		sort: false
 	}
 ];
 
@@ -50,7 +85,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-function SearchResultsHeader(props) {
+function UserResultsHeader(props) {
 	const classes = useStyles(props);
 	const dispatch = useDispatch();
 
@@ -88,6 +123,22 @@ function SearchResultsHeader(props) {
 									</TableSortLabel>
 								</Tooltip>
 							)}
+							{!row.sort && (
+								<Tooltip
+									title="Sort"
+									placement={row.align === 'right' ? 'bottom-end' : 'bottom-start'}
+									enterDelay={300}
+								>
+									<TableSortLabel
+										active={false}
+										
+										hideSortIcon={true}
+										className="font-semibold"
+									>
+										{row.label}
+									</TableSortLabel>
+								</Tooltip>
+							)}
 						</TableCell>
 					);
 				}, this)}
@@ -96,4 +147,4 @@ function SearchResultsHeader(props) {
 	);
 }
 
-export default SearchResultsHeader;
+export default UserResultsHeader;
