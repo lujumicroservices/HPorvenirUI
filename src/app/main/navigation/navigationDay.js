@@ -14,7 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { Document, Page } from 'react-pdf';
 import clsx from 'clsx';
-import ReactToPrint from 'react-to-print';
 import { green, grey, yellow, blue, orange } from '@material-ui/core/colors';
 import navigationService from 'app/services/navigationService';
 import zIndex from '@material-ui/core/styles/zIndex';
