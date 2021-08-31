@@ -2,10 +2,10 @@ FROM node:latest as build
 
 WORKDIR /app
 COPY package.json ./
+RUN npm install -g yarn --force
 RUN yarn install
 COPY . .
 EXPOSE 80
-RUN npm install -g yarn --force
 RUN yarn run build
 
 FROM nginx
