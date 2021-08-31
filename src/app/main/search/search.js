@@ -249,7 +249,7 @@ function SimpleFullWidthSample() {
 		}
 	};
 
-	function handleRequestSort(event, property) {
+	const handleRequestSort = (event, property) => {
 		const id = property;
 		let direction = 'desc';
 		if (order.id === property && order.direction === 'desc') {

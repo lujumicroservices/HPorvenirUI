@@ -170,11 +170,11 @@ function FuseSidePanel(props) {
 	const [opened, setOpened] = useState(props.opened);
 	const [mobileOpen, setMobileOpen] = useState(false);
 
-	function toggleOpened() {
+	const toggleOpened = () => {
 		setOpened(!opened);
 	}
 
-	function toggleMobileDrawer() {
+	const toggleMobileDrawer = () => {
 		setMobileOpen(!mobileOpen);
 	}
 

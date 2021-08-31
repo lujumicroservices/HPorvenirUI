@@ -198,23 +198,23 @@ function DialogDayViewer(props, ref) {
 		});
 	}
 
-	function handleCloseDialog() {
+	const handleCloseDialog = () => {
 		setOpenDialog(false);
-	}
+	};
 
-	function onSelectPage(page) {
+	const onSelectPage = page => {
 		setSelectedPage(page);
-	}
+	};
 
-	function handleZoomIn(ev) {
+	const handleZoomIn = ev => {
 		setScale(scale + 0.5);
-	}
+	};
 
-	function handleZoomOut(ev) {
+	const handleZoomOut = ev => {
 		setScale(scale - 0.5);
-	}
+	};
 
-	function handleWheel(e) {
+	const handleWheel = e => {
 		e.preventDefault();
 		return false;
 		/*
@@ -224,17 +224,17 @@ function DialogDayViewer(props, ref) {
 		e.nativeEvent.stopImmediatePropagation();
 		e.stopPropagation();
         */
-	}
+	};
 
-	function handleZoomReset() {
+	const handleZoomReset = () => {
 		setScale(1);
-	}
+	};
 
-	function handleDownloadButton() {
+	const handleDownloadButton = () => {
 		navigationService.downloadPage(dayInfo.pages[selectedPage]).then(data => {
 			console.log('');
 		});
-	}
+	};
 
 	function renderBackButton() {
 		return (

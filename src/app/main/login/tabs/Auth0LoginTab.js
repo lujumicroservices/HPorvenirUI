@@ -22,7 +22,7 @@ function Auth0LoginTab(props) {
 		});
 	}, [dispatch]);
 
-	function showDialog() {
+	const showDialog = () => {
 		auth0Service.login();
 	}
 

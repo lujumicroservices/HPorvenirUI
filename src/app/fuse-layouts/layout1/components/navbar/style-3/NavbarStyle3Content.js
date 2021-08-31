@@ -75,7 +75,7 @@ function NavbarStyle3Content(props) {
 			});
 	}, [navigation, location]);
 
-	function handleParentItemClick(selected) {
+	const handleParentItemClick = selected => {
 		/** if there is no child item do not set/open panel
 		 */
 		if (!selected.children) {
@@ -96,12 +96,12 @@ function NavbarStyle3Content(props) {
 			setSelectedNavigation([selected]);
 			setPanelOpen(true);
 		}
-	}
+	};
 
-	function handleChildItemClick(selected) {
+	const handleChildItemClick = selected => {
 		setPanelOpen(false);
 		mdDown && dispatch(navbarCloseMobile());
-	}
+	};
 
 	return (
 		<ClickAwayListener onClickAway={() => setPanelOpen(false)}>

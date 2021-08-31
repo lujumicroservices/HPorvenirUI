@@ -191,39 +191,39 @@ function DialogSearchViewer(props, ref) {
 			});
 	}
 
-	function handleCloseDialog() {
+	const handleCloseDialog = () => {
 		setOpenDialog(false);
-	}
+	};
 
-	function onSelectPage(_index) {
+	const onSelectPage = (_index) => {
 		payload.fileName = results[_index].name;
 		setIndex(_index);
 	}
 
-	function handleZoomIn(ev) {
+	const handleZoomIn = ev => {
 		setScale(scale + 0.5);
-	}
+	};
 
-	function handleZoomOut(ev) {
+	const handleZoomOut = ev => {
 		setScale(scale - 0.5);
-	}
+	};
 
 	function handleWheel(e) {
 		e.preventDefault();
 		return false;
 	}
 
-	function handleZoomReset() {
+	const handleZoomReset = () => {
 		setScale(1);
-	}
+	};
 
-	function handleDownloadButton() {
+	const handleDownloadButton = () => {
 		searchService.downloadDocDetailSearch(payload).then(data => {
 			console.log('');
 		});
-	}
+	};
 
-	function renderBackButton() {
+	const renderBackButton = () => {
 		return (
 			<Button
 				disabled={index <= 0}
@@ -235,9 +235,9 @@ function DialogSearchViewer(props, ref) {
 				Anterior
 			</Button>
 		);
-	}
+	};
 
-	function renderNextButton() {
+	const renderNextButton = () => {
 		return (
 			<Button
 				className={clsx(classes.buttonbarstyle, 'whitespace-nowrap mx-4')}
@@ -248,15 +248,15 @@ function DialogSearchViewer(props, ref) {
 				Siguiente
 			</Button>
 		);
-	}
+	};
 
-	function onPDFSuccess(success) {
+	const onPDFSuccess = success => {
 		console.log('success complete');
-	}
+	};
 
-	function onLoadProgressPDF(progress) {
+	const onLoadProgressPDF = progress => {
 		console.log(`pdf progress ${progress}`);
-	}
+	};
 
 	const pageLayout = useRef(null);
 

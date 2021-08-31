@@ -15,13 +15,13 @@ function ContactsMultiSelectMenu(props) {
 
 	const [anchorEl, setAnchorEl] = useState(null);
 
-	function openSelectedContactMenu(event) {
+	const openSelectedContactMenu = event => {
 		setAnchorEl(event.currentTarget);
-	}
+	};
 
-	function closeSelectedContactsMenu() {
+	const closeSelectedContactsMenu = () => {
 		setAnchorEl(null);
-	}
+	};
 
 	return (
 		<>

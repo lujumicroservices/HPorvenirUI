@@ -5,6 +5,7 @@ COPY package.json ./
 RUN yarn install
 COPY . .
 EXPOSE 80
+RUN npm install -g yarn
 RUN yarn run build
 
 FROM nginx

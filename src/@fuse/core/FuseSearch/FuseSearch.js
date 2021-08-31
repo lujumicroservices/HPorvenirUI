@@ -238,7 +238,7 @@ function FuseSearch(props) {
 		document.addEventListener('keydown', escFunction, false);
 	}
 
-	function hideSearch() {
+	const hideSearch = () => {
 		dispatch({ type: 'close' });
 		document.removeEventListener('keydown', escFunction, false);
 	}
@@ -272,14 +272,14 @@ function FuseSearch(props) {
 		});
 	}
 
-	function handleChange(event) {
+	const handleChange = event => {
 		dispatch({
 			type: 'setSearchText',
 			value: event.target.value
 		});
 	}
 
-	function handleClickAway(event) {
+	const handleClickAway = event => {
 		return (
 			state.opened &&
 			(!suggestionsNode.current || !suggestionsNode.current.contains(event.target)) &&

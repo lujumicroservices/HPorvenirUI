@@ -102,7 +102,7 @@ function ContactDialog(props) {
 		/**
 		 * Dialog type: 'edit'
 		 */
-		
+
 		if (contactDialog.type === 'edit' && contactDialog.data) {
 			reset({ ...contactDialog.data });
 		}
@@ -130,7 +130,7 @@ function ContactDialog(props) {
 	/**
 	 * Close Dialog
 	 */
-	function closeComposeDialog() {
+	const closeComposeDialog = () => {
 		return contactDialog.type === 'edit' ? dispatch(closeEditContactDialog()) : dispatch(closeNewContactDialog());
 	}
 
@@ -149,7 +149,7 @@ function ContactDialog(props) {
 	/**
 	 * Remove Event
 	 */
-	function handleRemove() {
+	const handleRemove = () => {
 		dispatch(removeContact(1));
 		closeComposeDialog();
 	}
