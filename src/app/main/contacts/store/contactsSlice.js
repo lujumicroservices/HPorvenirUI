@@ -22,7 +22,7 @@ export const addContact = createAsyncThunk('contactsApp/contacts/addContact', as
 export const updateContact = createAsyncThunk(
 	'contactsApp/contacts/updateContact',
 	async (contact, { dispatch, getState }) => {
-		const response = await axios.put(`${process.env.REACT_APP_WEBAPI}user`, { contact });
+		const response = await axios.put(`${process.env.REACT_APP_WEBAPI}user`, contact);
 		const data = await response.data;
 		dispatch(getContacts());
 		return data;

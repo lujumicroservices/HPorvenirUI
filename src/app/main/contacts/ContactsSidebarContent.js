@@ -55,13 +55,6 @@ function ContactsSidebarContent(props) {
 				animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
 				className="rounded-0 shadow-none lg:rounded-16 lg:shadow"
 			>
-				<div className="p-24 flex items-center">
-					<Avatar alt={user.name} src={user.avatar} />
-					<Typography className="mx-12">{user.name}</Typography>
-				</div>
-
-				<Divider />
-
 				<div className="p-24">
 					<Button
 						variant="contained"
@@ -69,48 +62,9 @@ function ContactsSidebarContent(props) {
 						className="w-full"
 						onClick={ev => dispatch(openNewContactDialog())}
 					>
-						New Contact
+						Nuevo Usuario
 					</Button>
 				</div>
-
-				<List className="pt-0 px-12">
-					<ListItem
-						button
-						component={NavLinkAdapter}
-						to="/apps/contacts/all"
-						activeClassName="active"
-						className={classes.listItem}
-					>
-						<Icon className="list-item-icon text-16" color="action">
-							people
-						</Icon>
-						<ListItemText className="truncate" primary="All contacts" disableTypography />
-					</ListItem>
-					<ListItem
-						button
-						component={NavLinkAdapter}
-						to="/apps/contacts/frequent"
-						activeClassName="active"
-						className={classes.listItem}
-					>
-						<Icon className="list-item-icon text-16" color="action">
-							restore
-						</Icon>
-						<ListItemText className="truncate" primary="Frequently contacted" disableTypography />
-					</ListItem>
-					<ListItem
-						button
-						component={NavLinkAdapter}
-						to="/apps/contacts/starred"
-						activeClassName="active"
-						className={classes.listItem}
-					>
-						<Icon className="list-item-icon text-16" color="action">
-							star
-						</Icon>
-						<ListItemText className="truncate" primary="Starred contacts" disableTypography />
-					</ListItem>
-				</List>
 			</Paper>
 		</div>
 	);

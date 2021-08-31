@@ -183,6 +183,14 @@ class NavigationService extends FuseUtils.EventEmitter {
 				});
 		});
 	};
+
+	contactRequest = contact => {
+		return new Promise((resolve, reject) => {
+			axios.post(`${process.env.REACT_APP_WEBAPI}mail`, contact).then(response => {
+				resolve(response);
+			});
+		});
+	};
 }
 
 const instance = new NavigationService();

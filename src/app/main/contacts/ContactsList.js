@@ -43,12 +43,6 @@ function ContactsList(props) {
 				sortable: true
 			},
 			{
-				Header: 'Password',
-				accessor: 'password',
-				className: 'font-medium',
-				sortable: true
-			},
-			{
 				Header: 'Nombre',
 				accessor: 'name',
 				sortable: true

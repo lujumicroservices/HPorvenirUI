@@ -1,19 +1,21 @@
+import React from 'react';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles } from '@material-ui/core/styles';
 import { yupResolver } from '@hookform/resolvers/yup';
-import AppBar from '@material-ui/core/AppBar';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import Fade from '@material-ui/core/Fade';
 import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
-import Toolbar from '@material-ui/core/Toolbar';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Slide from '@material-ui/core/Slide';
 import Icon from '@material-ui/core/Icon';
 import TextField from '@material-ui/core/TextField';
 import { Controller, useForm } from 'react-hook-form';
-import { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import navigationService from 'app/services/navigationService';
 import clsx from 'clsx';
 
 import _ from '@lodash';
@@ -57,32 +59,38 @@ const useStyles = makeStyles(theme => ({
 	},
 	card: {
 		width: '40%'
+	},
+	snackcontact: {
+		bottom: '100px'
 	}
 }));
 
 const defaultValues = {
-	id: '',
+	business: '',
 	name: '',
 	lastName: '',
-	avatar: 'assets/images/avatars/profile.jpg',
-	nickname: '',
-	company: '',
-	jobTitle: '',
 	email: '',
+	comments: '',
 	phone: '',
-	address: '',
-	birthday: '',
-	notes: ''
+	city: '',
+	state: '',
+	country: '',
+	accountType: '',
+	searchType: ''
 };
 
 const schema = yup.object().shape({
-	name: yup.string().required('You must enter a name')
+	email: yup.string().email('por favor introduzca un correo valido').required('debe introducir un correo valido'),
+	comments: yup.string().required('debe introducir un comentario')
 });
 
-function Contact() {
-	const classes = useStyles();
+function SlideTransition(props) {
+	return <Slide {...props} direction="up" />;
+}
 
-	function onSubmit(data) {}
+function Contact() {
+	const [open, setOpen] = React.useState(false);
+	const [transition, setTransition] = React.useState(undefined);
 
 	const { control, watch, reset, handleSubmit, formState, getValues } = useForm({
 		mode: 'onChange',
@@ -95,6 +103,26 @@ function Contact() {
 	const id = watch('id');
 	const name = watch('name');
 	const avatar = watch('avatar');
+
+	function handleClick(Transition) {
+		setTransition(() => Transition);
+		setOpen(true);
+	}
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const classes = useStyles();
+
+	function onSubmit(contact) {
+		navigationService.contactRequest(contact).then(yearsInfo => {
+			handleClick(SlideTransition);
+			reset({
+				...defaultValues
+			});
+		});
+	}
 
 	return (
 		<FusePageSimple
@@ -113,16 +141,25 @@ function Contact() {
 			contentToolbar={<></>}
 			content={
 				<div className={classes.container}>
+					<Snackbar
+						open={open}
+						onClose={handleClose}
+						TransitionComponent={transition}
+						message="graicas, tus Commentario fueron enviados existosamente!"
+						key={transition ? transition.name : ''}
+						className={classes.snackcontact}
+					/>
+
 					<h4> Envianos tus comentarios y dudas</h4>
 					<br />
 
 					<Card className={classes.mailform}>
-						<CardContent>
-							<form
-								noValidate
-								onSubmit={handleSubmit(onSubmit)}
-								className="flex flex-col md:overflow-hidden pt-24"
-							>
+						<form
+							noValidate
+							onSubmit={handleSubmit(onSubmit)}
+							className="flex flex-col md:overflow-hidden pt-24"
+						>
+							<CardContent>
 								<div className="flex">
 									<div className="min-w-48 pt-20">
 										<Icon color="action">account_circle</Icon>
@@ -136,11 +173,8 @@ function Contact() {
 												className={clsx(classes.controlOverride, 'mb-24')}
 												label="Empresa"
 												id="business"
-												error={!!errors.name}
-												helperText={errors?.name?.message}
-												variant="outlined"
-												required
 												fullWidth
+												variant="outlined"
 											/>
 										)}
 									/>
@@ -170,13 +204,13 @@ function Contact() {
 									<div className="min-w-48 pt-20" />
 									<Controller
 										control={control}
-										name="lastname"
+										name="lastName"
 										render={({ field }) => (
 											<TextField
 												{...field}
 												className={clsx(classes.controlOverride, 'mb-24')}
 												label="Apellido"
-												id="lastname"
+												id="lastName"
 												variant="outlined"
 												fullWidth
 											/>
@@ -217,8 +251,11 @@ function Contact() {
 												className={clsx(classes.controlOverride, 'mb-24')}
 												label="Email"
 												id="email"
+												error={!!errors.email}
+												helperText={errors?.email?.message}
 												variant="outlined"
 												fullWidth
+												required
 											/>
 										)}
 									/>
@@ -289,14 +326,18 @@ function Contact() {
 										control={control}
 										name="accountType"
 										render={({ field }) => (
-											<TextField
+											<Select
 												{...field}
 												className={clsx(classes.controlOverride, 'mb-24')}
-												label="Tipo cunta"
-												id="accountType"
 												variant="outlined"
-												fullWidth
-											/>
+											>
+												<MenuItem value="Institucional" key="1">
+													<em> Institucional / Business </em>
+												</MenuItem>
+												<MenuItem value="Personal" key="2">
+													<em> Personal / Personal </em>
+												</MenuItem>
+											</Select>
 										)}
 									/>
 								</div>
@@ -309,14 +350,30 @@ function Contact() {
 										control={control}
 										name="searchType"
 										render={({ field }) => (
-											<TextField
+											<Select
 												{...field}
 												className={clsx(classes.controlOverride, 'mb-24')}
-												label="Tipo busqueda"
-												id="searchType"
 												variant="outlined"
-												fullWidth
-											/>
+											>
+												<MenuItem value="Fecha especifica" key="1">
+													<em> Fecha especifica / Specific date </em>
+												</MenuItem>
+												<MenuItem value="Evento" key="2">
+													<em> Evento / Event </em>
+												</MenuItem>
+												<MenuItem value="Investigación" key="3">
+													<em> Investigación / Research </em>
+												</MenuItem>
+												<MenuItem value="Uso esporadico" key="4">
+													<em> Uso esporadico / Sporadic use </em>
+												</MenuItem>
+												<MenuItem value="Uso permanente" key="5">
+													<em> Uso permanente / Permanent use </em>
+												</MenuItem>
+												<MenuItem value="Otro" key="6">
+													<em> Otro / Other </em>
+												</MenuItem>
+											</Select>
 										)}
 									/>
 								</div>
@@ -334,19 +391,24 @@ function Contact() {
 												className={clsx(classes.controlOverride, 'mb-24')}
 												label="Comentarios"
 												id="comments"
+												error={!!errors.comments}
+												helperText={errors?.comments?.message}
 												variant="outlined"
 												multiline
 												rows={5}
 												fullWidth
+												required
 											/>
 										)}
 									/>
 								</div>
-							</form>
-						</CardContent>
-						<CardActions>
-							<Button>Enviar</Button>
-						</CardActions>
+							</CardContent>
+							<CardActions>
+								<Button variant="contained" color="secondary" type="submit">
+									Enviar
+								</Button>
+							</CardActions>
+						</form>
 					</Card>
 					<div className={classes.contactContainer}>
 						<Card className={clsx(classes.contact, classes.card, 'm-24')}>
@@ -354,96 +416,98 @@ function Contact() {
 								<Typography className={classes.title} color="textPrimary" gutterBottom>
 									Oficinas Monterrey
 								</Typography>
-								<br/>
-								<Typography variant="h8" component="h2">
+								<br />
+								<Typography variant="h6" component="h2">
 									Galeana 344 Sur Col. Centro Entre Washington y 5 de Mayo Monterrey, N.L. C.P. 64000
 								</Typography>
-								<br/>
+								<br />
 								<table className={classes.contactTable}>
-									<tr>
-										<td>
-											<Typography variant="body2" component="p">
-												Conmutador{' '}
-											</Typography>
-										</td>
-										<td>
-											<Typography variant="body2" component="p">
-												8345-4080{' '}
-											</Typography>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<Typography variant="body2" component="p">
-												Publicidad{' '}
-											</Typography>
-										</td>
-										<td>
-											<Typography variant="body2" component="p">
-												8340-1616 Ext 241 y 244
-											</Typography>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<Typography variant="body2" component="p">
-												Redacción
-											</Typography>
-										</td>
-										<td>
-											<Typography variant="body2" component="p">
-												8345-4615
-											</Typography>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<Typography variant="body2" component="p">
-												Dirección
-											</Typography>
-										</td>
-										<td>
-											<Typography variant="body2" component="p">
-												8340-8239
-											</Typography>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<Typography variant="body2" component="p">
-												Suscripciones
-											</Typography>
-										</td>
-										<td>
-											<Typography variant="body2" component="p">
-												83-430240 / 71 / 83
-											</Typography>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<Typography variant="body2" component="p">
-												Avisos Económicos
-											</Typography>
-										</td>
-										<td>
-											<Typography variant="body2" component="p">
-												8340-6200
-											</Typography>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<Typography variant="body2" component="p">
-												Fax
-											</Typography>
-										</td>
-										<td>
-											<Typography variant="body2" component="p">
-												8345-77-95 y 8340-80-08
-											</Typography>
-										</td>
-									</tr>
+									<tbody>
+										<tr>
+											<td>
+												<Typography variant="body2" component="p">
+													Conmutador{' '}
+												</Typography>
+											</td>
+											<td>
+												<Typography variant="body2" component="p">
+													8345-4080{' '}
+												</Typography>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<Typography variant="body2" component="p">
+													Publicidad{' '}
+												</Typography>
+											</td>
+											<td>
+												<Typography variant="body2" component="p">
+													8340-1616 Ext 241 y 244
+												</Typography>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<Typography variant="body2" component="p">
+													Redacción
+												</Typography>
+											</td>
+											<td>
+												<Typography variant="body2" component="p">
+													8345-4615
+												</Typography>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<Typography variant="body2" component="p">
+													Dirección
+												</Typography>
+											</td>
+											<td>
+												<Typography variant="body2" component="p">
+													8340-8239
+												</Typography>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<Typography variant="body2" component="p">
+													Suscripciones
+												</Typography>
+											</td>
+											<td>
+												<Typography variant="body2" component="p">
+													83-430240 / 71 / 83
+												</Typography>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<Typography variant="body2" component="p">
+													Avisos Económicos
+												</Typography>
+											</td>
+											<td>
+												<Typography variant="body2" component="p">
+													8340-6200
+												</Typography>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<Typography variant="body2" component="p">
+													Fax
+												</Typography>
+											</td>
+											<td>
+												<Typography variant="body2" component="p">
+													8345-77-95 y 8340-80-08
+												</Typography>
+											</td>
+										</tr>
+									</tbody>
 								</table>
 							</CardContent>
 						</Card>
@@ -453,28 +517,30 @@ function Contact() {
 								<Typography className={classes.title} color="textPrimary" gutterBottom>
 									Oficinas México, D.F.
 								</Typography>
-								<br/>
-								<Typography variant="h8" component="h2">
+								<br />
+								<Typography variant="h6" component="h2">
 									Paseo de la Reforma # 30 3er Piso México, D.F. C.P. 06600 Tels: 5705-6178 / 81 / 82
 								</Typography>
-								<br/>
+								<br />
 								<table className={classes.contactTable}>
-									<tr>
-										<td>
-											<Typography variant="body2" component="p">
-												Correos Electrónicos{' '}
-											</Typography>
-										</td>
-										<td>
-											<Typography variant="body2" component="p">
-												publicidad@elporvenir.com.mx <br />
-												relaciones@elporvenir.com.mx
-												<br />
-												porvenir@prodigy.net.mx
-												<br />
-											</Typography>
-										</td>
-									</tr>
+									<tbody>
+										<tr>
+											<td>
+												<Typography variant="body2" component="p">
+													Correos Electrónicos{' '}
+												</Typography>
+											</td>
+											<td>
+												<Typography variant="body2" component="p">
+													publicidad@elporvenir.com.mx <br />
+													relaciones@elporvenir.com.mx
+													<br />
+													porvenir@prodigy.net.mx
+													<br />
+												</Typography>
+											</td>
+										</tr>
+									</tbody>
 								</table>
 							</CardContent>
 						</Card>

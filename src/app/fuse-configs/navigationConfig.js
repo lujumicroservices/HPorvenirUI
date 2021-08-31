@@ -4,7 +4,6 @@ import ar from './navigation-i18n/ar';
 import en from './navigation-i18n/en';
 import tr from './navigation-i18n/tr';
 
-
 i18next.addResourceBundle('en', 'navigation', en);
 i18next.addResourceBundle('tr', 'navigation', tr);
 i18next.addResourceBundle('ar', 'navigation', ar);
@@ -49,18 +48,27 @@ const navigationConfig = [
 				title: 'Contact',
 				translate: 'Contact',
 				type: 'item',
-				icon: 'contact_mail',
+				icon: 'alternate_email',
 				auth: authRoles.user,
 				url: '/contact'
 			},
 			{
-				id: 'contact-component',
+				id: 'contact-admin',
 				title: 'Admin',
 				translate: 'Admin',
 				type: 'item',
-				icon: 'contact_mail',
+				icon: 'groups',
 				auth: authRoles.user,
 				url: '/contacts/all'
+			},
+			{
+				id: 'hemeroteca-logout',
+				title: 'LogOut',
+				translate: 'LogOut',
+				type: 'item',
+				icon: 'exit_to_app',
+				auth: authRoles.user,
+				url: '/logout'
 			}
 		]
 	}

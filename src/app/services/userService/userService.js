@@ -8,7 +8,7 @@ class UserService extends FuseUtils.EventEmitter {
             .get(`https://localhost:5001/user`)
 				//.get(`${process.env.REACT_APP_WEBAPI}user`)
 				.then(response => {
-                    debugger;
+                    
 					resolve(response);
 				})
 				.catch(err => {

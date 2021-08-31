@@ -67,7 +67,7 @@ const defaultValues = {
 	name: '',
 	lastName: '',
 	email: '',
-	roleArray: 'usuario'
+	roleArray: 'user'
 };
 
 /**
@@ -102,6 +102,7 @@ function ContactDialog(props) {
 		/**
 		 * Dialog type: 'edit'
 		 */
+		
 		if (contactDialog.type === 'edit' && contactDialog.data) {
 			reset({ ...contactDialog.data });
 		}
@@ -291,7 +292,7 @@ function ContactDialog(props) {
 							name="roleArray"
 							render={({ field }) => (
 								<Select {...field} variant="outlined">
-									<MenuItem value="usuario" key="usuario">
+									<MenuItem value="user" key="usuario">
 										<em> usuario </em>
 									</MenuItem>
 									<MenuItem value="admin" key="admin">

@@ -45,7 +45,7 @@ function ContactsHeader(props) {
 						delay={300}
 						className="hidden sm:flex text-16 md:text-24 mx-12 font-semibold"
 					>
-						Contacts
+						Usuarios
 					</Typography>
 				</div>
 			</div>
@@ -61,7 +61,7 @@ function ContactsHeader(props) {
 						<Icon color="action">search</Icon>
 
 						<Input
-							placeholder="Search for anything"
+							placeholder="Busca Usuarios"
 							className="flex flex-1 px-16"
 							disableUnderline
 							fullWidth

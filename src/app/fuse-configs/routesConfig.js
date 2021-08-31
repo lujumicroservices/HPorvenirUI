@@ -6,8 +6,17 @@ import ContactConfig from 'app/main/contact/contactConfig';
 import NavigationConfig from 'app/main/navigation/navigationConfig';
 import ContactsAppConfig from 'app/main/contacts/ContactsAppConfig';
 import LoginConfig from 'app/main/login/LoginConfig';
+import LogoutConfig from 'app/main/logout/LogoutConfig';
 
-const routeConfigs = [LoginConfig, SearchConfig, NavigationConfig, ContactConfig, HelpConfig, ContactsAppConfig];
+const routeConfigs = [
+	LogoutConfig,
+	LoginConfig,
+	SearchConfig,
+	NavigationConfig,
+	ContactConfig,
+	HelpConfig,
+	ContactsAppConfig
+];
 
 const routes = [
 	// if you want to make whole app auth protected by default change defaultAuth for example:
@@ -15,7 +24,7 @@ const routes = [
 	// The individual route configs which has auth option won't be overridden.
 	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['superadmin', 'admin', 'user']),
 	{
-		path: '/',				
+		path: '/',
 		component: () => <Redirect to="/navigation" />
 	},
 	{

@@ -5,6 +5,7 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import NavbarMobileLayout2 from 'app/fuse-layouts/layout2/components/NavbarMobileLayout2';
 import NavbarToggleFab from 'app/fuse-layouts/shared-components/NavbarToggleFab';
 import { navbarCloseMobile } from 'app/store/fuse/navbarSlice';
+import NavbarToggleButton from 'app/fuse-layouts/shared-components/NavbarToggleButton';
 import clsx from 'clsx';
 import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,6 +44,12 @@ function NavbarWrapperLayout2(props) {
 				<Hidden mdDown>
 					<NavbarLayout2 className={clsx(classes.navbar, props.className)} />
 				</Hidden>
+
+				{config.navbar.display && (
+						<Hidden lgUp>
+							<NavbarToggleButton className="w-40 h-40 p-0 mx-0 sm:mx-8" />
+						</Hidden>
+					)}
 
 				<Hidden lgUp>
 					<SwipeableDrawer
