@@ -1,10 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
+import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,10 +19,7 @@ import _ from '@lodash';
  */
 const schema = yup.object().shape({
 	email: yup.string().required('Usuario obligatorio'),
-	password: yup
-		.string()
-		.required('Por favor escriba su contraseña.')
-		
+	password: yup.string().required('Por favor escriba su contraseña.')
 });
 
 const defaultValues = {
@@ -28,7 +27,16 @@ const defaultValues = {
 	password: ''
 };
 
+const useStyles = makeStyles(theme => ({
+	controlOverride: {
+		'& label': {
+			color: 'gray'
+		}
+	}
+}));
+
 function JWTLoginTab(props) {
+	const classes = useStyles();
 	const dispatch = useDispatch();
 	const login = useSelector(({ auth }) => auth.login);
 	const { control, setValue, formState, handleSubmit, reset, trigger, setError } = useForm({
@@ -68,7 +76,7 @@ function JWTLoginTab(props) {
 					render={({ field }) => (
 						<TextField
 							{...field}
-							className="mb-16"
+							className={clsx(classes.controlOverride, 'mb-24')}
 							type="text"
 							error={!!errors.email}
 							helperText={errors?.email?.message}
@@ -93,7 +101,7 @@ function JWTLoginTab(props) {
 					render={({ field }) => (
 						<TextField
 							{...field}
-							className="mb-16"
+							className={clsx(classes.controlOverride, 'mb-24')}
 							label="Contraseña"
 							type="password"
 							error={!!errors.password}
@@ -124,13 +132,11 @@ function JWTLoginTab(props) {
 					className="w-full mx-auto mt-16"
 					aria-label="LOG IN"
 					disabled={_.isEmpty(dirtyFields) || !isValid}
-					value="legacy"				
+					value="legacy"
 				>
 					Ingresar
 				</Button>
 			</form>
-
-			
 		</div>
 	);
 }

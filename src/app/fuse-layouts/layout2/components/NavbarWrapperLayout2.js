@@ -46,10 +46,10 @@ function NavbarWrapperLayout2(props) {
 				</Hidden>
 
 				{config.navbar.display && (
-						<Hidden lgUp>
-							<NavbarToggleButton className="w-40 h-40 p-0 mx-0 sm:mx-8" />
-						</Hidden>
-					)}
+					<Hidden lgUp>
+						<NavbarToggleButton className="w-40 h-40 p-0 mx-0 sm:mx-8" />
+					</Hidden>
+				)}
 
 				<Hidden lgUp>
 					<SwipeableDrawer

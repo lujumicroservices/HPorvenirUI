@@ -41,12 +41,10 @@ const useStyles = makeStyles(theme => ({
 	},
 	header: {
 		height: headerHeight,
-		
 		display: 'flex',
-		background: `linear-gradient(to right, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
 		color: theme.palette.primary.contrastText,
-		backgroundSize: 'cover',
-		backgroundColor: theme.palette.primary.dark
+		backgroundColor: theme.palette.primary.dark,
+		backgroundImage: 'url(assets/images/10portadaswallpaperGRISES_wb.jpg)'
 	},
 	topBg: {
 		position: 'absolute',

@@ -36,8 +36,8 @@ const useStyles = makeStyles(theme => ({
 		right: 0,
 		top: 0,
 		height: headerHeight,
-		background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
-		backgroundSize: 'cover',
+		backgroundColor: theme.palette.primary.dark,
+		backgroundImage: 'url(assets/images/10portadaswallpaperGRISES_wb.jpg)',
 		pointerEvents: 'none'
 	},
 	contentWrapper: {
@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
 		overflow: 'auto',
 		'-webkit-overflow-scrolling': 'touch'
 	},
-	sidebarWrapper: {		
+	sidebarWrapper: {
 		position: 'absolute',
 		backgroundColor: 'transparent',
 		zIndex: 5,
@@ -161,7 +161,7 @@ const FusePageCarded = forwardRef((props, ref) => {
 
 	return (
 		<div className={clsx(classes.root, props.innerScroll && classes.innerScroll)} ref={rootRef}>
-			<div className={classes.topBg} />
+			<div className={clsx(classes.topBg, 'bg-repeat')} />
 
 			<div className="flex container w-full">
 				{isLeftSidebar && (

@@ -25,11 +25,16 @@ const useStyles = makeStyles(theme => ({
 	},
 	leftSection: {},
 	rightSection: {
-		background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${darken(
-			theme.palette.primary.dark,
-			0.5
-		)} 100%)`,
+		backgroundImage: 'url(assets/images/10portadaswallpaperGRISES.jpg)',
 		color: theme.palette.primary.contrastText
+	},
+	rightSectionContent: {
+		backgroundColor: 'white'
+	},
+	controlOverride: {
+		'& label': {
+			color: 'gray'
+		}
 	}
 }));
 
@@ -65,7 +70,7 @@ function Login() {
 							<div className="flex items-center mb-48">
 								<div>
 									<div className="logo">
-										<img width="128" src="assets/images/logos/logo-porv.gif" alt="logo" />
+										<img width="128" src="assets/images/logos/porvenir.png" alt="logo" />
 									</div>
 								</div>
 							</div>
@@ -86,14 +91,14 @@ function Login() {
 					</div>
 				</Card>
 
-				<div className={clsx(classes.rightSection, 'hidden md:flex flex-1 items-center justify-center p-64')}>
-					<div className="max-w-320">
+				<div className={clsx(classes.rightSection, ' hidden md:flex flex-1 items-center justify-center p-64')}>
+					<div className={clsx(classes.rightSectionContent, 'max-w-3xl p-16 shadow-2xl rounded-lg')}>
 						<motion.div
 							initial={{ opacity: 0, y: 40 }}
 							animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
 						>
 							<Typography variant="h3" color="inherit" className="font-semibold leading-tight">
-								El Porvenir <br />
+								Bienvenido. <br />
 							</Typography>
 						</motion.div>
 

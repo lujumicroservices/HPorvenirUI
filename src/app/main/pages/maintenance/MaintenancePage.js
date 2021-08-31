@@ -18,7 +18,7 @@ function MaintenancePage() {
 				<Grow in>
 					<Card className="w-full max-w-384">
 						<CardContent className="flex flex-col items-center justify-center text-center p-16 sm:p-48">
-							<img className="w-128 m-32" src="assets/images/logos/porvenir.jpg" alt="logo" />
+							<img className="w-128 m-32" src="assets/images/logos/porvenir.png" alt="logo" />
 
 							<Typography variant="subtitle1" className="mb-16 text-24 font-semibold">
 								Closed for scheduled maintenance!

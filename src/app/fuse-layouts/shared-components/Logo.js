@@ -28,11 +28,12 @@ function Logo() {
 
 	return (
 		<div className={clsx(classes.root, 'flex items-center')}>
-			<img className="logo-icon w-24 h-24" src="assets/images/logos/porvenir.jpg" alt="logo" />
-			<Typography className="text-16 leading-none mx-12 font-medium logo-text" color="inherit">
-				Hemeroteca Porvenir
-			</Typography>
-			
+			<img
+				className="logo-icon"
+				style={{ height: '50px' }}
+				src="assets/images/logos/porvenir_heme.png"
+				alt="logo"
+			/>
 		</div>
 	);
 }

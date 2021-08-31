@@ -6,10 +6,8 @@ import { useState } from 'react';
 import clsx from 'clsx';
 
 function FuseLoading(props) {
-	
 	const [showLoading, setShowLoading] = useState(!props.delay);
 	const [message, setMessage] = useState(props.message);
-
 
 	useTimeout(() => {
 		setShowLoading(true);
@@ -17,9 +15,7 @@ function FuseLoading(props) {
 
 	return (
 		<div className={clsx('flex flex-1 flex-col items-center justify-center p-24', !showLoading && 'hidden')}>
-			<Typography className="text-13 sm:text-20 mb-16">
-				{message}
-			</Typography>
+			<Typography className="text-13 sm:text-20 mb-16">{message}</Typography>
 			<LinearProgress className="w-192 sm:w-320 max-w-full rounded-2" color="secondary" />
 		</div>
 	);
@@ -31,7 +27,7 @@ FuseLoading.propTypes = {
 
 FuseLoading.defaultProps = {
 	delay: false,
-	message: "buscando"
+	message: 'buscando'
 };
 
 export default FuseLoading;
