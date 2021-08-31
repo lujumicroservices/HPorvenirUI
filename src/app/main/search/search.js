@@ -259,17 +259,17 @@ function SimpleFullWidthSample() {
 			direction,
 			id
 		});
-	}
+	};
 
-	function handleChangePage(event, value) {
+	const handleChangePage = (event, value) => {
 		setPage(value);
-	}
+	};
 
-	function handleChangeRowsPerPage(event) {
+	const handleChangeRowsPerPage = event => {
 		setRowsPerPage(event.target.value);
-	}
+	};
 
-	function handleRowClick(item, index) {
+	const handleRowClick = (item, index) => {
 		const orderedData = _.orderBy(
 			results,
 			[
@@ -293,7 +293,7 @@ function SimpleFullWidthSample() {
 		index = page * rowsPerPage + index;
 
 		viewerRef.current.handleOpenDialog(index, orderedData, payload);
-	}
+	};
 
 	function triggerFileSearch() {}
 
