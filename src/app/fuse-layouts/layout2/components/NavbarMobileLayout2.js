@@ -34,9 +34,8 @@ function NavbarMobileLayout2(props) {
 	return (
 		<div className={clsx('flex flex-col h-full overflow-hidden', classes.root, props.className)}>
 			<AppBar
-				color="primary"
 				position="static"
-				className="flex flex-row items-center flex-shrink h-48 md:h-64 min-h-48 md:min-h-64 px-12 shadow-0"
+				className="flex flex-row items-center flex-shrink h-48 md:h-64 min-h-48 md:min-h-64 p-20 m-20 shadow-0 bg-white"
 			>
 				<div className="flex flex-1 mx-8">
 					<Logo />

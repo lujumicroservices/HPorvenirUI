@@ -32,7 +32,6 @@ const useStyles = makeStyles(theme => ({
 function UserNavbarHeader(props) {
 	const user = useSelector(({ auth }) => auth.user);
 
-	
 	const classes = useStyles();
 
 	return (
@@ -42,12 +41,12 @@ function UserNavbarHeader(props) {
 			classes={{ root: classes.root }}
 			className="user relative flex flex-col items-center justify-center pt-24 pb-64 mb-32 z-0 shadow-0"
 		>
+			<Typography className=" whitespace-nowrap mb-4" color="inherit">
+				usuario:
+			</Typography>
 			<Typography className="username text-18 whitespace-nowrap font-semibold mb-4" color="inherit">
 				{user.name}
 			</Typography>
-			<Typography className="email text-13 opacity-50 whitespace-nowrap font-medium" color="inherit">
-				{user.email}
-			</Typography>			
 		</AppBar>
 	);
 }
