@@ -10,6 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import navigationService from 'app/services/navigationService';
 import { Done, LensOutlined } from '@material-ui/icons';
+import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
@@ -22,6 +23,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import FuseLoading from '@fuse/core/FuseLoading';
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
+import clsx from 'clsx';
 import _ from 'lodash';
 
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
@@ -107,6 +109,10 @@ const useStyles = makeStyles({
 		height: '30%',
 		display: 'flex',
 		alignItems: 'center'
+	},
+	searchInput: {
+		width: '600px',
+		minWidth: '300px'
 	}
 });
 
@@ -125,7 +131,7 @@ function SimpleFullWidthSample() {
 
 	const [order, setOrder] = useState({
 		direction: 'asc',
-		id: null
+		id: 'date'
 	});
 	const [results, setResults] = useState([]);
 	const [page, setPage] = useState(0);
@@ -213,11 +219,12 @@ function SimpleFullWidthSample() {
 		getNavInfo();
 	}, []);
 
-	useEffect(() => {
+	/* useEffect(() => {
 		if (searchTerm.length > 2) {
-			triggerSearch();
+			//triggerSearch();
 		}
 	}, [isPhrase, selectedYear, startDate, endDate]);
+	*/
 
 	const handleDateTypeChange = event => {
 		setDateType(event.target.value);
@@ -297,7 +304,7 @@ function SimpleFullWidthSample() {
 
 	function triggerFileSearch() {}
 
-	function triggerSearch() {
+	const triggerSearch = event => {
 		setIsSearching(true);
 		const terms = searchTerm.split(' ');
 
@@ -324,7 +331,7 @@ function SimpleFullWidthSample() {
 			.finally(() => {
 				setIsSearching(false);
 			});
-	}
+	};
 
 	return (
 		<FusePageSimple
@@ -343,7 +350,7 @@ function SimpleFullWidthSample() {
 
 						<Input
 							placeholder="Buscar"
-							className="flex flex-1 mx-8"
+							className={clsx(classes.searchInput, 'flex flex-1 mx-8')}
 							disableUnderline
 							fullWidth
 							value={searchTerm}
@@ -354,6 +361,10 @@ function SimpleFullWidthSample() {
 							onKeyPress={ev => handleKeyPress(ev)}
 						/>
 					</Paper>
+
+					<Button color="primary" variant="contained" onClick={ev => triggerSearch(ev)}>
+						<Icon className={classes.buttonIcon}>search</Icon>
+					</Button>
 				</div>
 			}
 			contentToolbar={

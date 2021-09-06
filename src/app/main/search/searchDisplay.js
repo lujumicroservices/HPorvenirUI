@@ -211,6 +211,7 @@ function DialogSearchViewer(props, ref) {
 
 	const onSelectPage = _index => {
 		payload.fileName = results[_index].name;
+		handleZoomReset();
 		setIndex(_index);
 	};
 
