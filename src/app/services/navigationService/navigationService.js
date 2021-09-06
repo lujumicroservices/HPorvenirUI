@@ -41,6 +41,8 @@ class NavigationService extends FuseUtils.EventEmitter {
 		return this.daysStringMap.indexOf(day);
 	};
 
+	getWeekDays = () => this.daysStringMap;
+
 	getStringDate = stringdate => {
 		const year = stringdate.substring(0, 4);
 		const month = stringdate.substring(4, 6);

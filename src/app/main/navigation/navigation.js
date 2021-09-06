@@ -33,6 +33,11 @@ const useStyles = makeStyles(theme => ({
 		height: '15%',
 		textAlign: 'center'
 	},
+	dayHeader: {
+		width: '14%',
+		height: '15%',
+		textAlign: 'center'
+	},
 	header: {
 		color: 'white'
 	},
@@ -76,7 +81,7 @@ const useStyles = makeStyles(theme => ({
 		}
 	},
 	leftSidebarContent: {
-		height:'500px',
+		height: '500px',
 		'& .yearActive': {
 			backgroundColor: grey[200],
 			pointerEvents: 'none'
@@ -232,10 +237,28 @@ function SimpleLeftSidebar3Sample() {
 					<Paper className="w-full rounded-20 shadow flex flex-col justify-between">
 						<div className={classes.days}>
 							{days &&
+								navigationService.getWeekDays().map(day => (
+									<div className={clsx(classes.day,"p-14")} key={day.value}>
+										<Typography
+											variant="subtitle1"
+											className="text-gray-600 font-normal invisible lg:visible sm:invisible"
+										>
+											{day}
+										</Typography>
+										<Typography
+											variant="subtitle1"
+											className=" text-black-800 font-normal lg:hidden"
+										>
+											{day[0]}
+										</Typography>
+									</div>
+								))}
+
+							{days &&
 								days.map(day => {
 									if (day.enable) {
 										return (
-											<div className={classes.day} key={day.value}>
+											<div className={clsx(classes.day,"p-14 cursor-pointer")} key={day.value}>
 												<Typography
 													variant="h6"
 													onClick={() =>
@@ -245,19 +268,12 @@ function SimpleLeftSidebar3Sample() {
 												>
 													{day.value}
 												</Typography>
-												<Typography variant="subtitle1" className=" text-black-800 font-normal invisible lg:visible sm:invisible">
-													{day.name}
-												</Typography>
-
-												<Typography variant="subtitle1" className=" text-black-800 font-normal lg:hidden">
-													{day.name[0]}
-												</Typography>
 											</div>
 										);
 									}
 
 									return (
-										<div className={classes.day} key={day.value}>
+										<div className={clsx(classes.day,"p-14")} key={day.value}>
 											<Typography
 												variant="h6"
 												className=" font-semibold leading-none text-red tracking-tighter"
@@ -265,12 +281,6 @@ function SimpleLeftSidebar3Sample() {
 												{day.value}
 												{day.value ? '' : '_'}
 											</Typography>
-											<Typography variant="subtitle1" className="text-gray-600 font-normal invisible lg:visible sm:invisible">
-												{day.name}
-											</Typography>
-											<Typography variant="subtitle1" className=" text-black-800 font-normal lg:hidden">
-													{day.name[0]}
-												</Typography>
 										</div>
 									);
 								})}

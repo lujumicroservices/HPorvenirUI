@@ -7,6 +7,7 @@ import Dialog from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Toolbar from '@material-ui/core/Toolbar';
+import DialogContent from '@material-ui/core/DialogContent';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -106,7 +107,8 @@ const useStyles = makeStyles(theme => ({
 	completebuttonbar: {
 		display: 'flex',
 		alignItems: 'center',
-		justifyContent: 'space-around'
+		justifyContent: 'space-around',
+		flexGrow: '1'
 	},
 
 	buttonbar: {
@@ -140,10 +142,16 @@ const useStyles = makeStyles(theme => ({
 		'& $h6': {
 			paddingLeft: '5px'
 		}
+	},
+	dialogHeader: {
+		display: 'flex',
+		alignItems: 'center',
+		backgroundColor: theme.palette.primary.dark
 	}
 }));
 
 function DialogSearchViewer(props, ref) {
+	const componentRef = useRef();
 	const classes = useStyles();
 
 	const [openDialog, setOpenDialog] = useState(false);
@@ -157,6 +165,12 @@ function DialogSearchViewer(props, ref) {
 	const [payload, setPayload] = useState(null);
 	const [fileData, setFileData] = useState(null);
 	const [loadingPDF, setLoadingPDF] = useState(false);
+
+	const [isScrolling, setIsScrolling] = useState(false);
+	const [clientX, setClientX] = useState(0);
+	const [scrollX, setScrollX] = useState(0);
+	const [clientY, setClientY] = useState(0);
+	const [scrollY, setScrollY] = useState(0);
 
 	useEffect(() => {
 		loadFileInfo();
@@ -195,10 +209,10 @@ function DialogSearchViewer(props, ref) {
 		setOpenDialog(false);
 	};
 
-	const onSelectPage = (_index) => {
+	const onSelectPage = _index => {
 		payload.fileName = results[_index].name;
 		setIndex(_index);
-	}
+	};
 
 	const handleZoomIn = ev => {
 		setScale(scale + 0.5);
@@ -258,12 +272,54 @@ function DialogSearchViewer(props, ref) {
 		console.log(`pdf progress ${progress}`);
 	};
 
+	const onMouseout = e => {
+		setIsScrolling(false);
+	};
+
+	const onMouseDown = e => {
+		setIsScrolling(true);
+		setClientX(e.clientX);
+		setClientY(e.clientY);
+	};
+
+	const onMouseUp = () => {
+		setIsScrolling(false);
+	};
+
+	const onMouseMove = e => {
+		console.log("ahaha");
+		if (isScrolling) {
+			if (
+				scrollX + (e.clientX - clientX) * -1 > 0 &&
+				scrollX + (e.clientX - clientX) * -1 < componentRef.current.scrollWidth
+			) {
+				componentRef.current.scrollLeft = scrollX + (e.clientX - clientX) * -1;
+				setScrollX(scrollX + (e.clientX - clientX) * -1);
+				setClientX(e.clientX);
+			} else {
+				setScrollX(componentRef.current.scrollLeft);
+			}
+
+			if (
+				scrollY + (e.clientY - clientY) * -1 > 0 &&
+				scrollY + (e.clientY - clientY) * -1 < componentRef.current.scrollHeight
+			) {
+				componentRef.current.scrollTop = scrollY + (e.clientY - clientY) * -1;
+				setScrollY(scrollY + (e.clientY - clientY) * -1);
+				setClientY(e.clientY);
+				// console.log(`scrolly${componentRef.current.scrollTop}`);
+			} else {
+				setScrollY(componentRef.current.scrollTop);
+			}
+		}
+	};
+
 	const pageLayout = useRef(null);
 
 	return (
 		<Dialog fullScreen open={openDialog} onClose={handleCloseDialog} aria-labelledby="form-dialog-title">
-			<AppBar position="static" elevation={0}>
-				<Toolbar className="flex w-full">
+			<div className={classes.dialogHeader} id="scroll-dialog-title">
+				<div>
 					<IconButton
 						size="medium"
 						edge="start"
@@ -273,101 +329,86 @@ function DialogSearchViewer(props, ref) {
 					>
 						<CloseIcon />
 					</IconButton>
+				</div>
+				{openDialog && (
+					<div className={classes.headerFormat}>
+						<Typography className={classes.headerText} variant="h6">
+							{navigationService.getStringDate(results[index].date)}
+						</Typography>
+					</div>
+				)}
 
-					{openDialog && (
-						<div className={classes.headerFormat}>
-							<Typography className={classes.headerText} variant="h6">
-								{navigationService.getStringDate(results[index].date)}
-							</Typography>
-						</div>
-					)}
-				</Toolbar>
-			</AppBar>
+				<div className={classes.completebuttonbar}>
+					{renderBackButton()}
 
-			<div>
-				<FusePageSimple
-					classes={{
-						root: classes.layoutRoot
-					}}
-					content={
-						<div className="p-24">
-							<div className={classes.root}>
-								<Paper className="w-full rounded-20 shadow flex flex-col justify-between">
-									<div id="pdfcont" onWheel={handleWheel}>
-										<div className={classes.completebuttonbar}>
-											{renderBackButton()}
-											<div className={classes.buttonbar}>
-												<Button
-													disabled={scale >= 3 || !fileData}
-													className={clsx(
-														classes.button,
-														classes.settingsButton,
-														'whitespace-nowrap mx-4'
-													)}
-													onClick={handleZoomIn}
-													variant="contained"
-												>
-													<Icon className={classes.buttonIcon}>zoom_in</Icon>
-												</Button>
-												<Button
-													disabled={scale <= 1 || !fileData}
-													className={clsx(classes.button, 'whitespace-nowrap mx-4')}
-													onClick={handleZoomOut}
-													variant="contained"
-												>
-													<Icon className={classes.buttonIcon}>zoom_out</Icon>
-												</Button>
-												<Button
-													disabled={!fileData}
-													className={clsx(
-														classes.button,
-														classes.settingsButton,
-														'whitespace-nowrap mx-4'
-													)}
-													onClick={handleZoomReset}
-													variant="contained"
-												>
-													<Icon className={classes.buttonIcon}>zoom_out_map</Icon>
-												</Button>
-												<Button
-													className={clsx(
-														classes.button,
-														classes.settingsButton,
-														'whitespace-nowrap mx-4'
-													)}
-													onClick={handleDownloadButton}
-													variant="contained"
-												>
-													<Icon className={classes.buttonIcon}>get_app</Icon>
-												</Button>
-											</div>
-											{renderNextButton()}
-										</div>
+					<div className={classes.buttonbar}>
+						<Button
+							disabled={scale >= 3}
+							className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap mx-4')}
+							onClick={handleZoomIn}
+							variant="contained"
+						>
+							<Icon className={classes.buttonIcon}>zoom_in</Icon>
+						</Button>
+						<Button
+							disabled={scale <= 1}
+							className={clsx(classes.button, 'whitespace-nowrap mx-4')}
+							onClick={handleZoomOut}
+							variant="contained"
+						>
+							<Icon className={classes.buttonIcon}>zoom_out</Icon>
+						</Button>
+						<Button
+							className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap mx-4')}
+							onClick={handleZoomReset}
+							variant="contained"
+						>
+							<Icon className={classes.buttonIcon}>zoom_out_map</Icon>
+						</Button>
+						<Button
+							className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap mx-4')}
+							onClick={handleDownloadButton}
+							variant="contained"
+						>
+							<Icon className={classes.buttonIcon}>get_app</Icon>
+						</Button>
+					</div>
+					{renderNextButton()}
+				</div>
+			</div>
 
-										{loadingPDF && (
-											<div className="h-60">
-												<FuseLoading message="Cargando..." />
-											</div>
-										)}
-
-										{!loadingPDF && (
-											<Document
-												className={classes.document}
-												file={fileData}
-												onLoadSuccess={onPDFSuccess}
-												onLoadProgress={onLoadProgressPDF}
-											>
-												<Page scale={scale} pageNumber={1} />
-											</Document>
-										)}
+			<DialogContent>				
+					<div style={{ display: 'flex', flexDirection: 'row', height: '99%' }}>
+						<div
+						onMouseDown={onMouseDown}
+						onMouseUp={onMouseUp}
+						onMouseMove={onMouseMove}
+						onMouseOut={onMouseout}
+						ref={componentRef}
+						style={{ overflow: 'auto', width: '100%', cursor: 'grab' }}>
+							<div id="pdfcont">
+								{loadingPDF && (
+									<div className="h-60">
+										<FuseLoading message="Cargando..." />
 									</div>
-								</Paper>
+								)}
+
+								{!loadingPDF && (
+									<div>
+									<Document
+										
+										file={fileData}
+										onLoadSuccess={onPDFSuccess}
+										onLoadProgress={onLoadProgressPDF}
+									>
+										<Page scale={scale} pageNumber={1} />
+									</Document>
+									</div>
+								)}
 							</div>
 						</div>
-					}
-					ref={pageLayout}
-				/>
-			</div>
+					</div>				
+			</DialogContent>
 		</Dialog>
 	);
 }
