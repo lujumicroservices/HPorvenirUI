@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/mouse-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useRef, forwardRef, useImperativeHandle, useState } from 'react';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles } from '@material-ui/core/styles';
@@ -439,10 +437,13 @@ function DialogDayViewer(props, ref) {
 						</Hidden>
 					</div>
 					<div
+						role="button"
+						tabIndex="0"
 						onMouseDown={onMouseDown}
 						onMouseUp={onMouseUp}
 						onMouseMove={onMouseMove}
 						onMouseOut={onMouseout}
+						onBlur={onMouseout}
 						ref={componentRef}
 						style={{ overflow: 'auto', width: '100%', cursor: 'grab' }}
 					>

@@ -287,7 +287,7 @@ function DialogSearchViewer(props, ref) {
 	};
 
 	const onMouseMove = e => {
-		console.log("ahaha");
+		console.log('ahaha');
 		if (isScrolling) {
 			if (
 				scrollX + (e.clientX - clientX) * -1 > 0 &&
@@ -377,37 +377,40 @@ function DialogSearchViewer(props, ref) {
 				</div>
 			</div>
 
-			<DialogContent>				
-					<div style={{ display: 'flex', flexDirection: 'row', height: '99%' }}>
-						<div
+			<DialogContent>
+				<div style={{ display: 'flex', flexDirection: 'row', height: '99%' }}>
+					<div
+						role="button"
+						tabIndex="0"
 						onMouseDown={onMouseDown}
 						onMouseUp={onMouseUp}
 						onMouseMove={onMouseMove}
 						onMouseOut={onMouseout}
+						onBlur={onMouseout}
 						ref={componentRef}
-						style={{ overflow: 'auto', width: '100%', cursor: 'grab' }}>
-							<div id="pdfcont">
-								{loadingPDF && (
-									<div className="h-60">
-										<FuseLoading message="Cargando..." />
-									</div>
-								)}
+						style={{ overflow: 'auto', width: '100%', cursor: 'grab' }}
+					>
+						<div id="pdfcont">
+							{loadingPDF && (
+								<div className="h-60">
+									<FuseLoading message="Cargando..." />
+								</div>
+							)}
 
-								{!loadingPDF && (
-									<div>
+							{!loadingPDF && (
+								<div>
 									<Document
-										
 										file={fileData}
 										onLoadSuccess={onPDFSuccess}
 										onLoadProgress={onLoadProgressPDF}
 									>
 										<Page scale={scale} pageNumber={1} />
 									</Document>
-									</div>
-								)}
-							</div>
+								</div>
+							)}
 						</div>
-					</div>				
+					</div>
+				</div>
 			</DialogContent>
 		</Dialog>
 	);
