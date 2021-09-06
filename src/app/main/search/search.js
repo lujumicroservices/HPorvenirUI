@@ -346,7 +346,6 @@ function SimpleFullWidthSample() {
 						animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
 						className="flex items-center w-full max-w-512 m-16 px-8 py-4 rounded-16 shadow"
 					>
-						<Icon color="action">search</Icon>
 
 						<Input
 							placeholder="Buscar"
@@ -360,11 +359,10 @@ function SimpleFullWidthSample() {
 							onChange={ev => handleSearchChange(ev)}
 							onKeyPress={ev => handleKeyPress(ev)}
 						/>
+						<Button color="primary" onClick={ev => triggerSearch(ev)}>
+							<Icon>search</Icon>
+						</Button>
 					</Paper>
-
-					<Button color="primary" variant="contained" onClick={ev => triggerSearch(ev)}>
-						<Icon className={classes.buttonIcon}>search</Icon>
-					</Button>
 				</div>
 			}
 			contentToolbar={
