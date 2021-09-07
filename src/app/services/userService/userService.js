@@ -5,10 +5,8 @@ class UserService extends FuseUtils.EventEmitter {
 	getUsers = payload => {
 		return new Promise((resolve, reject) => {
 			axios
-            .get(`https://localhost:5001/user`)
-				//.get(`${process.env.REACT_APP_WEBAPI}user`)
+			.get(`${process.env.REACT_APP_WEBAPI}user`)
 				.then(response => {
-                    
 					resolve(response);
 				})
 				.catch(err => {
