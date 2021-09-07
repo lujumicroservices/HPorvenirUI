@@ -391,7 +391,7 @@ function DialogSearchViewer(props, ref) {
 						ref={componentRef}
 						style={{ overflow: 'auto', width: '100%', cursor: 'grab' }}
 					>
-						<div id="pdfcont">
+						<div id="pdfcont" style={{ display: 'flex' }}>
 							{loadingPDF && (
 								<div className="h-60">
 									<FuseLoading message="Cargando..." />

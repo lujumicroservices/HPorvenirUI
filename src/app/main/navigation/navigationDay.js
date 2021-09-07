@@ -448,9 +448,9 @@ function DialogDayViewer(props, ref) {
 						style={{ overflow: 'auto', width: '100%', cursor: 'grab' }}
 					>
 						{dayInfo && (
-							<div id="pdfcont">
+							<div id="pdfcont" style={{ display: 'flex' }}>
 								<div>
-									<Document file={fileData}>
+									<Document  file={fileData}>
 										<Page scale={scale} pageNumber={1} />
 									</Document>
 								</div>
