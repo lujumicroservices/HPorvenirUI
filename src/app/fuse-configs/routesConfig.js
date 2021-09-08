@@ -7,6 +7,8 @@ import NavigationConfig from 'app/main/navigation/navigationConfig';
 import ContactsAppConfig from 'app/main/contacts/ContactsAppConfig';
 import LoginConfig from 'app/main/login/LoginConfig';
 import LogoutConfig from 'app/main/logout/LogoutConfig';
+import MantainanceConfig from 'app/main/mantainance/mantainanceConfig';
+
 
 const routeConfigs = [
 	LogoutConfig,
@@ -15,7 +17,8 @@ const routeConfigs = [
 	NavigationConfig,
 	ContactConfig,
 	HelpConfig,
-	ContactsAppConfig
+	ContactsAppConfig,
+	MantainanceConfig
 ];
 
 const routes = [
@@ -25,7 +28,7 @@ const routes = [
 	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['superadmin', 'admin', 'user']),
 	{
 		path: '/',
-		component: () => <Redirect to="/navigation" />
+		component: () => <Redirect to="/mantainance" />
 	},
 	{
 		component: () => <Redirect to="/pages/errors/error-404" />

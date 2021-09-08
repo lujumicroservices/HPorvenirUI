@@ -51,10 +51,9 @@ class FuseAuthorization extends Component {
         User is guest
         Redirect to Login Page
         */
-
 		if (!userRole || userRole.length === 0) {
 			history.push({
-				pathname: '/login',
+				pathname: '/mantainance',
 				state: { redirectUrl: pathname }
 			});
 		} else {
