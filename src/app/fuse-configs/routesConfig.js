@@ -28,7 +28,7 @@ const routes = [
 	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['superadmin', 'admin', 'user']),
 	{
 		path: '/',
-		component: () => <Redirect to="/mantainance" />
+		component: () => <Redirect to="/navigation" />
 	},
 	{
 		component: () => <Redirect to="/pages/errors/error-404" />

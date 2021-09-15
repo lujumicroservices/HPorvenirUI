@@ -29,7 +29,6 @@ class Auth extends Component {
 		new Promise(resolve => {
 			jwtService.on('onAutoLogin', () => {
 				this.props.showMessage({ message: 'Logging in with JWT' });
-
 				/**
 				 * Sign in and retrieve user data from Api
 				 */

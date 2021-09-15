@@ -34,7 +34,6 @@ class FuseAuthorization extends Component {
 	static getDerivedStateFromProps(props, state) {
 		const { location, userRole } = props;
 		const { pathname } = location;
-
 		const matched = matchRoutes(state.routes, pathname)[0];
 
 		return {
@@ -53,7 +52,7 @@ class FuseAuthorization extends Component {
         */
 		if (!userRole || userRole.length === 0) {
 			history.push({
-				pathname: '/mantainance',
+				pathname: '/login',
 				state: { redirectUrl: pathname }
 			});
 		} else {
