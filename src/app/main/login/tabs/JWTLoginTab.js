@@ -32,6 +32,9 @@ const useStyles = makeStyles(theme => ({
 		'& label': {
 			color: 'gray'
 		}
+	},
+	manualError: {
+		color: 'red'
 	}
 }));
 
@@ -124,6 +127,21 @@ function JWTLoginTab(props) {
 						/>
 					)}
 				/>
+
+				<div>
+					{login.errors &&
+						login.errors.map((item, index) => {
+							if (item.type === 'manual') {
+								return (
+									<Typography className={classes.manualError} noWrap>
+										{item.message}
+									</Typography>
+								);
+							}
+
+							return '';
+						})}
+				</div>
 
 				<Button
 					type="submit"

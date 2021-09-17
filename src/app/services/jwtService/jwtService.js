@@ -16,7 +16,7 @@ class JwtService extends FuseUtils.EventEmitter {
 			},
 			err => {
 				return new Promise((resolve, reject) => {
-					if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
+					if (err?.response?.status === 401 && err?.config && !err?.config?.__isRetryRequest) {
 						// if you ever get an unauthorized response, logout the user
 						this.emit('onAutoLogout', 'Invalid access_token');
 						this.setSession(null);
@@ -105,7 +105,7 @@ class JwtService extends FuseUtils.EventEmitter {
 				})
 				.catch(error => {
 					this.logout();
-					reject(new Error('Failed to get ip.'));
+					reject(new Error('Failed authenticate.'));
 				});
 		});
 	};
