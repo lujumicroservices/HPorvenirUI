@@ -58,7 +58,7 @@ const navigationConfig = [
 				translate: 'Admin',
 				type: 'item',
 				icon: 'groups',
-				auth: authRoles.user,
+				auth: authRoles.superadmin,
 				url: '/contacts/all'
 			},
 			{
