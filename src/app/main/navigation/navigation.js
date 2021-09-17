@@ -146,7 +146,6 @@ function SimpleLeftSidebar3Sample() {
 		navigationService.buildNavigationDays(selectedYear, month).then(daysInfo => {
 			const emptyArray = [];
 			if (daysInfo.length > 0) {
-				
 				const dayNumber = navigationService.getDayNumber(daysInfo[0].name);
 				for (let i = 0; i < dayNumber; i += 1) {
 					emptyArray.push({
@@ -156,8 +155,9 @@ function SimpleLeftSidebar3Sample() {
 					});
 				}
 			}
-		
+
 			const finalDays = emptyArray.concat(daysInfo);
+			console.log(finalDays);
 			setDays(finalDays);
 		});
 	}
@@ -240,7 +240,7 @@ function SimpleLeftSidebar3Sample() {
 						<div className={classes.days}>
 							{days &&
 								navigationService.getWeekDays().map(day => (
-									<div className={clsx(classes.day,"p-14")} key={day.value}>
+									<div className={clsx(classes.day, 'p-14')} key={day.value}>
 										<Typography
 											variant="subtitle1"
 											className="text-gray-600 font-normal invisible lg:visible sm:invisible"
@@ -257,10 +257,10 @@ function SimpleLeftSidebar3Sample() {
 								))}
 
 							{days &&
-								days.map(day => {
+								days.map((day, index) => {
 									if (day.enable) {
 										return (
-											<div className={clsx(classes.day,"p-14 cursor-pointer")} key={day.value}>
+											<div className={clsx(classes.day, 'p-14 cursor-pointer')} key={index}>
 												<Typography
 													variant="h6"
 													onClick={() =>
@@ -275,7 +275,7 @@ function SimpleLeftSidebar3Sample() {
 									}
 
 									return (
-										<div className={clsx(classes.day,"p-14")} key={day.value}>
+										<div className={clsx(classes.day, 'p-14')} key={index}>
 											<Typography
 												variant="h6"
 												className=" font-semibold leading-none text-red tracking-tighter"

@@ -86,7 +86,7 @@ function Login() {
 							</a>
 						</div>
 						<div className="py-16">
-							<a href="tarifas/tarifas.aspx">Mas Información y Tarifas</a>
+							<a href="/contact">Mas Información y Tarifas</a>
 						</div>
 					</div>
 				</Card>
