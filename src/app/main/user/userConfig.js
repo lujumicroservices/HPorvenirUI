@@ -8,7 +8,7 @@ const UserConfig = {
 			config: {}
 		}
 	},
-	auth: authRoles.user,
+	auth: authRoles.superadmin,
 	routes: [
 		{
 			path: '/user',

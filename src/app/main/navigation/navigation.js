@@ -146,6 +146,7 @@ function SimpleLeftSidebar3Sample() {
 		navigationService.buildNavigationDays(selectedYear, month).then(daysInfo => {
 			const emptyArray = [];
 			if (daysInfo.length > 0) {
+				
 				const dayNumber = navigationService.getDayNumber(daysInfo[0].name);
 				for (let i = 0; i < dayNumber; i += 1) {
 					emptyArray.push({
@@ -155,6 +156,7 @@ function SimpleLeftSidebar3Sample() {
 					});
 				}
 			}
+		
 			const finalDays = emptyArray.concat(daysInfo);
 			setDays(finalDays);
 		});
@@ -278,8 +280,7 @@ function SimpleLeftSidebar3Sample() {
 												variant="h6"
 												className=" font-semibold leading-none text-red tracking-tighter"
 											>
-												{day.value}
-												{day.value ? '' : '_'}
+												{day.value ? day.value : '_'}
 											</Typography>
 										</div>
 									);

@@ -84,7 +84,7 @@ class NavigationService extends FuseUtils.EventEmitter {
 				endDate = new Date(process.env.REACT_APP_NAV_ENDDATE);
 			}
 
-			for (let i = startDate.getFullYear(); i < endDate.getFullYear(); i += 1) {
+			for (let i = startDate.getFullYear(); i <= endDate.getFullYear(); i += 1) {
 				const year = { value: i };
 				year.enable = info[i] === undefined || Object.keys(info[i]).length === 0;
 				years.push(year);
