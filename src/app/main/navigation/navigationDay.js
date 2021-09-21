@@ -155,7 +155,8 @@ const useStyles = makeStyles(theme => ({
 	groupHeader: {
 		display: 'flex',
 		alignItems: 'center',
-		flexDirection: 'row',
+		flexDirection: 'column',
+		width: '100%',
 		backgroundColor: theme.palette.primary.dark
 	}
 }));

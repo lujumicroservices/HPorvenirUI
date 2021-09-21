@@ -77,6 +77,7 @@ const useStyles = makeStyles(theme => ({
 		minHeight: toolbarHeight,
 		display: 'flex',
 		alignItems: 'center',
+		justifyContent:'end',
 		borderBottom: `1px solid ${theme.palette.divider}`
 	},
 	content: {
