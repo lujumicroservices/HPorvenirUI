@@ -83,9 +83,9 @@ const useStyles = makeStyles(theme => ({
 			}
 		},
 		'& $span': {
-			color: 'white',
+			color: 'black',
 			'& $span': {
-				color: 'white',
+				color: 'black',
 				'&:hover': {
 					color: 'black'
 				}
@@ -128,10 +128,12 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	button: {
-		minWidth: 40,
-		width: 40,
-		height: 40,
-		margin: '10px'
+		minWidth: 30,
+		width: 30,
+		height: 30,
+		margin: '5px',
+		backgroundColor: theme.palette.secondary.dark,
+		color: 'black'
 	},
 
 	headerFormat: {
@@ -302,7 +304,7 @@ function DialogDayViewer(props, ref) {
 			dayInfo && (
 				<Button
 					disabled={selectedPage <= 0}
-					className={clsx(classes.buttonbarstyle, 'whitespace-nowrap mx-4')}
+					className={clsx(classes.buttonbarstyle, classes.button, 'whitespace-nowrap')}
 					variant="contained"
 					onClick={() => onSelectPage(selectedPage - 1)}
 				>
@@ -317,7 +319,7 @@ function DialogDayViewer(props, ref) {
 			dayInfo && (
 				<Button
 					disabled={selectedPage >= dayInfo.thumb.length - 1}
-					className={clsx(classes.buttonbarstyle, 'whitespace-nowrap mx-4')}
+					className={clsx(classes.buttonbarstyle, classes.button, 'whitespace-nowrap')}
 					variant="contained"
 					onClick={() => onSelectPage(selectedPage + 1)}
 				>
@@ -338,7 +340,7 @@ function DialogDayViewer(props, ref) {
 			aria-labelledby="form-dialog-title"
 		>
 			<div className={classes.dialogHeader} id="scroll-dialog-title">
-				<div style={{ alignSelf: 'baseline' }}>
+				<div style={{ alignSelf: 'baseline', padding: '10px' }}>
 					<IconButton
 						size="medium"
 						edge="start"
@@ -367,7 +369,7 @@ function DialogDayViewer(props, ref) {
 						<div className={classes.buttonbar}>
 							<Button
 								disabled={scale >= 3}
-								className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap mx-4')}
+								className={clsx(classes.button, 'whitespace-nowrap')}
 								onClick={handleZoomIn}
 								variant="contained"
 							>
@@ -375,21 +377,21 @@ function DialogDayViewer(props, ref) {
 							</Button>
 							<Button
 								disabled={scale <= 1}
-								className={clsx(classes.button, 'whitespace-nowrap mx-4')}
+								className={clsx(classes.button, 'whitespace-nowrap')}
 								onClick={handleZoomOut}
 								variant="contained"
 							>
 								<Icon className={classes.buttonIcon}>zoom_out</Icon>
 							</Button>
 							<Button
-								className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap mx-4')}
+								className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap')}
 								onClick={handleZoomReset}
 								variant="contained"
 							>
 								<Icon className={classes.buttonIcon}>zoom_out_map</Icon>
 							</Button>
 							<Button
-								className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap mx-4')}
+								className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap')}
 								onClick={handleDownloadButton}
 								variant="contained"
 							>
@@ -418,11 +420,20 @@ function DialogDayViewer(props, ref) {
 												<img src={page} alt="" />
 												{i === selectedPage && (
 													<span
-														className={clsx(classes.button, classes.settingsButton, 'icon')}
+														className={clsx(
+															classes.button,
+															classes.settingsButton,
+															'icon',
+															'rounded-lg'
+														)}
 														variant="contained"
 														color="secondary"
 													>
-														<Typography color="Primary" variant="subtitle2">
+														<Typography
+															color="Primary"
+															variant="subtitle2"
+															className="mt-5"
+														>
 															{i + 1}
 														</Typography>
 													</span>
@@ -430,11 +441,20 @@ function DialogDayViewer(props, ref) {
 
 												{i !== selectedPage && (
 													<span
-														className={clsx(classes.button, classes.settingsButton, 'icon')}
+														className={clsx(
+															classes.button,
+															classes.settingsButton,
+															'icon',
+															'rounded-lg'
+														)}
 														variant="contained"
 														color="primary"
 													>
-														<Typography color="textPrimary" variant="subtitle2">
+														<Typography
+															color="textPrimary"
+															variant="subtitle2"
+															className="mt-5"
+														>
 															{i + 1}
 														</Typography>
 													</span>
