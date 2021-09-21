@@ -151,6 +151,12 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		alignItems: 'center',
 		backgroundColor: theme.palette.primary.dark
+	},
+	groupHeader: {
+		display: 'flex',
+		alignItems: 'center',
+		flexDirection: 'row',
+		backgroundColor: theme.palette.primary.dark
 	}
 }));
 
@@ -331,7 +337,7 @@ function DialogDayViewer(props, ref) {
 			aria-labelledby="form-dialog-title"
 		>
 			<div className={classes.dialogHeader} id="scroll-dialog-title">
-				<div>
+				<div style={{ alignSelf: 'baseline' }}>
 					<IconButton
 						size="medium"
 						edge="start"
@@ -342,53 +348,55 @@ function DialogDayViewer(props, ref) {
 						<CloseIcon />
 					</IconButton>
 				</div>
-				{dayInfo && (
-					<div className={classes.headerFormat}>
-						<Typography className={classes.headerText} variant="h6">
-							{`${navigationService.getDayString(
-								selectedDate.getDay()
-							)}, ${selectedDate.getDate()} De ${navigationService.getMonthString(
-								selectedDate.getMonth()
-							)} De ${selectedDate.getFullYear()}`}
-						</Typography>
-					</div>
-				)}
-				<div className={classes.completebuttonbar}>
-					{renderBackButton()}
+				<div className={classes.groupHeader}>
+					{dayInfo && (
+						<div className={classes.headerFormat}>
+							<Typography className={classes.headerText} variant="h6">
+								{`${navigationService.getDayString(
+									selectedDate.getDay()
+								)}, ${selectedDate.getDate()} De ${navigationService.getMonthString(
+									selectedDate.getMonth()
+								)} De ${selectedDate.getFullYear()}`}
+							</Typography>
+						</div>
+					)}
+					<div className={classes.completebuttonbar}>
+						{renderBackButton()}
 
-					<div className={classes.buttonbar}>
-						<Button
-							disabled={scale >= 3}
-							className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap mx-4')}
-							onClick={handleZoomIn}
-							variant="contained"
-						>
-							<Icon className={classes.buttonIcon}>zoom_in</Icon>
-						</Button>
-						<Button
-							disabled={scale <= 1}
-							className={clsx(classes.button, 'whitespace-nowrap mx-4')}
-							onClick={handleZoomOut}
-							variant="contained"
-						>
-							<Icon className={classes.buttonIcon}>zoom_out</Icon>
-						</Button>
-						<Button
-							className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap mx-4')}
-							onClick={handleZoomReset}
-							variant="contained"
-						>
-							<Icon className={classes.buttonIcon}>zoom_out_map</Icon>
-						</Button>
-						<Button
-							className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap mx-4')}
-							onClick={handleDownloadButton}
-							variant="contained"
-						>
-							<Icon className={classes.buttonIcon}>get_app</Icon>
-						</Button>
+						<div className={classes.buttonbar}>
+							<Button
+								disabled={scale >= 3}
+								className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap mx-4')}
+								onClick={handleZoomIn}
+								variant="contained"
+							>
+								<Icon className={classes.buttonIcon}>zoom_in</Icon>
+							</Button>
+							<Button
+								disabled={scale <= 1}
+								className={clsx(classes.button, 'whitespace-nowrap mx-4')}
+								onClick={handleZoomOut}
+								variant="contained"
+							>
+								<Icon className={classes.buttonIcon}>zoom_out</Icon>
+							</Button>
+							<Button
+								className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap mx-4')}
+								onClick={handleZoomReset}
+								variant="contained"
+							>
+								<Icon className={classes.buttonIcon}>zoom_out_map</Icon>
+							</Button>
+							<Button
+								className={clsx(classes.button, classes.settingsButton, 'whitespace-nowrap mx-4')}
+								onClick={handleDownloadButton}
+								variant="contained"
+							>
+								<Icon className={classes.buttonIcon}>get_app</Icon>
+							</Button>
+						</div>
+						{renderNextButton()}
 					</div>
-					{renderNextButton()}
 				</div>
 			</div>
 
@@ -450,7 +458,7 @@ function DialogDayViewer(props, ref) {
 						{dayInfo && (
 							<div id="pdfcont" style={{ display: 'flex' }}>
 								<div>
-									<Document  file={fileData}>
+									<Document file={fileData}>
 										<Page scale={scale} pageNumber={1} />
 									</Document>
 								</div>

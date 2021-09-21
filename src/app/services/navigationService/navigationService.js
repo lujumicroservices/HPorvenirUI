@@ -178,7 +178,7 @@ class NavigationService extends FuseUtils.EventEmitter {
 					const downloadUrl = window.URL.createObjectURL(new Blob([data]));
 					const link = document.createElement('a');
 					link.href = downloadUrl;
-					link.setAttribute('download', page); // any other extension
+					link.setAttribute('download', page.replace('.tif', '.pdf')); // any other extension
 					document.body.appendChild(link);
 					link.click();
 					link.remove();

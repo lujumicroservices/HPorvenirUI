@@ -172,6 +172,7 @@ function SimpleLeftSidebar3Sample() {
 					<div className="flex items-center p-24 px-12">
 						<Hidden lgUp>
 							<IconButton
+								style={{ backgroundColor: '#FED441', padding: '5px' }}
 								onClick={ev => pageLayout.current.toggleLeftSidebar()}
 								aria-label="open left sidebar"
 							>
@@ -185,11 +186,17 @@ function SimpleLeftSidebar3Sample() {
 				</div>
 			}
 			contentToolbar={
-				<div className="px-24">
-					<h4>
-						{' '}
-						<Typography> Año seleccionado : {selectedYear} </Typography>{' '}
-					</h4>
+				<div className="px-24" style={{ display: 'flex', alignItems: 'center' }}>
+					<Typography className="p-24"> Año : {selectedYear} </Typography>{' '}
+					<Hidden lgUp>
+						<Button
+							onClick={ev => pageLayout.current.toggleLeftSidebar()}
+							variant="contained"
+							color="secondary"
+						>
+							Cambiar año
+						</Button>
+					</Hidden>
 				</div>
 			}
 			content={
