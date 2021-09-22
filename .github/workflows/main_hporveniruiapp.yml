@@ -25,7 +25,7 @@ jobs:
       run: |
         npm install -g yarn --force
         yarn install
-        yarn run build
+        CI='' yarn run build
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
