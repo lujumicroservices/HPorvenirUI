@@ -52,4 +52,3 @@ jobs:
       with:
         app-name: 'hporveniruiapp'        
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_ad6582842c504eb6818f209b36e142b2 }}
-        package: .
