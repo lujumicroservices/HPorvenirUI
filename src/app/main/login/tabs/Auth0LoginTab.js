@@ -24,7 +24,7 @@ function Auth0LoginTab(props) {
 
 	const showDialog = () => {
 		auth0Service.login();
-	}
+	};
 
 	return (
 		<div className="w-full">

@@ -32,7 +32,7 @@ class JwtService extends FuseUtils.EventEmitter {
 
 		if (!access_token) {
 			this.tryGetIp().then(result => {
-				this.trylogByIp(result).then( result2 => {
+				this.trylogByIp(result).then(result2 => {
 					console.log(result2);
 				});
 			});
@@ -110,7 +110,7 @@ class JwtService extends FuseUtils.EventEmitter {
 		});
 	};
 
-	trylogByIp = (ip) => {
+	trylogByIp = ip => {
 		return new Promise((resolve, reject) => {
 			axios
 				.get(`${process.env.REACT_APP_WEBAPI}Authentication/iplogin/${ip}`)
@@ -118,7 +118,7 @@ class JwtService extends FuseUtils.EventEmitter {
 					if (response.data.user) {
 						this.setSession(response.data.access_token);
 						this.handleAuthentication();
-						//resolve(response.data.user);
+						// resolve(response.data.user);
 					} else {
 						reject(new Error('missing'));
 					}

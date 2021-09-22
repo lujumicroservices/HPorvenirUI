@@ -137,7 +137,7 @@
     },
     "scripts": {
         "start": "craco start --config craco.config.js --verbose",
-        "build": "cross-env GENERATE_SOURCEMAP=false craco build",
+        "build": "cross-env CI=false GENERATE_SOURCEMAP=false craco build",
         "test": "craco test --env=node",
         "eject": "craco eject",
         "build-docs": "find ./src/app/main/documentation/material-ui-components \\( -name '*.ts' -o -name '*.tsx' \\) -type f -delete && babel-node --presets @babel/preset-env src/app/main/documentation/material-ui-components/build.js",

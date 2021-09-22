@@ -172,11 +172,11 @@ function FuseSidePanel(props) {
 
 	const toggleOpened = () => {
 		setOpened(!opened);
-	}
+	};
 
 	const toggleMobileDrawer = () => {
 		setMobileOpen(!mobileOpen);
-	}
+	};
 
 	return (
 		<>

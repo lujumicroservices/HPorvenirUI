@@ -31,7 +31,7 @@ function FuseNavVerticalLayout2(props) {
 
 	const handleItemClick = item => {
 		onItemClick && onItemClick(item);
-	}
+	};
 
 	return (
 		<List

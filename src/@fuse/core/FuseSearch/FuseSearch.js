@@ -241,7 +241,7 @@ function FuseSearch(props) {
 	const hideSearch = () => {
 		dispatch({ type: 'close' });
 		document.removeEventListener('keydown', escFunction, false);
-	}
+	};
 
 	function escFunction(event) {
 		if (event.keyCode === 27) {
@@ -277,7 +277,7 @@ function FuseSearch(props) {
 			type: 'setSearchText',
 			value: event.target.value
 		});
-	}
+	};
 
 	const handleClickAway = event => {
 		return (
@@ -285,7 +285,7 @@ function FuseSearch(props) {
 			(!suggestionsNode.current || !suggestionsNode.current.contains(event.target)) &&
 			hideSearch()
 		);
-	}
+	};
 
 	const autosuggestProps = {
 		renderInputComponent,

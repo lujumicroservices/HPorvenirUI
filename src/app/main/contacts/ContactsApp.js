@@ -11,7 +11,6 @@ import ContactsSidebarContent from './ContactsSidebarContent';
 import reducer from './store';
 import { getContacts } from './store/contactsSlice';
 
-
 function ContactsApp(props) {
 	const dispatch = useDispatch();
 
@@ -19,7 +18,7 @@ function ContactsApp(props) {
 	const routeParams = useParams();
 
 	useDeepCompareEffect(() => {
-		dispatch(getContacts(routeParams));	
+		dispatch(getContacts(routeParams));
 	}, [dispatch, routeParams]);
 
 	return (

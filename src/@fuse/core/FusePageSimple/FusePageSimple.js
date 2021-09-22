@@ -186,7 +186,7 @@ const FusePageSimple = forwardRef((props, ref) => {
 					{/*    className={clsx(classes.contentCardWrapper, props.sidebarInner && classes.contentCardWrapperInnerSidebar)} */}
 					{/*    enable={props.innerScroll && props.sidebarInner} */}
 					{/* > */}
-					
+
 					<FuseScrollbars
 						className={classes.contentWrapper}
 						enable={props.innerScroll && !props.sidebarInner}

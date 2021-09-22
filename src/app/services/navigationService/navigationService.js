@@ -66,7 +66,7 @@ class NavigationService extends FuseUtils.EventEmitter {
 			});
 		}
 
-		return new Promise(function (resolve, reject) {
+		return new Promise((resolve, reject) => {
 			resolve(JSON.parse(localStorage.getItem('navigationExclusionv2')));
 		});
 	};
@@ -145,7 +145,7 @@ class NavigationService extends FuseUtils.EventEmitter {
 				});
 			});
 		}
-		return new Promise(function (resolve, reject) {
+		return new Promise((resolve, reject) => {
 			resolve(JSON.parse(localStorage.getItem(`day_${year}_${month}_${day}`)));
 		});
 	};

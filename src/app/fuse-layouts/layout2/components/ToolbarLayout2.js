@@ -39,7 +39,7 @@ function ToolbarLayout2(props) {
 							<NavbarToggleButton className="w-40 h-40 p-0 mx-0 sm:mx-8" />
 						</Hidden>
 					)}
-hola
+
 					<div className="flex items-center px-8 h-full overflow-x-auto">
 						<FullScreenToggle />
 

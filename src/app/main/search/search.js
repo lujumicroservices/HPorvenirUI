@@ -346,7 +346,6 @@ function SimpleFullWidthSample() {
 						animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
 						className="flex items-center w-full max-w-512 m-16 px-8 py-4 rounded-16 shadow"
 					>
-
 						<Input
 							placeholder="Buscar"
 							className={clsx(classes.searchInput, 'flex flex-1 mx-8')}

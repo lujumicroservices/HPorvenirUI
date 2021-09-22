@@ -132,7 +132,7 @@ function ContactDialog(props) {
 	 */
 	const closeComposeDialog = () => {
 		return contactDialog.type === 'edit' ? dispatch(closeEditContactDialog()) : dispatch(closeNewContactDialog());
-	}
+	};
 
 	/**
 	 * Form Submit
@@ -152,7 +152,7 @@ function ContactDialog(props) {
 	const handleRemove = () => {
 		dispatch(removeContact(1));
 		closeComposeDialog();
-	}
+	};
 
 	return (
 		<Dialog

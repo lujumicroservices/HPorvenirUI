@@ -9,7 +9,6 @@ import LoginConfig from 'app/main/login/LoginConfig';
 import LogoutConfig from 'app/main/logout/LogoutConfig';
 import MantainanceConfig from 'app/main/mantainance/mantainanceConfig';
 
-
 const routeConfigs = [
 	LogoutConfig,
 	LoginConfig,

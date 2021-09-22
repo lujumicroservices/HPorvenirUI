@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-
 export const getContacts = createAsyncThunk('contactsApp/contacts/getContacts', async (routeParams, { getState }) => {
 	routeParams = routeParams || getState().contactsApp.contacts.routeParams;
 	const response = await axios.get(`${process.env.REACT_APP_WEBAPI}user`, {
@@ -11,7 +10,7 @@ export const getContacts = createAsyncThunk('contactsApp/contacts/getContacts', 
 	return { data, routeParams };
 });
 
-export const addContact = createAsyncThunk('contactsApp/contacts/addContact', async (user, { dispatch, getState }) => {	
+export const addContact = createAsyncThunk('contactsApp/contacts/addContact', async (user, { dispatch, getState }) => {
 	const response = await axios.post(`${process.env.REACT_APP_WEBAPI}user`, user);
 	const data = await response.data;
 	dispatch(getContacts());
@@ -74,7 +73,7 @@ export const setContactsStarred = createAsyncThunk(
 	'contactsApp/contacts/setContactsStarred',
 	async (contactIds, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/set-contacts-starred', { contactIds });
-		const data = await response.data;	
+		const data = await response.data;
 		dispatch(getContacts());
 
 		return data;
@@ -85,7 +84,7 @@ export const setContactsUnstarred = createAsyncThunk(
 	'contactsApp/contacts/setContactsUnstarred',
 	async (contactIds, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/set-contacts-unstarred', { contactIds });
-		const data = await response.data;		
+		const data = await response.data;
 		dispatch(getContacts());
 		return data;
 	}

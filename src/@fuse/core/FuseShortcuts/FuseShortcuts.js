@@ -48,11 +48,11 @@ function FuseShortcuts(props) {
 
 	const addMenuClick = event => {
 		setAddMenu(event.currentTarget);
-	}
+	};
 
 	const addMenuClose = () => {
 		setAddMenu(null);
-	}
+	};
 
 	const search = ev => {
 		const newSearchText = ev.target.value;
@@ -64,7 +64,7 @@ function FuseShortcuts(props) {
 			return;
 		}
 		setSearchResults(null);
-	}
+	};
 
 	function toggleInShortcuts(id) {
 		let newShortcuts = [...shortcuts];
