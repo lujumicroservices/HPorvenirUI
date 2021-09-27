@@ -36,23 +36,23 @@ jobs:
 
     - uses: actions/checkout@v2
       with:
-        path: ./proxi
+        path: ./proxy
         repository: lujumicroservices/HporvenirProxy
 
     - name: npm install, build, and test
-      working-directory: ./proxi
+      working-directory: ./proxy
       run: |
+        mkdir ../proxy/client
         npm install
         npm run build --if-present
         npm run test --if-present
-
-
-
+        cp ../spa/build ./proxy/client
+        
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
       with:
         name: node-app
-        path: spa/build/
+        path: ./proxy
 
   deploy:
     runs-on: ubuntu-latest
