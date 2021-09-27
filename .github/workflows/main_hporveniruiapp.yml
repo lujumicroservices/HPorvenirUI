@@ -30,10 +30,23 @@ jobs:
         yarn install
         CI='' yarn run build
       
-    
     - name: add process.json
       run: |
         echo '{ script: "serve", env: { PM2_SERVE_SPA: "true", PM2_SERVE_HOMEPAGE: "/index.html" } }' >> spa/build/process.json
+
+    - uses: actions/checkout@v2
+      with:
+        path: ./proxi
+        repository: lujumicroservices/HporvenirProxy
+
+    - name: npm install, build, and test
+      working-directory: ./proxi
+      run: |
+        npm install
+        npm run build --if-present
+        npm run test --if-present
+
+
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
