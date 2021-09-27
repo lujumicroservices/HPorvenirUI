@@ -46,7 +46,7 @@ jobs:
         npm install
         npm run build --if-present
         npm run test --if-present
-        cp ../spa/build ./proxy/client
+        cp -r ../spa/build ./proxy/client
         
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
