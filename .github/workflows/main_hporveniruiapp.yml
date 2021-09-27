@@ -42,11 +42,11 @@ jobs:
     - name: npm install, build, and test
       working-directory: ./proxy
       run: |
-        mkdir ./proxy/client
+        mkdir client
         npm install
         npm run build --if-present
         npm run test --if-present
-        cp -r ../spa/build ./proxy/client
+        cp -r ../spa/build ./client
         
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
