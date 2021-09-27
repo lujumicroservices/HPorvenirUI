@@ -29,11 +29,7 @@ jobs:
         npm install -g yarn --force
         yarn install
         CI='' yarn run build
-      
-    - name: add process.json
-      run: |
-        echo '{ script: "serve", env: { PM2_SERVE_SPA: "true", PM2_SERVE_HOMEPAGE: "/index.html" } }' >> spa/build/process.json
-
+         
     - uses: actions/checkout@v2
       with:
         path: ./proxy
