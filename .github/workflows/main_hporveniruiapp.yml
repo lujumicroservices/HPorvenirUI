@@ -6,7 +6,7 @@ name: Build and deploy Node.js app to Azure Web App - hporveniruiapp
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 jobs:
@@ -15,6 +15,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        path: ./spa
 
     - name: Set up Node.js version
       uses: actions/setup-node@v1
@@ -22,16 +24,31 @@ jobs:
         node-version: '14.x'
 
     - name: npm install, build, and test
+      working-directory: ./spa
       run: |
         npm install -g yarn --force
         yarn install
         CI='' yarn run build
+         
+    - uses: actions/checkout@v2
+      with:
+        path: ./proxy
+        repository: lujumicroservices/HporvenirProxy
 
+    - name: npm install, build, and test
+      working-directory: ./proxy
+      run: |
+        mkdir client
+        npm install
+        npm run build --if-present
+        npm run test --if-present
+        cp -r ../spa/build/. ./client/
+        
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
       with:
         name: node-app
-        path: build/
+        path: ./proxy
 
   deploy:
     runs-on: ubuntu-latest
