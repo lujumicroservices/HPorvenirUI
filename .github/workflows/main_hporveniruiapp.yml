@@ -25,7 +25,10 @@ jobs:
 
     - name: npm install, build, and test
       working-directory: ./spa
-      run: CI='' yarn run build
+      run: |
+        npm install -g yarn --force
+        yarn install
+        CI='' yarn run build
       
     
     - name: add process.json
