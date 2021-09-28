@@ -300,6 +300,10 @@ function DialogDayViewer(props, ref) {
 		}
 	};
 
+	function onLoadPDFError(error){
+		console.log(error);
+	}
+
 	function renderBackButton() {
 		return (
 			dayInfo && (
@@ -480,7 +484,9 @@ function DialogDayViewer(props, ref) {
 						{dayInfo && (
 							<div id="pdfcont" style={{ display: 'flex' }}>
 								<div>
-									<Document file={fileData}>
+									<Document file={fileData}
+									onLoadError={onLoadPDFError}
+									>
 										<Page scale={scale} pageNumber={1} />
 									</Document>
 								</div>
