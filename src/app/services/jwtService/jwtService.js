@@ -1,12 +1,13 @@
 import FuseUtils from '@fuse/utils/FuseUtils';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import { useLocation } from 'react-router-dom';
 /* eslint-disable camelcase */
 
 class JwtService extends FuseUtils.EventEmitter {
-	init() {
+	init(urlp) {
 		this.setInterceptors();
-		this.handleIpAuthentication();
+		this.handleIpAuthentication(urlp);
 	}
 
 	setInterceptors = () => {
@@ -27,15 +28,21 @@ class JwtService extends FuseUtils.EventEmitter {
 		);
 	};
 
-	handleIpAuthentication = () => {
+	handleIpAuthentication = urlp => {
 		const access_token = this.getAccessToken();
-
 		if (!access_token) {
-			this.tryGetIp().then(result => {
-				this.trylogByIp(result).then(result2 => {
-					console.log(result2);
+			if (urlp && urlp.iv && urlp.secret) {
+				this.trylogRemote(urlp).then(result => {
+					console.log(result);
 				});
-			});
+			} else {
+				this.tryGetIp().then(result => {
+					this.trylogByIp(result).then(result2 => {
+						console.log(result2);
+					});
+				});
+			}
+
 			// this.emit('onNoAccessToken');
 			// return;
 		} else {
@@ -114,6 +121,25 @@ class JwtService extends FuseUtils.EventEmitter {
 		return new Promise((resolve, reject) => {
 			axios
 				.get(`${process.env.REACT_APP_WEBAPI}Authentication/iplogin/${ip}`)
+				.then(response => {
+					if (response.data.user) {
+						this.setSession(response.data.access_token);
+						this.handleAuthentication();
+						// resolve(response.data.user);
+					} else {
+						reject(new Error('missing'));
+					}
+				})
+				.catch(error => {
+					this.handleAuthentication();
+				});
+		});
+	};
+
+	trylogRemote = urlp => {
+		return new Promise((resolve, reject) => {
+			axios
+				.get(`${process.env.REACT_APP_WEBAPI}Authentication/remotelogin/${urlp.secret}/${urlp.iv}`)
 				.then(response => {
 					if (response.data.user) {
 						this.setSession(response.data.access_token);

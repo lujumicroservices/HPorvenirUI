@@ -1,11 +1,11 @@
+import queryString from 'query-string';
 import FuseSplashScreen from '@fuse/core/FuseSplashScreen';
-import auth0Service from 'app/services/auth0Service';
-import firebaseService from 'app/services/firebaseService';
 import jwtService from 'app/services/jwtService';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
+import { withRouter } from 'react-router-dom';
 
 import { setUserDataFirebase, setUserDataAuth0, setUserData, logoutUser } from './store/userSlice';
 
@@ -15,6 +15,7 @@ class Auth extends Component {
 	};
 
 	componentDidMount() {
+		const { location } = this.props;
 		return Promise.all([
 			// Comment the lines which you do not use
 			// this.firebaseCheck(),
@@ -32,6 +33,7 @@ class Auth extends Component {
 				/**
 				 * Sign in and retrieve user data from Api
 				 */
+
 				jwtService
 					.signInWithToken()
 					.then(user => {
@@ -60,70 +62,8 @@ class Auth extends Component {
 				resolve();
 			});
 
-			jwtService.init();
-
-			return Promise.resolve();
-		});
-
-	auth0Check = () =>
-		new Promise(resolve => {
-			auth0Service.init(success => {
-				if (!success) {
-					resolve();
-				}
-			});
-
-			if (auth0Service.isAuthenticated()) {
-				this.props.showMessage({ message: 'Logging in with Auth0' });
-
-				/**
-				 * Retrieve user data from Auth0
-				 */
-				auth0Service.getUserData().then(tokenData => {
-					this.props.setUserDataAuth0(tokenData);
-
-					resolve();
-
-					this.props.showMessage({ message: 'Logged in with Auth0' });
-				});
-			} else {
-				resolve();
-			}
-
-			return Promise.resolve();
-		});
-
-	firebaseCheck = () =>
-		new Promise(resolve => {
-			firebaseService.init(success => {
-				if (!success) {
-					resolve();
-				}
-			});
-
-			firebaseService.onAuthStateChanged(authUser => {
-				if (authUser) {
-					this.props.showMessage({ message: 'Logging in with Firebase' });
-
-					/**
-					 * Retrieve user data from Firebase
-					 */
-					firebaseService.getUserData(authUser.uid).then(
-						user => {
-							this.props.setUserDataFirebase(user, authUser);
-
-							resolve();
-
-							this.props.showMessage({ message: 'Logged in with Firebase' });
-						},
-						error => {
-							resolve();
-						}
-					);
-				} else {
-					resolve();
-				}
-			});
+			const urlp = queryString.parse(this.props.location.search);
+			jwtService.init(urlp);
 
 			return Promise.resolve();
 		});
@@ -147,4 +87,4 @@ function mapDispatchToProps(dispatch) {
 	);
 }
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default withRouter(connect(null, mapDispatchToProps)(Auth));
