@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
+import { showMessage } from 'app/store/fuse/messageSlice';
 import axios from 'axios';
 
 export const getContacts = createAsyncThunk('contactsApp/contacts/getContacts', async (routeParams, { getState }) => {
@@ -13,6 +14,7 @@ export const getContacts = createAsyncThunk('contactsApp/contacts/getContacts', 
 export const addContact = createAsyncThunk('contactsApp/contacts/addContact', async (user, { dispatch, getState }) => {
 	const response = await axios.post(`${process.env.REACT_APP_WEBAPI}user`, user);
 	const data = await response.data;
+	dispatch(showMessage({ message: 'Usuario creado con exito' }));
 	dispatch(getContacts());
 
 	return data;
@@ -24,6 +26,7 @@ export const updateContact = createAsyncThunk(
 		const response = await axios.put(`${process.env.REACT_APP_WEBAPI}user`, contact);
 		const data = await response.data;
 		dispatch(getContacts());
+		dispatch(showMessage({ message: 'Usuario actualizado con exito' }));
 		return data;
 	}
 );

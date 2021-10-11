@@ -46,7 +46,8 @@ const defaultValues = {
 	name: '',
 	lastName: '',
 	email: '',
-	role: 'usuario'
+	role: 'usuario',
+	duracion: '1'
 };
 
 const schema = yup.object().shape({
@@ -135,7 +136,7 @@ function AddUserDialog(props) {
 
 	return (
 		<Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-			<DialogTitle id="simple-dialog-title">Agregar nuevo usuario</DialogTitle>
+			<DialogTitle id="simple-dialog-title">Agregar nuevo usuarioa</DialogTitle>
 			<Card className={classes.mailform}>
 				<CardContent>
 					<form
@@ -241,6 +242,35 @@ function AddUserDialog(props) {
 										variant="outlined"
 										fullWidth
 									/>
+								)}
+							/>
+						</div>
+
+						<div className="flex">
+							<div className="min-w-48 pt-20">
+								<Icon color="action">vpn_key</Icon>
+							</div>
+							<Controller
+								control={control}
+								name="duracion"
+								render={({ field }) => (
+									<Select {...field} variant="outlined">
+										<MenuItem value="1" key="1">
+											<em> 1 mes </em>
+										</MenuItem>
+										<MenuItem value="6" key="6">
+											<em> 6 meses </em>
+										</MenuItem>
+										<MenuItem value="12" key="12">
+											<em> 1 año </em>
+										</MenuItem>
+										<MenuItem value="36" key="36">
+											<em> 3 años </em>
+										</MenuItem>
+										<MenuItem value="0" key="0">
+											<em> indefinido </em>
+										</MenuItem>
+									</Select>
 								)}
 							/>
 						</div>

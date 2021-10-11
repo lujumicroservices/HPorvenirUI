@@ -11,7 +11,9 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
+import { DatePicker } from '@material-ui/pickers';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
@@ -67,7 +69,8 @@ const defaultValues = {
 	name: '',
 	lastName: '',
 	email: '',
-	roleArray: 'user'
+	roleArray: 'user',
+	duration: null
 };
 
 /**
@@ -83,7 +86,7 @@ function ContactDialog(props) {
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ contactsApp }) => contactsApp.contacts.contactDialog);
 
-	const { control, watch, reset, handleSubmit, formState, getValues } = useForm({
+	const { control, watch, reset, handleSubmit, formState, getValues, setValue } = useForm({
 		mode: 'onChange',
 		defaultValues,
 		resolver: yupResolver(schema)
@@ -117,6 +120,10 @@ function ContactDialog(props) {
 			});
 		}
 	}, [contactDialog.data, contactDialog.type, reset]);
+
+	const handleClick = () => {
+		const x = 1;
+	};
 
 	/**
 	 * On Dialog Open
@@ -167,7 +174,7 @@ function ContactDialog(props) {
 			<AppBar position="static" elevation={0}>
 				<Toolbar className="flex w-full">
 					<Typography variant="subtitle1" color="inherit">
-						{contactDialog.type === 'new' ? 'New Contact' : 'Edit Contact'}
+						{contactDialog.type === 'new' ? 'Nuevo Usuario' : 'Editar Usuario'}
 					</Typography>
 				</Toolbar>
 				<div className="flex flex-col items-center justify-center pb-24">
@@ -284,6 +291,89 @@ function ContactDialog(props) {
 					</div>
 
 					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">access_time</Icon>
+						</div>
+
+						<div>
+							<Chip
+								className="m-5"
+								label="1 mes"
+								onClick={() => {
+									const ndate = new Date();
+									ndate.setMonth(ndate.getMonth() + 1);
+
+									setValue('duration', ndate, {
+										shouldValidate: true,
+										shouldDirty: true
+									});
+								}}
+							/>
+							<Chip
+								className="m-5"
+								label="3 meses"
+								onClick={() => {
+									const ndate = new Date();
+									ndate.setMonth(ndate.getMonth() + 3);
+									setValue('duration', ndate, {
+										shouldValidate: true,
+										shouldDirty: true
+									});
+								}}
+							/>
+							<Chip
+								className="m-5"
+								label="1 año"
+								onClick={() => {
+									const ndate = new Date();
+									ndate.setMonth(ndate.getMonth() + 12);
+									setValue('duration', ndate, {
+										shouldValidate: true,
+										shouldDirty: true
+									});
+								}}
+							/>
+							<Chip
+								className="m-5"
+								label="3 años"
+								onClick={() => {
+									const ndate = new Date();
+									ndate.setMonth(ndate.getMonth() + 36);
+									setValue('duration', ndate, {
+										shouldValidate: true,
+										shouldDirty: true
+									});
+								}}
+							/>
+							<Chip
+								className="m-5"
+								label="indefinido"
+								onClick={() => {
+									setValue('duration', null, {
+										shouldValidate: true,
+										shouldDirty: true
+									});
+								}}
+							/>
+						</div>
+
+						<Controller
+							name="duration"
+							control={control}
+							render={({ field: { onChange, value } }) => (
+								<DatePicker
+									format="dd-MM-yyyy"
+									label="duracion"
+									inputVariant="outlined"
+									value={value}
+									onChange={onChange}
+									className={clsx(classes.controlOverride, 'mt-8 mb-16 w-full')}
+								/>
+							)}
+						/>
+					</div>
+
+					<div className="flex pt-20">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">vpn_key</Icon>
 						</div>
