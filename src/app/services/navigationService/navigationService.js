@@ -161,7 +161,7 @@ class NavigationService extends FuseUtils.EventEmitter {
 	loadPage = page => {
 		return new Promise((resolve, reject) => {
 			axios
-				.get(`${process.env.REACT_APP_WEBAPI}navigation/file/${encodeURIComponent(page)}`, {
+				.get(`${process.env.REACT_APP_WEBAPI}navigation/file/${this.encodeFileName(page)}`, {
 					headers: {
 						'Content-Type': 'application/json'
 					},
@@ -176,7 +176,7 @@ class NavigationService extends FuseUtils.EventEmitter {
 	downloadPage = page => {
 		return new Promise((resolve, reject) => {
 			axios
-				.get(`${process.env.REACT_APP_WEBAPI}navigation/file/${encodeURIComponent(page)}`, {
+				.get(`${process.env.REACT_APP_WEBAPI}navigation/file/${this.encodeFileName(page)}`, {
 					responseType: 'blob',
 					headers: {
 						'Content-Type': 'application/pdf'
@@ -200,6 +200,10 @@ class NavigationService extends FuseUtils.EventEmitter {
 				resolve(response);
 			});
 		});
+	};
+
+	encodeFileName = page => {
+		return page.split('/').join('@@');
 	};
 }
 
