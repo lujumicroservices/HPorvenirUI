@@ -71,14 +71,6 @@ function ContactsList(props) {
 						<IconButton
 							onClick={ev => {
 								ev.stopPropagation();
-								dispatch(toggleStarredContact(row.original.id));
-							}}
-						>
-							<Icon>edit</Icon>
-						</IconButton>
-						<IconButton
-							onClick={ev => {
-								ev.stopPropagation();
 								dispatch(removeContact(row.original.id));
 							}}
 						>

@@ -34,7 +34,7 @@ export const updateContact = createAsyncThunk(
 export const removeContact = createAsyncThunk(
 	'contactsApp/contacts/removeContact',
 	async (id, { dispatch, getState }) => {
-		await axios.delete(`${process.env.REACT_APP_WEBAPI}user`, { id });
+		await axios.delete(`${process.env.REACT_APP_WEBAPI}user/${id}`);
 		return id;
 	}
 );
