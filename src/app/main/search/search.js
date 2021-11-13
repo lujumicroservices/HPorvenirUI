@@ -1,6 +1,7 @@
 import React, { memo, useState, useEffect, useRef } from 'react';
 import FusePageSimple from '@fuse/core/FusePageSimple';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { lightBlue } from "@material-ui/core/colors";
 import Paper from '@material-ui/core/Paper';
 import { motion } from 'framer-motion';
 import Icon from '@material-ui/core/Icon';
@@ -29,6 +30,36 @@ import _ from 'lodash';
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
 import SearchTableHeader from './searchResultsHeader';
 import DialogSearchViewer from './searchDisplay';
+
+const defaultMaterialTheme = createMuiTheme({
+	palette: {
+		primary: {
+		  main: '#32AFF2'
+		}
+	},
+	overrides: {
+		MuiButton: {
+		  root: {
+			borderRadius:100,
+			backgroundColor: 'white',
+			marginBottom: '10px',
+			'& span': {
+				'& h6': {
+					color: 'black',
+					margin: '5px'		
+				},
+				'& h4': {
+					color: 'black',
+					margin: '5px'		
+				}
+			}			
+		  },		  
+		  textPrimary: {
+			color: 'black'
+		  }
+		}		
+	  },
+	});
 
 const BootstrapInput = withStyles(theme => ({
 	root: {
@@ -113,6 +144,9 @@ const useStyles = makeStyles({
 	searchInput: {
 		width: '600px',
 		minWidth: '300px'
+	},
+	calendar: {
+		color:'red'
 	}
 });
 
@@ -163,7 +197,9 @@ function SimpleFullWidthSample() {
 		return (
 			<>
 				<HeaderFormControl className={classes.margin}>
+				<ThemeProvider theme={defaultMaterialTheme}>
 					<KeyboardDatePicker
+						className={classes.calendar}
 						margin="normal"
 						id="date-picker-dialog"
 						label="Fecha Inicial"
@@ -174,9 +210,12 @@ function SimpleFullWidthSample() {
 							'aria-label': 'change date'
 						}}
 					/>
+					</ThemeProvider>
 				</HeaderFormControl>
 				<HeaderFormControl className={classes.margin}>
+				<ThemeProvider theme={defaultMaterialTheme}>
 					<KeyboardDatePicker
+						className={classes.calendar}
 						margin="normal"
 						id="date-picker-dialog"
 						label="Fecha Final"
@@ -187,6 +226,7 @@ function SimpleFullWidthSample() {
 							'aria-label': 'change date'
 						}}
 					/>
+					</ThemeProvider>
 				</HeaderFormControl>
 			</>
 		);
