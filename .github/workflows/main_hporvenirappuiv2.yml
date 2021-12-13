@@ -48,6 +48,6 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'hporveniruiapp'        
+        app-name: 'hporvenirappuiv2'        
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7B172049EEA34309ADA3D20275E00093 }}
         package: ./proxy
