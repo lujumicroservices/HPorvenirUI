@@ -86,7 +86,7 @@ function Login() {
 							</a>
 						</div>
 						<div className="py-16">
-							<a href="/contact">Mas Información y Tarifas</a>
+						    <Link  to={{pathname: '/contact'}}>Mas Información y Tarifas</Link>						
 						</div>
 					</div>
 				</Card>
