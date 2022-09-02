@@ -46,7 +46,7 @@ const navigationConfig = [
 			{
 				id: 'contact-component',
 				title: 'Contact',
-				translate: 'Contact',
+				translate: 'CONTACT',
 				type: 'item',
 				icon: 'alternate_email',
 				auth: authRoles.user,
@@ -55,11 +55,20 @@ const navigationConfig = [
 			{
 				id: 'contact-admin',
 				title: 'Admin',
-				translate: 'Admin',
+				translate: 'ADMIN',
 				type: 'item',
 				icon: 'groups',
 				auth: authRoles.superadmin,
 				url: '/contacts/all'
+			},
+			{
+				id: 'who-component',
+				title: 'Who',
+				translate: 'WHO',
+				type: 'item',
+				icon: 'groups',
+				auth: authRoles.user,
+				url: '/who'
 			},
 			{
 				id: 'hemeroteca-logout',

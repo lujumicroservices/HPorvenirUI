@@ -155,7 +155,7 @@ function Tarifas() {
 					<br />
 
 					<Card className={classes.mailform}>
-						<div className="flex flex-row">
+						<div className="flex justify-around">
 							<div>
 								<div className="grid grid-cols-2">
 									<div>SEMESTRAL</div>
@@ -196,7 +196,7 @@ function Tarifas() {
 						</div>
 
 						<div className="pt-20 flex justify-center">
-							<Link to={{ pathname: '/contact' }}>Mas Información y Tarifas</Link>
+							<Link to={{ pathname: '/contact' }}>Contacto</Link>
 						</div>
 					</Card>
 				</div>

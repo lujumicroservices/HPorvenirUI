@@ -9,6 +9,7 @@ import LoginConfig from 'app/main/login/LoginConfig';
 import LogoutConfig from 'app/main/logout/LogoutConfig';
 import MantainanceConfig from 'app/main/mantainance/mantainanceConfig';
 import TarifasConfig from 'app/main/tarifas/tarifasConfig';
+import WhoConfig from 'app/main/who/whoConfig';
 
 const routeConfigs = [
 	LogoutConfig,
@@ -19,7 +20,8 @@ const routeConfigs = [
 	HelpConfig,
 	ContactsAppConfig,
 	MantainanceConfig,
-	TarifasConfig
+	TarifasConfig,
+	WhoConfig
 ];
 
 const routes = [
