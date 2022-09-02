@@ -8,6 +8,7 @@ import ContactsAppConfig from 'app/main/contacts/ContactsAppConfig';
 import LoginConfig from 'app/main/login/LoginConfig';
 import LogoutConfig from 'app/main/logout/LogoutConfig';
 import MantainanceConfig from 'app/main/mantainance/mantainanceConfig';
+import TarifasConfig from 'app/main/tarifas/tarifasConfig';
 
 const routeConfigs = [
 	LogoutConfig,
@@ -17,7 +18,8 @@ const routeConfigs = [
 	ContactConfig,
 	HelpConfig,
 	ContactsAppConfig,
-	MantainanceConfig
+	MantainanceConfig,
+	TarifasConfig
 ];
 
 const routes = [
