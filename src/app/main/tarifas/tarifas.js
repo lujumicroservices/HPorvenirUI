@@ -159,13 +159,14 @@ function Tarifas() {
 							<div>
 								<div className="grid grid-cols-2">
 									<div>SEMESTRAL</div>
-									<div>$ 2,296.80 NETO</div>
+									<div>$ 2,900.00 NETO</div>
 								</div>
 
 								<div className="grid grid-cols-2">
 									<div>ANUAL</div>
-									<div>$ 4,384.80 NETO</div>
+									<div>$ 5,220.00 NETO</div>
 								</div>
+								<div className=''>Vigencia  al 31 de Diciembre de 2024</div>
 
 								<div className="pt-6">
 									<div className='font-bold'>DATOS BANCARIOS</div>
@@ -184,8 +185,8 @@ function Tarifas() {
 										</div>
 
 										<div className="pt-6">
-											TAMBIEN PUEDE SER EN EFECTIVO Ó CHEQUE A NOMBRE DE EDITORIAL EL PORVENIR SA
-											DE CV
+											 A NOMBRE DE EDITORIAL EL PORVENIR SA DE CV </br>
+Cuando este el pago envíar el comprobante y datos para facturar  y también usuario y contraseña que quiere poner al siguiente correo publicidad.porvenir@gmail.com se tardan de un día a dos días en darlo de alta cualquier duda estamos a sus ordenes
 										</div>
 									</div>
 								</div>
