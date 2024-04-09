@@ -166,7 +166,7 @@ function Tarifas() {
 									<div>ANUAL</div>
 									<div>$ 5,220.00 NETO</div>
 								</div>
-								<div className=''>Vigencia  al 31 de Diciembre de 2024</div>
+								<div>Vigencia  al 31 de Diciembre de 2024</div>
 
 								<div className="pt-6">
 									<div className='font-bold'>DATOS BANCARIOS</div>
@@ -185,8 +185,9 @@ function Tarifas() {
 										</div>
 
 										<div className="pt-6">
-											 A NOMBRE DE EDITORIAL EL PORVENIR SA DE CV </br>
-Cuando este el pago envíar el comprobante y datos para facturar  y también usuario y contraseña que quiere poner al siguiente correo publicidad.porvenir@gmail.com se tardan de un día a dos días en darlo de alta cualquier duda estamos a sus ordenes
+										<p>	 A NOMBRE DE EDITORIAL EL PORVENIR SA DE CV </p> 
+<p>Cuando este el pago envíar el comprobante y datos para facturar  y también usuario y contraseña que quiere poner al siguiente correo publicidad.porvenir@gmail.com se tardan de un día a dos días en darlo de alta cualquier duda estamos a sus ordenes
+						</p> 
 										</div>
 									</div>
 								</div>
