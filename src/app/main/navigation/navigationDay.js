@@ -427,7 +427,6 @@ function DialogDayViewer(props, ref) {
 															'icon',
 															'rounded-lg'
 														)}
-														variant="contained"
 														color="secondary"
 													>
 														<Typography
@@ -448,7 +447,6 @@ function DialogDayViewer(props, ref) {
 															'icon',
 															'rounded-lg'
 														)}
-														variant="contained"
 														color="primary"
 													>
 														<Typography
