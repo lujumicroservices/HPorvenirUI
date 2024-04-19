@@ -300,7 +300,7 @@ function SimpleLeftSidebar3Sample() {
 				</div>
 			}
 			leftSidebarHeader={
-				<div borderRadius={16} className={classes.leftSidebarHeader}>
+				<div style={{ borderRadius: '10px' }} className={classes.leftSidebarHeader}>
 					<h4 className="yearsHeader p-24">Años Disponibles</h4>
 				</div>
 			}
