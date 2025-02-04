@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 class JwtService extends FuseUtils.EventEmitter {
 	init(urlp) {
 		this.setInterceptors();
-		this.handleIpAuthentication(urlp);
+		this.handleAuthentication(urlp);
 	}
 
 	setInterceptors = () => {
