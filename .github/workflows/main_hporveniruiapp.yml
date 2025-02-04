@@ -26,7 +26,7 @@ jobs:
         yarn build
 
     - name: Deploy to Azure Web App
-      uses: azure/static-web-apps-deploy@v3
+      uses: azure/static-web-apps-deploy@v1
       with:
         app-name: 'hporveniruiapp'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_ad6582842c504eb6818f209b36e142b2 }}
