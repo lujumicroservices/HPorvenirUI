@@ -19,8 +19,9 @@ jobs:
     - name: Install dependencies and build
       run: |
         export NODE_OPTIONS=--openssl-legacy-provider
+        npm install -g yarn --force
         yarn install
-        yarn build
+        CI='' yarn run build
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
