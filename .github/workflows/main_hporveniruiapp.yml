@@ -1,6 +1,6 @@
 name: Build and deploy ui
 
-on:  
+on:
   workflow_dispatch:
 
 jobs:
@@ -9,23 +9,42 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      
+      with:
+        path: ./spa
 
     - name: Set up Node.js version
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v1
       with:
         node-version: '18.x'
 
-    - name: Install dependencies and build
+    - name: npm install, build, and test
+      working-directory: ./spa
       run: |
         export NODE_OPTIONS=--openssl-legacy-provider
         npm install -g yarn --force
         yarn install
-        CI='' yarn run build
+        yarn build
 
-    - name: Deploy to Azure Web App
+    - uses: actions/checkout@v2
+      with:
+        path: ./proxy
+        repository: lujumicroservices/HporvenirProxy
+
+    - name: npm install, build, and test
+      working-directory: ./proxy
+      run: |
+        mkdir client
+        npm install
+        npm run build --if-present
+        npm run test --if-present
+        cp -r ../spa/build/. ./client/
+        
+    - name: 'Deploy to Azure Web App'
+      id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'hporveniruiapp'
+        app-name: 'hporveniruiapp'        
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_ad6582842c504eb6818f209b36e142b2 }}
-        package: build
+        package: ./proxy
+
+  
